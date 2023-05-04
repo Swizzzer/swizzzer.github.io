@@ -1,0 +1,769 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lambert Swizzer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="多项式插值多项式插值要做的就是,找一个多项式 $y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n$ 来近似任意函数 $f(x)$。 为了让插值尽量精确，我们让 $y(x)$ 经过所有的 $x_i$（插值节点）。这样就得到： $$\left{\begin{aligned}a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(x_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算方法:插值与数值逼近">
+<meta property="og:url" content="https://eupho.me/%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-%E6%8F%92%E5%80%BC%E4%B8%8E%E6%95%B0%E5%80%BC%E9%80%BC%E8%BF%91">
+<meta property="og:site_name" content="Euphome">
+<meta property="og:description" content="多项式插值多项式插值要做的就是,找一个多项式 $y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n$ 来近似任意函数 $f(x)$。 为了让插值尽量精确，我们让 $y(x)$ 经过所有的 $x_i$（插值节点）。这样就得到： $$\left{\begin{aligned}a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(x_">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eupho.me/assets/Untitled.png">
+<meta property="article:published_time" content="2023-05-04T10:10:44.000Z">
+<meta property="article:modified_time" content="2023-05-04T10:14:23.864Z">
+<meta property="article:author" content="Lambert Swizzer">
+<meta property="article:tag" content="Computation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://eupho.me/assets/Untitled.png">
+  
+  
+  
+  <title>计算方法:插值与数值逼近 - Euphome</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"eupho.me","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Euphome</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算方法:插值与数值逼近"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-04 18:10" pubdate>
+          2023年5月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算方法:插值与数值逼近</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="多项式插值"><a href="#多项式插值" class="headerlink" title="多项式插值"></a>多项式插值</h2><p>多项式插值要做的就是,找一个多项式 $y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n$ 来近似任意函数 $f(x)$。</p>
+<p>为了让插值尽量精确，我们让 $y(x)$ 经过所有的 $x_i$（插值节点）。这样就得到：</p>
+<p>$$<br>\left{\begin{aligned}<br>a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(x_0)\<br>a_0+a_1x_1+a_2x_1^2+\cdots+a_nx_1^n&amp;&#x3D;f(x_1)\<br>&amp;\vdots \<br>a_0+a_1x_n+a_2x_n^2+\cdots+a_nx_n^n&amp;&#x3D;f(x_n)\<br>\end{aligned}\right.<br>$$</p>
+<p>显然这个方程组的解是唯一的，即：多项式插值具有唯一性。Lagrange 插值、Newton 插值等只是得到这个方程组的解的不同方式，最终得到的结果是一样的。</p>
+<h2 id="Lagrange-插值"><a href="#Lagrange-插值" class="headerlink" title="Lagrange 插值"></a>Lagrange 插值</h2><h3 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h3><p>$$<br>L(x)&#x3D;\sum_{j&#x3D;0}^nf(x_j)l_j(x)<br>$$</p>
+<p>其中</p>
+<p>$$<br>\begin{aligned}<br>l_j(x)&amp;&#x3D;\frac{(x-x_0)(x-x_1)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_n)}{(x_j-x_0)(x_j-x_1)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_n)} \<br>&amp;&#x3D; \prod_{i&#x3D;0, i\neq j}^n\frac{x-x_i}{x_j-x_i}<br>\end{aligned}<br>$$</p>
+<p>事实上，$l_j(x)$ 的本质就是 $$\left{\begin{aligned}<br>&amp;0, x\neq x_j\ &amp;1, x&#x3D;x_j<br>\end{aligned}\right.$$ 类似布尔函数.</p>
+<p>被插函数可以表示为 $f(x)&#x3D;L(x)+E(x)$，其中 $E(x)$ 即为误差（又叫「插值余项」）。</p>
+<h3 id="误差-x2F-余项"><a href="#误差-x2F-余项" class="headerlink" title="误差 &#x2F; 余项"></a>误差 &#x2F; 余项</h3><p>$$<br>E(x)&#x3D;\frac{f^{(n+1)}(\xi)}{(n+1)!}p_{n+1}(x), p_{n+1}(x)&#x3D;(x-x_0)(x-x_1)\cdots(x-x_n)<br>$$</p>
+<p>其中 $\xi\in(a, b)$。</p>
+<p>容易得到误差上限 $|E(x)|\leqslant\frac{\max\limits_{a&lt;x&lt;b} f^{(n+1)}(x)}{(n+1)!}p_{n+1}(x)$。事实上，因为多项式插值是唯一的，所有多项式插值的误差和上限都是这个东西。</p>
+<h2 id="Newton-插值"><a href="#Newton-插值" class="headerlink" title="Newton 插值"></a>Newton 插值</h2><h3 id="计算-1"><a href="#计算-1" class="headerlink" title="计算"></a>计算</h3><p>将 $n$ 次插值多项式写成如下的形式：</p>
+<p>$$<br>y(x)&#x3D;a_0+a_1(x-x_0)+a_2(x-x_0)(x-x_1)+\cdots+a_n(x-x_0)(x-x_1)\cdots(x-x_{n+1})<br>$$</p>
+<p>其中：</p>
+<p>$$<br>\begin{aligned}<br>a_0 &amp;&#x3D; f(x_0)\<br>a_1 &amp;&#x3D; \frac{f(x_1)-f(x_0)}{x_1-x_0} \<br>a_2 &amp;&#x3D; \frac{\frac{f(x_2)-f(x_0)}{x_2-x_0}-\frac{f(x_1)-f(x_0)}{x_1-x_0}}{x_2-x_1} \<br>&amp;\cdots<br>\end{aligned}<br>$$</p>
+<p>为了便于表示，引入差商的定义。</p>
+<h3 id="差商"><a href="#差商" class="headerlink" title="差商"></a>差商</h3><p>$$<br>\begin{aligned}<br>f[x_0 x_1] &amp;&#x3D; \frac{f(x_1)-f(x_0)}{x_1-x_0} \<br>f[x_0x_1x_2] &amp;&#x3D; \frac{f[x_0x_2]-f[x_0x_1]}{x_2-x_1} \<br>f[x_0x_1x_2x_3] &amp;&#x3D; \frac{f[x_0x_1x_3]-f[x_0x_1x_2]}{x_3-x_2} \<br>&amp;\cdots \<br>f[x_0x_1\cdots x_k] &amp;&#x3D; \frac{f[x_0x_1\cdots x_{k-2}x_k]-f[x_0x_1\cdots x_{k-2}x_{k-1}]}{x_k-x_{k-1}}<br>\end{aligned}<br>$$</p>
+<p>从上到下依次称「一阶差商」「二阶差商」……「$k$ 阶差商」。可以证明，$a_k&#x3D;f[x_0x_1\cdots x_k], k&#x3D;0, 1, 2, \cdots, n$。</p>
+<p>用差商表示的 Newton 插值多项式：</p>
+<p>$$<br>N_n(x)&#x3D;f(x_0)+f<a href="x-x_0">x_0x_1</a>+f<a href="x-x_0">x_0x_1x_2</a>(x-x_1)+\cdots+f<a href="x-x_0">x_0x_1\cdots x_n</a>\cdots(x-x_{n-1})<br>$$</p>
+<h3 id="误差-x2F-余项-1"><a href="#误差-x2F-余项-1" class="headerlink" title="误差 &#x2F; 余项"></a>误差 &#x2F; 余项</h3><p>$$<br>E(x)&#x3D;f<a href="x-x_0">x_0x_1\cdots x_nx</a>(x-x_1)\cdots(x-x_n)<br>$$</p>
+<p>由于多项式插值的唯一性，这个式子的值和 Lagrange 插值的余项是相等的，由此可以得到差商和导数的关系：</p>
+<p>$$<br>f[x_0x_1\cdots x_j]&#x3D;\frac{f^{(j)}(\xi_j)}{j!}<br>$$</p>
+<p>其中 $\xi_j\in(x_0, x_j)$。</p>
+<h2 id="差分与等距节点的插值"><a href="#差分与等距节点的插值" class="headerlink" title="差分与等距节点的插值"></a>差分与等距节点的插值</h2><h3 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h3><ul>
+<li>$k$ 阶向前差分：$\Delta^kf(x)&#x3D;\Delta^{k-1}f(x+h)-\Delta^{k-1}f(x)$；</li>
+<li>0 阶向前差分：$\Delta^0f(x)&#x3D;f(x)$；</li>
+<li>$k$ 阶向后差分：$\nabla^kf(x)&#x3D;\nabla^{k-1}f(x)-\nabla^{k-1}f(x-h)$；</li>
+<li>0 阶向后差分：$\nabla^0f(x)&#x3D;f(x)$；</li>
+<li>$k$ 阶中心差分：$\delta^kf(x)&#x3D;\delta^{k-1}f(x+\frac{h}{2})-\delta^{k-1}f(x-\frac{h}{2})$；</li>
+<li>0 阶中心差分：$\delta^0f(x)&#x3D;f(x)$。</li>
+</ul>
+<p>向前差分与差商的关系：$f[x_0x_1\cdots x_k]&#x3D;\frac{\Delta^kf_0}{k!h^k}&#x3D;\frac{\nabla^kf_k}{k!h^k}$。</p>
+<h3 id="Newton-向前插值公式"><a href="#Newton-向前插值公式" class="headerlink" title="Newton 向前插值公式"></a>Newton 向前插值公式</h3><p>用差分代替 Newton 插值公式中的差商：</p>
+<p>$$<br>\begin{aligned}<br>N_n(x) &#x3D; \Delta^0f_0&amp;+\frac{\Delta^1f_0}{h}(x-x_0)+\frac{\Delta^2f_0}{2!h^2}(x-x_1)(x-x_0)+\cdots \ &amp;+\frac{\Delta^nf_0}{n!h^n}(x-x_{n-1})(x-x_{n-2})\cdots(x-x_0)<br>\end{aligned}<br>$$</p>
+<p>用 $x_0+th$ 代替 $x$：</p>
+<p>$$<br>\begin{aligned}<br>N_n(x_0+th) &amp;&#x3D; \Delta^0f_0+ \Delta^1f_0t+\Delta^2f_0\frac{t(t-1)}{2!} +\cdots+\Delta^nf_0\frac{t(t-1)\cdots(t-(n-1))}{n!} \<br>&amp;&#x3D; \sum_{j&#x3D;0}^n\Delta^jf_0\frac{t(t-1)(t-2)\cdots(t-(j-1))}{j!} \<br>&amp;&#x3D; \sum_{j&#x3D;0}^n\Delta^jf_0\mathrm{C}_t^j<br>\end{aligned}<br>$$</p>
+<p>（组合数公式：$\mathrm{C}_n^m&#x3D;\frac{n!}{m!(n-m)!}&#x3D;\frac{n(n-1)(n-2)\cdots(n-(m-1))}{m!}$。广义的组合数中 $n$ 可以是负数、小数）</p>
+<h3 id="Newton-向后插值公式"><a href="#Newton-向后插值公式" class="headerlink" title="Newton 向后插值公式"></a>Newton 向后插值公式</h3><p>起始点选 $x_n$，使用向后的差分，可以推出下面的 Newton 向后插值公式。</p>
+<p>$$<br>\begin{aligned}<br>N_n(x_n+th)<br>&amp;&#x3D;\sum_{j&#x3D;0}^{n}\nabla^jf_n\frac{t(t+1)\cdots(t+j-2)(t+j-1)}{j!} \<br>&amp;&#x3D;\sum_{j&#x3D;0}^n\nabla^jf_n\mathrm{C}_{t+j-1}^{j}<br>\end{aligned}<br>$$</p>
+<h2 id="函数的最佳平方逼近"><a href="#函数的最佳平方逼近" class="headerlink" title="函数的最佳平方逼近"></a>函数的最佳平方逼近</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>先来看连续情况.给定函数 $f(x)\in C[a,b], x\in[a, b];\phi_0,\phi_1,\cdots,\phi_n$是$C[a,b]$上n+1个线性无关函数，找一个 $\phi^*(x)\in\Phi(x)&#x3D;\mathrm{span}{\phi_0(x), \phi_1(x), \cdots, \phi_n(x)}$，使得</p>
+<p>$$<br>\int\limits_a^b\rho(x)(f(x)-\phi^*(x))^2\mathrm{d}x&#x3D;\min_{\phi(x)\in\Phi(x)}\int\limits_a^b\rho(x)(f(x)-\phi(x))^2\mathrm{d}x<br>$$</p>
+<p>即左侧的积分式取得最小值。式中 $\rho(x)$ 是权函数，满足：</p>
+<ul>
+<li>$\rho(x)\geqslant 0, \forall x\in[a, b]$；</li>
+<li>$\int_a^b\rho(x)x^k\mathrm{d}x$ 存在，$\forall k&#x3D;0, 1, 2, \cdots$；</li>
+<li>对任何非负函数 $f(x)$，若 $\int_a^bf(x)\rho(x)\mathrm{d}x&#x3D;0$，则 $f(x)\equiv0$。</li>
+</ul>
+<h3 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h3><p>记 $\phi^*(x)&#x3D;a_0\phi_0(x)+a_1\phi_1(x)+\cdots+a_n\phi_n(x)$。</p>
+<p>记 $||f-\phi^*||_2^2&#x3D;F(a_0, a_1, \cdots, a_n)&#x3D;\int_a^b\rho(x)(f(x)-\phi^*(x))^2\mathrm{d}x$。令 $\frac{\partial F}{\partial a_j}&#x3D;0$，有</p>
+<p>$$<br>\begin{aligned}<br>\int\limits_a^b\rho(x)f(x)\phi_j(x)\mathrm{d}x &#x3D; a_0\int\limits_a^b\rho(x)\phi_0(x)\phi_j(x)\mathrm{d}x&amp;+a_1\int\limits_a^b\rho(x)\phi_1(x)\phi_j(x)\mathrm{d}x+\cdots \<br>&amp;+ a_n\int\limits_a^b\rho(x)\phi_n(x)\phi_j(x)\mathrm{d}x<br>\end{aligned}<br>$$</p>
+<p>记 $(f, g)$ 为 $\int_a^b\rho(x)f(x)g(x)\mathrm{d}x$。令 $F$ 的所有偏导为零，得到下面的线性方程组：</p>
+<p>$$<br>\left[\begin{matrix}<br>(\phi_0,\phi_0) &amp; (\phi_1, \phi_0) &amp; \cdots &amp; (\phi_n, \phi_0) \<br>(\phi_0,\phi_1) &amp; (\phi_1, \phi_1) &amp; \cdots &amp; (\phi_n, \phi_1) \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>(\phi_0,\phi_n) &amp; (\phi_1, \phi_n) &amp; \cdots &amp; (\phi_n, \phi_n) \<br>\end{matrix}\right]<br>\left[\begin{matrix}<br>a_0 \ a_1 \\vdots\a_n<br>\end{matrix}\right]&#x3D;<br>\left[\begin{matrix}<br>(f, \phi_0)\<br>(f, \phi_1)\<br>\vdots \<br>(f, \phi_n) \<br>\end{matrix}\right]<br>$$</p>
+<p>求解这个方程组，即可得到最佳平方逼近时的系数。</p>
+<h3 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h3><p>记 $f-\phi^*(x)&#x3D;\delta$，记 $||\delta||_2^2$ 为「平方误差」，记它的平方根 $||\delta||_2$ 为「均方误差」。</p>
+<p>$$<br>\begin{aligned}<br>||\delta||_2^2&amp;&#x3D;||f-\phi^*||_2^2&#x3D;(f, f)-(\phi^*, f)\<br>&amp;&#x3D;||f||<em>2^2-\sum</em>{j&#x3D;0}^na_j^*(\phi_j, f)<br>\end{aligned}<br>$$</p>
+<h3 id="正交函数与正交多项式"><a href="#正交函数与正交多项式" class="headerlink" title="正交函数与正交多项式"></a>正交函数与正交多项式</h3><p>对 $f(x),g(x)\in C[a, b]$，记 $(f,g)&#x3D;\int_a^b\rho(x)f(x)g(x)\mathrm{d}x$，若 $(f,g)&#x3D;0$，称 $f(x)$、$g(x)$ 在 $[a,b]$ 上带权 $\rho(x)$ 正交，记作 $f\bot g$。</p>
+<p>如果函数序列 ${\phi_j}_0^{+\infty}$ 在 $[a, b]$ 上两两带权 $\rho(x)$ 正交，称 ${\phi_j}$ 为 $[a, b]$ 上带权 $\rho(x)$ 的正交函数族。</p>
+<p>例如：$1, \sin x, \cos x, \sin 2x, \cos 2x, \cdots$ 是在 $[-\pi,\pi]$ 上带权 $\rho(x)\equiv1$ 的正交函数族，因为</p>
+<p>$$<br>\begin{aligned}<br>(1, 1)&amp;&#x3D;\int\limits_{-\pi}^{\pi}\mathrm{d}x&#x3D;2\pi\<br>(\sin nx, \sin mx)&amp;&#x3D;\int\limits_{-\pi}^\pi\sin nx\sin mx\mathrm{d}x&#x3D;\left{\begin{aligned}&amp;\pi,m&#x3D;n\&amp;0, m\neq n\end{aligned}\right. \<br>(\cos nx, \cos mx)&amp;&#x3D;\int\limits_{-\pi}^\pi\cos nx\cos mx\mathrm{d}x&#x3D;\left{\begin{aligned}&amp;\pi,m&#x3D;n\&amp;0, m\neq n\end{aligned}\right. \<br>(\cos nx, \sin mx)&amp;&#x3D;\int\limits_{-\pi}^\pi\cos nx\sin mx\mathrm{d}x&#x3D;0 \<br>\end{aligned}<br>$$</p>
+<p>如果 $\phi_n(x)$ 为首项系数非零的 $n$ 次多项式，称 ${\phi_j}$ 为正交多项式族。</p>
+<p><img src="/../assets/Untitled.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用正交多项式族作为 $\Phi(x)$ 进行最佳平方逼近，这样得到的左侧矩阵是对角阵。</p>
+<h3 id="曲线拟合（最小二乘法）"><a href="#曲线拟合（最小二乘法）" class="headerlink" title="曲线拟合（最小二乘法）"></a>曲线拟合（最小二乘法）</h3><p>曲线拟合即是离散情况的最佳平方逼近问题。给定已知 $(m+1)$ 个数据点的离散函数 $f(x), x\in[a, b]$，找一个 $\phi^*(x)\in\Phi(x)&#x3D;\mathrm{span}{\phi_0(x), \phi_1(x), \cdots, \phi_n(x)}$，使得</p>
+<p>$$<br>||f-\phi^*||<em>2^2&#x3D;F(a_0, a_1,\cdots, a_n)&#x3D;\min</em>{\phi\in\Phi}\sum_{j&#x3D;0}^m\rho(x_j)(f(x_j)-\phi(x_j))^2<br>$$</p>
+<p>定义离散情况的内积</p>
+<p>$$<br>(f,g)&#x3D;\sum_{i&#x3D;0}^m\rho(x_i)f(x_i)g(x_i)<br>$$</p>
+<p>使用与前文相同的解法，可以解出系数 $a_i,i&#x3D;0, 1, \cdots, n$。</p>
+<p>同样可以定义离散情况下的平方误差</p>
+<p>$$<br>||\delta||_2^2&#x3D;||f-\phi^*||<em>2^2&#x3D;\sum</em>{i&#x3D;0}^m\rho(x_i)(f_i-\phi(x_i))^2<br>$$</p>
+<p>以及均方误差</p>
+<p>$$<br>||\delta||_2&#x3D;\sqrt{||\delta||<em>2^2}&#x3D;\sqrt{\sum</em>{i&#x3D;0}^m\rho(x_i)(f_i-\phi(x_i))^2}<br>$$</p>
+<p>特别注意，在曲线拟合这里的「均方误差」没有「均」，即不用将根号里的东西乘以 $\frac{1}{m}$。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="category-chain-item">课程笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Computation/">#Computation</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算方法:插值与数值逼近</div>
+      <div>https://eupho.me/计算方法-插值与数值逼近</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lambert Swizzer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%BE%E7%A8%8B%E7%AC%AC%E4%B8%80%E7%AB%A0-Java%E5%9F%BA%E7%A1%80" title="面向对象课程第一章:Java基础">
+                        <span class="hidden-mobile">面向对象课程第一章:Java基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Swizzzer/blogComments');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
