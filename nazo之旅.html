@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -48,8 +48,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -234,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.7k 字
+          7.6k 字
         
       </span>
     
@@ -295,7 +293,7 @@ target="_blank" rel="noopener" href="https://nazo.one-story.cn">nazo</a>是在�
 <h1 id="level-4">Level 4</h1>
 <p>Level
 4中继续尝试上述方法会得到失败的结果,因此打开浏览器控制台准备检查元素,然后发现答案直接就写在控制台里
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">answer: level-five<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure> 过关.</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">answer:</span> level-five<br></code></pre></td></tr></table></figure> 过关.</p>
 <h1 id="level-5">Level 5</h1>
 <p>JavaScript中NaN表示不是任何一个数字的元素,自然不能比较相等与否.输入返回值<code>false</code>,过关.</p>
 <h1 id="level-6">Level 6</h1>
@@ -331,35 +329,7 @@ Map输入,定位到了自由女神像...
 Dollar,也就是<code>Jump $</code>,提示是四个字母且汇编相关(其实不提示也很容易想到是汇编).汇编中$表示PC指向的地址,跳转到当前地址,明显意指循环(loop).输入<code>loop</code>,过关.</p>
 <h1 id="level-15">Level 15</h1>
 <p>空白,提示也是void.尝试输入empty,null等字串均不通过,无奈继续打开控制台检查元素.检索字段<code>answer</code>,在<code>54f001c6bf2b13aa6cf4.js</code>这个脚本中发现了这么一段:
-<figure><div class="code-wrapper"><pre class="line-numbers language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">mounted: function() &#123;
-                    var t &#x3D; this,
-                        e &#x3D; document.querySelector(&quot;.content-slot&quot;).getBoundingClientRect().height;
-                    if (this.footerHeight &#x3D; e + 120, 18 &#x3D;&#x3D;&#x3D; this.levelNum)
-                        document.addEventListener(&quot;keydown&quot;, function(t) &#123;
-                            90 &#x3D;&#x3D; t.keyCode &amp;&amp; t.ctrlKey &amp;&amp; (window.location.href &#x3D; &quot;.&#x2F;brainfuck&quot;)
-                        &#125;);
-                    else if (15 &#x3D;&#x3D;&#x3D; this.levelNum)
-                        setTimeout(function() &#123;
-                            document.title &#x3D; &quot;answer: awesome&quot;
-                        &#125;, 3e3);
-                    else if (4 &#x3D;&#x3D;&#x3D; this.levelNum)
-                        console.log(&quot;answer: level-five&quot;);
-                    else if (22 &#x3D;&#x3D;&#x3D; this.levelNum)
-                        window.addEventListener(&quot;resize&quot;, function(t) &#123;
-                            t.target.innerWidth &lt; 320 ? document.querySelector(&quot;.question-text&quot;).innerHTML &#x3D; &quot;TOBORRM&quot; : document.querySelector(&quot;.question-text&quot;).innerHTML &#x3D; &quot;width: 320px;&quot;
-                        &#125;);
-                    else if (25 &#x3D;&#x3D;&#x3D; this.levelNum) &#123;
-                        var n &#x3D; document.querySelector(&quot;.question-text&quot;).innerHTML;
-                        window.innerWidth &lt; 950 ? document.querySelector(&quot;.question-text&quot;).innerHTML &#x3D; &quot;答题框被你无情的挤爆了。请在更大的屏幕上观看。&quot; : document.querySelector(&quot;.question-text&quot;).innerHTML &#x3D; n,
-                        window.addEventListener(&quot;resize&quot;, function(t) &#123;
-                            t.target.innerWidth &lt; 950 ? document.querySelector(&quot;.question-text&quot;).innerHTML &#x3D; &quot;答题框被你无情的挤爆了。请在更大的屏幕上观看。&quot; : document.querySelector(&quot;.question-text&quot;).innerHTML &#x3D; n
-                        &#125;)
-                    &#125; else
-                        48 &#x3D;&#x3D;&#x3D; this.levelNum &amp;&amp; (this.textArray[0] &#x3D; Date.parse(new Date), window.setInterval(function() &#123;
-                            t.textArray[0] &#x3D; Date.parse(new Date),
-                            t.$forceUpdate()
-                        &#125;, 1e3), this.textArray[1] &#x3D; &quot;空格用_代替&quot;)
-                &#125;,<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-attr">mounted</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>                    <span class="hljs-keyword">var</span> t = <span class="hljs-variable language_">this</span>,<br>                        e = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.content-slot&quot;</span>).<span class="hljs-title function_">getBoundingClientRect</span>().<span class="hljs-property">height</span>;<br>                    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">footerHeight</span> = e + <span class="hljs-number">120</span>, <span class="hljs-number">18</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">levelNum</span>)<br>                        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;keydown&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">t</span>) &#123;<br>                            <span class="hljs-number">90</span> == t.<span class="hljs-property">keyCode</span> &amp;&amp; t.<span class="hljs-property">ctrlKey</span> &amp;&amp; (<span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span> = <span class="hljs-string">&quot;./brainfuck&quot;</span>)<br>                        &#125;);<br>                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">15</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">levelNum</span>)<br>                        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>                            <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">&quot;answer: awesome&quot;</span><br>                        &#125;, <span class="hljs-number">3e3</span>);<br>                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">4</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">levelNum</span>)<br>                        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;answer: level-five&quot;</span>);<br>                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">22</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">levelNum</span>)<br>                        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;resize&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">t</span>) &#123;<br>                            t.<span class="hljs-property">target</span>.<span class="hljs-property">innerWidth</span> &lt; <span class="hljs-number">320</span> ? <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&quot;TOBORRM&quot;</span> : <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&quot;width: 320px;&quot;</span><br>                        &#125;);<br>                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">25</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">levelNum</span>) &#123;<br>                        <span class="hljs-keyword">var</span> n = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span>;<br>                        <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> &lt; <span class="hljs-number">950</span> ? <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&quot;答题框被你无情的挤爆了。请在更大的屏幕上观看。&quot;</span> : <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span> = n,<br>                        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;resize&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">t</span>) &#123;<br>                            t.<span class="hljs-property">target</span>.<span class="hljs-property">innerWidth</span> &lt; <span class="hljs-number">950</span> ? <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&quot;答题框被你无情的挤爆了。请在更大的屏幕上观看。&quot;</span> : <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.question-text&quot;</span>).<span class="hljs-property">innerHTML</span> = n<br>                        &#125;)<br>                    &#125; <span class="hljs-keyword">else</span><br>                        <span class="hljs-number">48</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">levelNum</span> &amp;&amp; (<span class="hljs-variable language_">this</span>.<span class="hljs-property">textArray</span>[<span class="hljs-number">0</span>] = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>), <span class="hljs-variable language_">window</span>.<span class="hljs-built_in">setInterval</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>                            t.<span class="hljs-property">textArray</span>[<span class="hljs-number">0</span>] = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>),<br>                            t.$forceUpdate()<br>                        &#125;, <span class="hljs-number">1e3</span>), <span class="hljs-variable language_">this</span>.<span class="hljs-property">textArray</span>[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;空格用_代替&quot;</span>)<br>                &#125;,<br></code></pre></td></tr></table></figure>
 现在就是第15关,那么答案自然就是<code>awesome</code>了(这里顺便还得到了另外一些关卡的答案...)</p>
 <h1 id="level-16">Level 16</h1>
 <p>看过<生活大爆炸>的对这个问题应该能手到擒来,不过虽然我没看过,但是我在知乎上看到过一篇文章介绍为什么73是best
@@ -467,8 +437,7 @@ target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/國際信號�
 <h1 id="level-45">Level 45</h1>
 <p>看起来应该是某种特殊的字母书写方式,Google了下发现是<a
 target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/Leet">Leet</a></p>
-<p>题目对应的文字是: <figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">This is an example of leet at its finest
-The answer is : sigma<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure> 输入<code>sigma</code>,过关.</p>
+<p>题目对应的文字是: <figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ada">This <span class="hljs-keyword">is</span> an example <span class="hljs-keyword">of</span> leet <span class="hljs-keyword">at</span> its finest<br>The answer <span class="hljs-keyword">is</span> : <span class="hljs-type">sigma</span><br></code></pre></td></tr></table></figure> 输入<code>sigma</code>,过关.</p>
 <h1 id="level-46">Level 46</h1>
 <p>还是图片,以图搜图得到<code>sanic</code>,输入过关.</p>
 <p>按检索结果来看图片里的是动漫人物Sonic,被称为Sanic或许是个梗?
@@ -490,28 +459,7 @@ target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/UNIX时间">�
 <h1 id="level-49">Level 49</h1>
 <p>一张图片,Git的图标,容易想到应该和Level 38是类似的隐写手段.</p>
 <p>解压后得到一个Git仓库,存放的answer.txt里显示<code>this is not a real answer</code>.git进这个仓库查询日志,发现一共提交过三次
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">branch
-
-answer.txt | 2 +-
-1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit 09d0e4c0cfc5d75c2f49b51928b241b9b9cda53d (master)
-Author: Dieber &lt;451120068@qq.com&gt;
-Date: Fri Jul 20 18:46:32 2018 +0800
-
-cover
-
-answer.txt | 2 +-
-1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit b91dbf1a5cd95e4ad2e7842991cb1c8773f78d41
-Author: Dieber &lt;451120068@qq.com&gt;
-Date: Fri Jul 20 18:45:52 2018 +0800
-
-first commit
-
-answer.txt | 1 +
-1 file changed, 1 insertion(+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure> 逐次回滚,最终在first
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">branch</span><br><br><span class="hljs-attribute">answer</span>.txt | <span class="hljs-number">2</span> +-<br><span class="hljs-attribute">1</span> file changed, <span class="hljs-number">1</span> insertion(+), <span class="hljs-number">1</span> deletion(-)<br><br><span class="hljs-attribute">commit</span> <span class="hljs-number">09</span>d0e4c0cfc5d75c2f49b51928b241b9b9cda53d (master)<br><span class="hljs-attribute">Author</span>: Dieber &lt;<span class="hljs-number">451120068</span>@qq.com&gt;<br><span class="hljs-attribute">Date</span>: Fri Jul <span class="hljs-number">20</span> <span class="hljs-number">18</span>:<span class="hljs-number">46</span>:<span class="hljs-number">32</span> <span class="hljs-number">2018</span> +<span class="hljs-number">0800</span><br><br><span class="hljs-attribute">cover</span><br><br><span class="hljs-attribute">answer</span>.txt | <span class="hljs-number">2</span> +-<br><span class="hljs-attribute">1</span> file changed, <span class="hljs-number">1</span> insertion(+), <span class="hljs-number">1</span> deletion(-)<br><br><span class="hljs-attribute">commit</span> b91dbf1a5cd95e4ad2e7842991cb1c8773f78d41<br><span class="hljs-attribute">Author</span>: Dieber &lt;<span class="hljs-number">451120068</span>@qq.com&gt;<br><span class="hljs-attribute">Date</span>: Fri Jul <span class="hljs-number">20</span> <span class="hljs-number">18</span>:<span class="hljs-number">45</span>:<span class="hljs-number">52</span> <span class="hljs-number">2018</span> +<span class="hljs-number">0800</span><br><br><span class="hljs-attribute">first</span> commit<br><br><span class="hljs-attribute">answer</span>.txt | <span class="hljs-number">1</span> +<br><span class="hljs-attribute">1</span> file changed, <span class="hljs-number">1</span> insertion(+)<br></code></pre></td></tr></table></figure> 逐次回滚,最终在first
 commit中发现answer.txt中的内容给出了我们要的答案<code>answer:gitisawesome</code>.
 输入<code>gitisawesome</code>,过关~</p>
 <h1 id="level-50">Level 50</h1>
@@ -883,8 +831,6 @@ author,提示说明应该是跟一首歌有关的.在各个平台搜索了一遍
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
