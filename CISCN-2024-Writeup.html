@@ -1,0 +1,834 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta name="google-site-verification" content="vfJ2GJW1_Q4AOrJXuD5IJvdntHtM2T5hXhBiq3pLXiw" />
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lambert Swizzer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="解了点Crypto和Misc题目，记录下自己的题解。题目的附件在探姬佬的repo里可以找到，就不再额外说明题目了。 Misc 通风机 TriID识别出是Sybase iAnywhere的database，不过似乎并不对。Google了一下基本都指向Siemens的S7-200 Program，随便找了个下载站下载安装。这里建议装在虚拟机，毕竟我对于这类下载站都不很信任，并且这个上古软件本身就很脏.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CISCN-2024-Writeup">
+<meta property="og:url" content="https://eupho.me/CISCN-2024-Writeup">
+<meta property="og:site_name" content="Euphome">
+<meta property="og:description" content="解了点Crypto和Misc题目，记录下自己的题解。题目的附件在探姬佬的repo里可以找到，就不再额外说明题目了。 Misc 通风机 TriID识别出是Sybase iAnywhere的database，不过似乎并不对。Google了一下基本都指向Siemens的S7-200 Program，随便找了个下载站下载安装。这里建议装在虚拟机，毕竟我对于这类下载站都不很信任，并且这个上古软件本身就很脏.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eupho.me/assets/7f920daec9affbe2765bb844dc0d0875.png">
+<meta property="og:image" content="https://eupho.me/assets/%E6%88%AA%E5%B1%8F2024-05-19%2017.30.15.png">
+<meta property="og:image" content="https://eupho.me/assets/image-1.png">
+<meta property="og:image" content="https://eupho.me/assets/image-2.png">
+<meta property="og:image" content="https://eupho.me/assets/image-3.png">
+<meta property="article:published_time" content="2024-05-19T14:43:17.000Z">
+<meta property="article:modified_time" content="2024-05-19T15:31:36.920Z">
+<meta property="article:author" content="Lambert Swizzer">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Crypto">
+<meta property="article:tag" content="Misc">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://eupho.me/assets/7f920daec9affbe2765bb844dc0d0875.png">
+  
+  
+  
+  <title>CISCN-2024-Writeup - Euphome</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"eupho.me","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Euphome</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CISCN-2024-Writeup"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-19 22:43" pubdate>
+          2024年5月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CISCN-2024-Writeup</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>解了点Crypto和Misc题目，记录下自己的题解。题目的附件在探姬佬的<a
+target="_blank" rel="noopener" href="https://github.com/CTF-Archives/CISCN2024">repo</a>里可以找到，就不再额外说明题目了。</p>
+<h1 id="misc">Misc</h1>
+<h2 id="通风机">通风机</h2>
+<p>TriID识别出是Sybase
+iAnywhere的database，不过似乎并不对。Google了一下基本都指向Siemens的S7-200
+Program，随便找了个<a
+target="_blank" rel="noopener" href="https://plc4me.com/download-step-7_v4-s7-200-siemens-plc-software-real-100/">下载站</a>下载安装。这里建议装在虚拟机，毕竟我对于这类下载站都不很信任，并且这个上古软件本身就很脏...</p>
+<p>安装之后也并不能直接打开这个mwp文件，找一份mwp文件对比一下+各方搜索，确认是文件头缺少了3字节。添加上<code>47 4A 4B</code>之后正常打开，在Symbol
+Table里有</p>
+<figure>
+<img src="../assets/7f920daec9affbe2765bb844dc0d0875.png" srcset="/img/loading.gif" lazyload
+alt="通风机" />
+<figcaption aria-hidden="true">通风机</figcaption>
+</figure>
+<p>base64 decode即可。</p>
+<p><code>flag&#123;2467ce26-fff9-4008-8d55-17df83ecbfc2&#125;</code></p>
+<h2 id="盗版软件">盗版软件</h2>
+<p>很神奇的题目，解压得到一个dmp和一个exe。最初直接010
+editor人肉盯帧dmp文件找到了个<code>www.waodown.com</code>，交flag碰壁数十次之后觉得应该不是这个域名...后来和队友头脑风暴了半个小时，想起来头天晚上复盘前些年的CISCN时用到的gimp，抱着试试看的心态将dmp作为raw
+data打开图像，手工fuzz了位移和宽高(unintended
+solution可能？抽象做法)后整出来了：</p>
+<figure>
+<img src="../assets/截屏2024-05-19%2017.30.15.png" srcset="/img/loading.gif" lazyload alt="gimp-yyds" />
+<figcaption aria-hidden="true">gimp-yyds</figcaption>
+</figure>
+<p>IP地址还得从exe入手，扔沙箱里看到exe运行后生成了loader.exe和一个png。对malware有经验的应该马上就能反应过来png里大概有shellcode，而loader就是加载Shellcode连接C2执行后续恶意行为的。png丢到Stegsolve里盯出来了LSB隐写：</p>
+<figure>
+<img src="../assets/image-1.png" srcset="/img/loading.gif" lazyload alt="&quot;稀疏嵌入&quot;" />
+<figcaption aria-hidden="true">"稀疏嵌入"</figcaption>
+</figure>
+<p>典型的<code>50 4B 03 04</code>，zip头。让GPT搓个脚本提取出zip：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_bytes</span>(<span class="hljs-params">input_file, output_file</span>):<br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(input_file, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> f_in, <span class="hljs-built_in">open</span>(output_file, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f_out:<br>            byte_index = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>                byte = f_in.read(<span class="hljs-number">1</span>)  <span class="hljs-comment"># 读取一个字节</span><br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> byte:  <span class="hljs-comment"># 判断是否已经读到文件末尾</span><br>                    <span class="hljs-keyword">break</span><br>                <span class="hljs-keyword">if</span> byte_index % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:  <span class="hljs-comment"># 每隔一个字节提取一个字节</span><br>                    f_out.write(byte)  <span class="hljs-comment"># 写入提取的字节</span><br>                byte_index += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;An error occurred: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 指定输入文件和输出文件的路径</span><br>input_file = <span class="hljs-string">&quot;1.bin&quot;</span><br>output_file = <span class="hljs-string">&quot;output.zip&quot;</span><br><br><span class="hljs-comment"># 调用提取字节的函数</span><br>extract_bytes(input_file, output_file)<br></code></pre></td></tr></table></figure>
+<p>提取之后删除多余的一坨文件尾，解压得到.b。.b看起来很像base85，猜测解码之后就是Shellcode——你说的对，但是题目给的loader.exe压根就不是exe而是一坨0xff(或许我的附件有问题？)，我一度以为还需要手搓Shellcode
+loader😅</p>
+<p>解码后的文件丢VT上一堆报毒(貌似是MetaSploit家族的？)，但是YARA规则没识别出IP。丢<a
+target="_blank" rel="noopener" href="https://s.threatbook.com/report/file/a97946c34d2d8642820f196a54a6e8d78cf4f58a97e417be9696d7fd19e7fc95">微步</a>发现已经有结果了，应该是做出来的前人传的吧：</p>
+<figure>
+<img src="../assets/image-2.png" srcset="/img/loading.gif" lazyload alt="前人的智慧" />
+<figcaption aria-hidden="true">前人的智慧</figcaption>
+</figure>
+<p>MD5之后，提交，get。</p>
+<p>可惜此时已经黑灯了，导致后来队友出的另外两道题只能挑一道提交，不过好在另两道最后都是50分，倒也没有亏什么分数😇</p>
+<p>flag{096e8b0f9daf10869f013c1b7efda3fd}</p>
+<h2 id="神秘文件">神秘文件</h2>
+<p>和队友合力解的，硬控3h是真的坐牢🤪</p>
+<p>细节不想写了，大概说一下卡住的几个点吧。 1.
+宏里面的RC4没有密钥，且密码学工具箱不能正常解密(也可能我操作不当，欢迎交流)。(找了一下午密钥你告诉我密钥为空？)</p>
+<ol start="2" type="1">
+<li><p>属性里的<code>ha?again?</code>是没用的</p></li>
+<li><p>第四张PPT里检查阅读顺序可以拿到Part7</p></li>
+<li><p>幻灯片母版里有Part8。其实这里直接解压PPT会发现一个看似没有用到的文本框，作为线索可以找到这个点。</p></li>
+</ol>
+<h1 id="crypto">Crypto</h1>
+<h2 id="古典密码">古典密码</h2>
+<p>感谢cyberchef，在我走投无路的时候信手筛选了下Cipher，把第一个Atbash
+Cipher拖进去直接就魔法棒了🪄</p>
+<figure>
+<img src="../assets/image-3.png" srcset="/img/loading.gif" lazyload alt="大厨我好喜欢你啊" />
+<figcaption aria-hidden="true">大厨我好喜欢你啊</figcaption>
+</figure>
+<h2 id="ovo">OvO</h2>
+<p>挺不错的数学题，听人说跟XY的某个Copper是同一篇Paper？不过我是没看出来，欢迎各位指教。</p>
+<p>一个有用的观察是<span class="math inline">\(e//n =
+rr\)</span>，这样就消去了一个变量。我们拿到的e经过了截位，并且高位信息明显跟p，q有关，所以需要想办法抠出点p或者q的高位信息。</p>
+<p>在纸上推算一会儿可以发现，<span class="math inline">\(65537 + kk * p
++ rr * ((p+1) * (q+1)) +
+1\)</span>这个式子乘上p是可以再消去一个变量的，接下来就可以尝试多项式求根了。</p>
+<p>如果e没有截位，那么我们拿到<span class="math inline">\(f = (65537*x +
+kk*x^2 + (kk+2)*n*x + (kk+2)*x^2 + (kk+2)*n + (kk+3)*x) -
+e*x\)</span>之后直接f.roots()就可以得到p。但是e经过了截位，所以得到的x其实比p要大一点，不过这已经可以让我们拿到p的高位了——拿到高位就够了。后面就是简单的p高位泄露。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Sage</span><br><span class="hljs-keyword">import</span> hashlib<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br>n = <span class="hljs-number">111922722351752356094117957341697336848130397712588425954225300832977768690114834703654895285440684751636198779555891692340301590396539921700125219784729325979197290342352480495970455903120265334661588516182848933843212275742914269686197484648288073599387074325226321407600351615258973610780463417788580083967</span><br>e = <span class="hljs-number">37059679294843322451875129178470872595128216054082068877693632035071251762179299783152435312052608685562859680569924924133175684413544051218945466380415013172416093939670064185752780945383069447693745538721548393982857225386614608359109463927663728739248286686902750649766277564516226052064304547032760477638585302695605907950461140971727150383104</span><br>c = <span class="hljs-number">14999622534973796113769052025256345914577762432817016713135991450161695032250733213228587506601968633155119211807176051329626895125610484405486794783282214597165875393081405999090879096563311452831794796859427268724737377560053552626220191435015101496941337770496898383092414492348672126813183368337602023823</span><br><span class="hljs-comment"># rr = e//n, rr == 331118458487559161870846961263454730639,以下的rr事实上是kk（</span><br>rr = <span class="hljs-number">331118458487559161870846961263454730637</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">Copper</span>(<span class="hljs-params">n, c, e, rr</span>):<br>	R.&lt;x&gt; = PolynomialRing(RealField(<span class="hljs-number">1024</span>))<br>	f = (<span class="hljs-number">65537</span>*x + rr*x^<span class="hljs-number">2</span> + (rr+<span class="hljs-number">2</span>)*n*x + (rr+<span class="hljs-number">2</span>)*x^<span class="hljs-number">2</span> + (rr+<span class="hljs-number">2</span>)*n + (rr+<span class="hljs-number">3</span>)*x) - e*x<br>	f = f.monic()<br>	res = f.roots()<br>	<span class="hljs-keyword">if</span>(res):<br>		<span class="hljs-keyword">return</span> res<br><br>res = Copper(n, c, e, rr)<br><span class="hljs-keyword">for</span> root <span class="hljs-keyword">in</span> res:<br>    p_hi = <span class="hljs-built_in">int</span> (root[<span class="hljs-number">0</span>])<br>    PR.&lt;x&gt; = PolynomialRing(Zmod(n))<br>    ff = x + p_hi<br>    roots_1 = ff.monic().small_roots(X=<span class="hljs-number">2</span>^<span class="hljs-number">200</span>, beta=<span class="hljs-number">0.3</span>)<br>    <span class="hljs-keyword">if</span> roots_1:<br>        p = <span class="hljs-built_in">int</span>(roots_1[<span class="hljs-number">0</span>]) + p_hi<br>        q = n//p<br>        e = <span class="hljs-number">65537</span> + rr * p + (rr+<span class="hljs-number">2</span>) * (p+<span class="hljs-number">1</span>) * (q+<span class="hljs-number">1</span>) + <span class="hljs-number">1</span><br>        d = inverse(e, (p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>        m = <span class="hljs-built_in">pow</span>(c, d, n)<br>        <span class="hljs-built_in">print</span>(long_to_bytes(m))<br></code></pre></td></tr></table></figure>
+<p>嗯，exp里的Copper函数其实不是CopperSmith，之所以叫这个是因为是从CopperSmith的板子改过来的，我懒得改名字了（轻喷qwq</p>
+<h1 id="reverse">Reverse</h1>
+<h2 id="asm_re">asm_re</h2>
+<p>三脚猫水平的我也只能做做Re签到了（</p>
+<p>汇编很长，不想看的话直接丢给GPT，GPT大概率会告诉你这玩意儿的主体逻辑的位置。稍微审计一下发现就是个仿射+异或，直接逆回去就行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">expected_data = [<span class="hljs-number">0x1fd7</span>,<span class="hljs-number">0x21b7</span>,<span class="hljs-number">0x1e47</span>,<span class="hljs-number">0x2027</span>,<span class="hljs-number">0x26e7</span>,<span class="hljs-number">0x10d7</span>,<span class="hljs-number">0x1127</span>,<span class="hljs-number">0x2007</span>,<span class="hljs-number">0x11c7</span>,<span class="hljs-number">0x1e47</span>,<span class="hljs-number">0x1017</span>,<span class="hljs-number">0x1017</span>,<span class="hljs-number">0x11f7</span>,<span class="hljs-number">0x2007</span>,<span class="hljs-number">0x1037</span>,<span class="hljs-number">0x1107</span>,<span class="hljs-number">0x1f17</span>,<span class="hljs-number">0x10d7</span>,<span class="hljs-number">0x1017</span>,<span class="hljs-number">0x1017</span>,<span class="hljs-number">0x1f67</span>,<span class="hljs-number">0x1017</span>,<span class="hljs-number">0x11c7</span>,<span class="hljs-number">0x11c7</span>,<span class="hljs-number">0x1017</span>,<span class="hljs-number">0x1fd7</span>,<span class="hljs-number">0x1f17</span>,<span class="hljs-number">0x1107</span>,<span class="hljs-number">0x0f47</span>,<span class="hljs-number">0x1127</span>,<span class="hljs-number">0x1037</span>,<span class="hljs-number">0x1e47</span>,<span class="hljs-number">0x1037</span>,<span class="hljs-number">0x1fd7</span>,<span class="hljs-number">0x1107</span>,<span class="hljs-number">0x1fd7</span>,<span class="hljs-number">0x1107</span>,<span class="hljs-number">0x2787</span>]<br><br><span class="hljs-comment"># 将预期数据转换为字符串</span><br>flag_chars = []<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(expected_data)):<br>    byte_value = expected_data[i]<br>    char = <span class="hljs-built_in">chr</span>((((byte_value - <span class="hljs-number">0x1E</span>)^ <span class="hljs-number">0x4D</span>) - <span class="hljs-number">0x14</span> ) // <span class="hljs-number">0x50</span>)<br>    flag_chars.append(char)<br><br><span class="hljs-comment"># 恢复的 flag</span><br>flag = <span class="hljs-string">&#x27;&#x27;</span>.join(flag_chars)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Recovered flag: <span class="hljs-subst">&#123;flag&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>注意提取目标的数组的时候调一下分组大小和端序就行。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Writeups/" class="category-chain-item">Writeups</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/">#CTF</a>
+      
+        <a href="/tags/Crypto/">#Crypto</a>
+      
+        <a href="/tags/Misc/">#Misc</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CISCN-2024-Writeup</div>
+      <div>https://eupho.me/CISCN-2024-Writeup</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lambert Swizzer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/imaginaryCTF-round46" title="imaginaryCTF-round46">
+                        <span class="hidden-mobile">imaginaryCTF-round46</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Swizzzer/blogComments');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
