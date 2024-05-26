@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://eupho.me/assets/LEIMU_encoded.png">
 <meta property="article:published_time" content="2024-05-26T09:59:59.000Z">
-<meta property="article:modified_time" content="2024-05-26T10:04:26.566Z">
+<meta property="article:modified_time" content="2024-05-26T10:06:30.988Z">
 <meta property="article:author" content="Lambert Swizzer">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Crypto">
@@ -543,6 +543,12 @@ class="math inline">\(y=x^3\)</span>的像素值，两个融合起来就是flag�
   
 
 
+  
+  
+
+
+
+
 
 
 
@@ -734,6 +740,49 @@ class="math inline">\(y=x^3\)</span>的像素值，两个融合起来就是flag�
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
