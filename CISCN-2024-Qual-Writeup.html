@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://eupho.me/assets/image-3.png">
 <meta property="og:image" content="https://eupho.me/assets/yyds.png">
 <meta property="article:published_time" content="2024-05-19T14:43:17.000Z">
-<meta property="article:modified_time" content="2024-05-19T18:12:51.000Z">
+<meta property="article:modified_time" content="2024-05-26T09:32:51.000Z">
 <meta property="article:author" content="Lambert Swizzer">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Crypto">
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.7k 字
+          5.8k 字
         
       </span>
     
@@ -290,7 +290,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年5月20日 凌晨
+                    本文最后更新于：2024年5月26日 下午
                   
                 
               </p>
@@ -315,6 +315,8 @@ alt="通风机" />
 </figure>
 <p>base64 decode即可。</p>
 <p><code>flag&#123;2467ce26-fff9-4008-8d55-17df83ecbfc2&#125;</code></p>
+<p>Update: 复现发现直接binwalk
+-e分离文件后strings就能拿到那串base64。这个套路我本来还挺熟悉的，结果赛场上还是太路径依赖了...</p>
 <h2 id="盗版软件">盗版软件</h2>
 <p>很神奇的题目，解压得到一个dmp和一个exe。最初直接010
 editor人肉盯帧dmp文件找到了个<code>www.waodown.com</code>，交flag碰壁数十次之后觉得应该不是这个域名...后来和队友头脑风暴了半个小时，想起来头天晚上复盘前些年的CISCN时用到的gimp，抱着试试看的心态将dmp作为raw
