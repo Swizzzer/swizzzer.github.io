@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://eupho.me/assets/image-4.png">
 <meta property="og:image" content="https://eupho.me/assets/image-5.png">
 <meta property="article:published_time" content="2024-06-12T07:07:46.000Z">
-<meta property="article:modified_time" content="2024-06-12T16:14:42.527Z">
+<meta property="article:modified_time" content="2024-06-13T09:32:21.000Z">
 <meta property="article:author" content="Lambert Swizzer">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Crypto">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.1k 字
+          10k 字
         
       </span>
     
@@ -242,7 +242,7 @@
         
         
         
-          16 分钟
+          17 分钟
         
       </span>
     
@@ -285,7 +285,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年6月13日 凌晨
+                    本文最后更新于：2024年6月13日 下午
                   
                 
               </p>
@@ -384,6 +384,20 @@ class="math inline">\(Q, R, S\)</span>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><br>p = <br>Q =  <span class="hljs-comment"># Q_0</span><br>R =  <span class="hljs-comment"># R_0</span><br>S =  <span class="hljs-comment"># S_0</span><br>C =  <span class="hljs-comment"># C_0</span><br><br><br>L = Matrix(QQ,[<br>    [<span class="hljs-number">1</span>/<span class="hljs-number">2</span>^<span class="hljs-number">320</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,Q],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,R],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,S],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">320</span>,-C],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,p]<br>])<br>L[:,-<span class="hljs-number">1</span>:] *= <span class="hljs-number">2</span>^<span class="hljs-number">320</span><br>L = L.LLL()<br><span class="hljs-built_in">print</span>(L)<br><br><span class="hljs-comment"># L[-1][-2] == 2^320</span><br><br>r0, s0 = L[-<span class="hljs-number">1</span>][<span class="hljs-number">1</span>], L[-<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] <span class="hljs-comment"># 2638621544, 3219364802</span><br><br><br>m = (C - r0*R - s0*S)*inverse(Q,p) % p<br><br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><br><span class="hljs-comment"># b&#x27;CCTF&#123;3X7eNdED_H!dD3n_nNm8eR_pR0Bl3m_iN_CCTF!!&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>稍微调一下格的大小，直接一组就出了，给的那么多组Q,R,S甚至都没什么用...</p>
+<h3 id="alilbols">Alilbols</h3>
+<blockquote>
+<p>task</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> d, flag<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">genkey</span>(<span class="hljs-params">d</span>):<br>	<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>		f = getRandomRange(<span class="hljs-number">1</span>, <span class="hljs-built_in">int</span>(sqrt(<span class="hljs-number">2</span>) * <span class="hljs-number">10</span> ** d))<br>		g = getRandomRange(<span class="hljs-number">10</span> ** d, <span class="hljs-built_in">int</span>(sqrt(<span class="hljs-number">2</span>) * <span class="hljs-number">10</span> ** d))<br>		<span class="hljs-keyword">if</span> gcd(f, <span class="hljs-number">10</span> * g) == <span class="hljs-number">1</span>:<br>			q = <span class="hljs-number">4</span> * <span class="hljs-number">100</span> ** d<br>			h = inverse(f, q) * g % q<br>			<span class="hljs-keyword">if</span> gcd(h, <span class="hljs-number">10</span> * d) == <span class="hljs-number">1</span>:<br>				<span class="hljs-keyword">break</span><br>	pkey, skey = (d, h), (f, g)<br>	<span class="hljs-keyword">return</span> pkey, skey<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">m, pkey</span>):<br>	d, h = pkey<br>	q = <span class="hljs-number">4</span> * <span class="hljs-number">100</span> ** d<br>	<span class="hljs-keyword">assert</span> m &lt; <span class="hljs-number">10</span> ** d<br>	r = getRandomRange(<span class="hljs-number">1</span>, <span class="hljs-number">10</span> ** d // <span class="hljs-number">2</span>)<br>	c = (r * h + m + r) % q<br>	<span class="hljs-keyword">return</span> c<br><br>pkey, _ = genkey(d)<br>m = bytes_to_long(flag)<br>c = encrypt(m, pkey)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;h = <span class="hljs-subst">&#123;pkey[<span class="hljs-number">1</span>]&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;c = <span class="hljs-subst">&#123;c&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>很经典的NTRU，我们有</p>
+<p><span class="math display">\[c=(r(h+1)+m)\bmod{q}\]</span></p>
+<p>其中只有h已知。各个参数的范围都在代码里，不赘述了，总之这里的q不知道，得找到d的值去恢复q。直接枚举是可行的，不过也可以先猜一波h的十进制位数恰好就是2d位，若真，则d为563。</p>
+<p>造个格子跑一下：</p>
+<blockquote>
+<p>exp</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># sage</span><br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes<br><br>h = <br>c = <br>d = <span class="hljs-number">563</span><br>q = <span class="hljs-number">4</span> * <span class="hljs-number">100</span> ** d<br>M = Matrix(ZZ,[<br>    [<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,h+<span class="hljs-number">1</span>],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">2048</span>,-c],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,q]<br>])<br><br><br>M = M.LLL()<br><br><span class="hljs-built_in">print</span>(long_to_bytes(<span class="hljs-built_in">abs</span>(M[-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>])))<br><br><span class="hljs-comment"># b&#x27;CCTF&#123;4_c0N9rU3n7!aL_Pu81iC_k3Y_cRyp70_5ySTeM_1N_CCTF!!&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>然后就真的拿到了。</p>
 
                 
               </div>
