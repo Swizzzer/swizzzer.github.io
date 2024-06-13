@@ -28,6 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://eupho.me/assets/image-4.png">
 <meta property="og:image" content="https://eupho.me/assets/image-5.png">
+<meta property="og:image" content="https://eupho.me/assets/image-6.png">
 <meta property="article:published_time" content="2024-06-12T07:07:46.000Z">
 <meta property="article:modified_time" content="2024-06-13T09:32:21.000Z">
 <meta property="article:author" content="Lambert Swizzer">
@@ -231,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          10k 字
+          11k 字
         
       </span>
     
@@ -242,7 +243,7 @@
         
         
         
-          17 分钟
+          19 分钟
         
       </span>
     
@@ -398,6 +399,40 @@ class="math inline">\(Q, R, S\)</span>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># sage</span><br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes<br><br>h = <br>c = <br>d = <span class="hljs-number">563</span><br>q = <span class="hljs-number">4</span> * <span class="hljs-number">100</span> ** d<br>M = Matrix(ZZ,[<br>    [<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,h+<span class="hljs-number">1</span>],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">2048</span>,-c],<br>    [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,q]<br>])<br><br><br>M = M.LLL()<br><br><span class="hljs-built_in">print</span>(long_to_bytes(<span class="hljs-built_in">abs</span>(M[-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>])))<br><br><span class="hljs-comment"># b&#x27;CCTF&#123;4_c0N9rU3n7!aL_Pu81iC_k3Y_cRyp70_5ySTeM_1N_CCTF!!&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>然后就真的拿到了。</p>
+<h3 id="ally">Ally</h3>
+<p>非常有CryptoCTF味道的题，"只需"求解一个Diophantine
+equation即可。手解显然是不可能的，搜了下方程的形式还真搜出来<a
+target="_blank" rel="noopener" href="https://projecteuclid.org/journals/bulletin-of-the-belgian-mathematical-society-simon-stevin/volume-17/issue-2/On-a-Diophantine-Equation-of-Stroeker/10.36045/bbms/1274896199.full">一篇论文</a></p>
+<p>不过很遗憾，论文开篇就表示N是奇数的情况已经研究过了，因此本篇只研究偶数的情况...更抽象的是N是奇数情况时的参考文献根本搜不到（如果正在阅读本文的你恰好找到了link，麻烦贴在评论区好吗😊😊）</p>
+<p>不过这篇文章里还是有一些地方提到了odd的情况，比如</p>
+<p><code>If v = N, then 4u = N + 3, which is impossible since N + 3 is odd. Thus, v ̸= N</code></p>
+<p>如果我偏要v=N呢？这时我们有</p>
+<p><span class="math display">\[\begin{aligned}
+2x &amp;= v−u+l+1 \\
+2y &amp;= v−u−l+1 \\
+v &amp;= p \\
+p &amp;= N \\
+uv &amp;= Nl \\
+4u &amp;= p+3
+\end{aligned}\]</span></p>
+<p>代换一下有</p>
+<p><span class="math display">\[\begin{aligned}
+2x &amp;= 3u+l-2 \\
+2y &amp;= 3u-l-2 \\
+u &amp;= l
+\end{aligned}\]</span></p>
+<p>所以我们得到 <span class="math inline">\(x=2u-1, y=u-1\)</span></p>
+<p>验个证先：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># sage</span><br>PR.&lt;u&gt; = PolynomialRing(ZZ)<br>p = <span class="hljs-number">4</span>*u-<span class="hljs-number">3</span><br>x = <span class="hljs-number">2</span>*u-<span class="hljs-number">1</span><br>y = u-<span class="hljs-number">1</span><br>LL = p*(x-y)^<span class="hljs-number">3</span><br>RR = (x^<span class="hljs-number">2</span>+y)*(x+y^<span class="hljs-number">2</span>)<br><br><span class="hljs-built_in">print</span>(LL==RR)<br></code></pre></td></tr></table></figure>
+<figure>
+<img src="../assets/image-6.png" srcset="/img/loading.gif" lazyload alt="能Sagemath的为什么要手推呢" />
+<figcaption aria-hidden="true">能Sagemath的为什么要手推呢</figcaption>
+</figure>
+<p>按这个格式提交答案就好了。</p>
+<blockquote>
+<p>exp</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime<br><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> re<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_ans</span>(<span class="hljs-params">bits</span>):<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        p = getPrime(bits)<br>        <span class="hljs-keyword">if</span> p % <span class="hljs-number">4</span> == <span class="hljs-number">1</span>:<br>            k = p // <span class="hljs-number">4</span><br>            x, y = <span class="hljs-number">2</span> * k + <span class="hljs-number">1</span>, k<br>            <span class="hljs-keyword">return</span> p, x, y<br>        <br>conn = remote(<span class="hljs-string">&#x27;00.cr.yp.toc.tf&#x27;</span>, <span class="hljs-number">13777</span>)<br>pattern = <span class="hljs-string">r&#x27;(.+?)-bit&#x27;</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>):<br>    conn.recvuntil(<span class="hljs-string">&#x27;send your&#x27;</span>)<br>    s = conn.recvline().decode()<br>    mat = re.search(pattern, s)<br>    bits = <span class="hljs-built_in">int</span>(mat.group(<span class="hljs-number">1</span>))<br>    p, x, y = get_ans(bits)<br>    conn.sendline(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;p&#125;</span>&#x27;</span>)<br>    conn.sendline(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;x&#125;</span>,<span class="hljs-subst">&#123;y&#125;</span>&#x27;</span>)<br><br>conn.interactive()<br><br><span class="hljs-comment"># Congratz! You got the flag: b&#x27;CCTF&#123;Di0phaNtinE_eQuaT1on_iZ_4n_equ4tion_wiTh_int3ger_solu7Ions_0nly!&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
