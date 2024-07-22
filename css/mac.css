@@ -1,17 +1,41 @@
-.highlight {
-  background: #011627;
-  border-radius: 5px;
-  box-shadow: 0 10px 30px 0 rgba(0,0,0,0.4);
-  padding-top: 30px;
+.markdown-body .highlight table,
+.markdown-body .code-wrapper pre {
+  border-radius: 0 0 0.5rem 0.5rem;
 }
-.highlight::before {
-  background: #fc625d;
-  border-radius: 50%;
-  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
-  content: ' ';
-  height: 12px;
-  left: 12px;
-  margin-top: -20px;
-  position: absolute;
-  width: 12px;
+.markdown-body .highlight,
+.markdown-body .code-wrapper {
+  background-color: #e6ebf1;
+  border-radius: 0.625rem;
+}
+.markdown-body .highlight > i,
+.markdown-body .code-wrapper > i {
+  color: #777;
+  margin-left: 10px;
+  line-height: 2rem;
+  transform: none;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.markdown-body .highlight > i.collapsed,
+.markdown-body .code-wrapper > i.collapsed {
+  transform: rotate(-90deg);
+}
+.markdown-body .highlight > span,
+.markdown-body .code-wrapper > span {
+  color: #777;
+  margin-left: 10px;
+  font-weight: bold;
+}
+[data-user-color-scheme='dark'] .markdown-body .highlight,
+[data-user-color-scheme='dark'] .markdown-body .code-wrapper {
+  background-color: #203a4a;
+  transition: background-color 0.2s ease-in-out;
+}
+[data-user-color-scheme='dark'] .markdown-body .highlight > i,
+[data-user-color-scheme='dark'] .markdown-body .code-wrapper > i {
+  color: #c4c6c9;
+}
+[data-user-color-scheme='dark'] .markdown-body .highlight > span,
+[data-user-color-scheme='dark'] .markdown-body .code-wrapper > span {
+  color: #c4c6c9;
+  transition: color 0.2s ease-in-out;
 }
