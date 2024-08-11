@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta name="google-site-verification" content="vfJ2GJW1_Q4AOrJXuD5IJvdntHtM2T5hXhBiq3pLXiw" />
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lambert Swizzer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="CTFZone好难好难...肝了一天也只不过拿下这一道题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024 CTFZone-she&#39;s the real one-Writeup">
+<meta property="og:url" content="https://eupho.me/2024-CTFZone-shes-the-real-one">
+<meta property="og:site_name" content="Euphome">
+<meta property="og:description" content="CTFZone好难好难...肝了一天也只不过拿下这一道题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-11T18:41:45.000Z">
+<meta property="article:modified_time" content="2024-08-11T19:16:46.489Z">
+<meta property="article:author" content="Lambert Swizzer">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Crypto">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2024 CTFZone-she&#39;s the real one-Writeup - Euphome</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"eupho.me","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":false,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Euphome</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024 CTFZone-she&#39;s the real one-Writeup"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-12 02:41" pubdate>
+          2024年8月12日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2024 CTFZone-she&#39;s the real one-Writeup</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年8月12日 凌晨
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>CTFZone好难好难...肝了一天也只不过拿下这一道题。</p>
+<span id="more"></span>
+<blockquote>
+<p>task</p>
+</blockquote>
+<figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-1ujwczlzpy4q8y"></i><span>python</span><div class="collapse show" id="collapse-1ujwczlzpy4q8y"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> namedtuple<br><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><br><span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(flag) == <span class="hljs-number">33</span><br><br>Point = namedtuple(<span class="hljs-string">&quot;Point&quot;</span>, [<span class="hljs-string">&quot;x&quot;</span>, <span class="hljs-string">&quot;y&quot;</span>])<br>R = RealField(prec=<span class="hljs-number">800</span>)<br>inf = Point(R(<span class="hljs-number">0</span>), R(<span class="hljs-number">1</span>))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lift_x</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> Point(x, sqrt(x**<span class="hljs-number">3</span> - R(<span class="hljs-number">3</span>) * x - R(<span class="hljs-number">2</span>)))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">P, Q</span>):<br>    <span class="hljs-keyword">if</span> P.x == Q.x <span class="hljs-keyword">and</span> P.y != Q.y:<br>        <span class="hljs-keyword">return</span> inf<br>    <span class="hljs-keyword">elif</span> P.y == Q.y:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;Points have to differ!&quot;</span>)<br>    <span class="hljs-keyword">elif</span> P == inf:<br>        <span class="hljs-keyword">return</span> Q<br>    <span class="hljs-keyword">elif</span> Q == inf:<br>        <span class="hljs-keyword">return</span> P<br><br>    lambda_ = (P.y - Q.y) / (P.x - Q.x)<br><br>    xr = lambda_**<span class="hljs-number">2</span> - P.x - Q.x<br>    yr = lambda_ * (Q.x - xr) - Q.y<br>    <span class="hljs-keyword">return</span> Point(xr, yr)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">double</span>(<span class="hljs-params">P</span>):<br>    <span class="hljs-keyword">if</span> P == inf:<br>        <span class="hljs-keyword">return</span> P<br><br>    lambda_ = (R(<span class="hljs-number">3</span>) * P.x**<span class="hljs-number">2</span> - R(<span class="hljs-number">3</span>)) / (R(<span class="hljs-number">2</span>) * P.y)<br><br>    xr = lambda_**<span class="hljs-number">2</span> - <span class="hljs-number">2</span> * P.x<br>    yr = lambda_ * (P.x - xr) - P.y<br>    <span class="hljs-keyword">return</span> Point(xr, yr)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">multiply_by_scalar</span>(<span class="hljs-params">P, n: <span class="hljs-built_in">int</span></span>):<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> P == inf:<br>        <span class="hljs-keyword">return</span> inf<br>    <span class="hljs-keyword">elif</span> n &lt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> multiply_by_scalar(Point(-P.x, P.y), -n)<br><br>    R0, R1 = P, double(P)<br>    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> <span class="hljs-built_in">bin</span>(n)[<span class="hljs-number">3</span>:]:<br>        <span class="hljs-keyword">if</span> b == <span class="hljs-string">&quot;0&quot;</span>:<br>            R0, R1 = double(R0), add(R0, R1)<br>        <span class="hljs-keyword">else</span>:<br>            R0, R1 = add(R0, R1), double(R1)<br>    <span class="hljs-keyword">return</span> R0<br><br><br>P = lift_x(R(<span class="hljs-number">5.0</span>) + R.random_element())<br>s = <span class="hljs-built_in">int</span>.from_bytes(flag, <span class="hljs-string">&#x27;big&#x27;</span>)<br>Q = multiply_by_scalar(P, s)<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;output.dump&quot;</span>, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(dumps([P, Q]))<br></code></pre></td></tr></table></div></figure>
+<p>先来看下输出：</p>
+<blockquote>
+<p>output.dump</p>
+</blockquote>
+<figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-4dph53lzpy4q8y"></i><span>python</span><div class="collapse show" id="collapse-4dph53lzpy4q8y"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># sage</span><br><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> namedtuple<br>Point = namedtuple(<span class="hljs-string">&quot;Point&quot;</span>, [<span class="hljs-string">&quot;x&quot;</span>, <span class="hljs-string">&quot;y&quot;</span>])<br>P, Q = loads(<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;output.dump&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>).read())<br>P, Q<br><span class="hljs-comment"># (Point(x=4.85057122750390330433014774845690325940033540110422764146149706704984961847838462175367562988623210644689151060385830985493965537584825006903699918005698470402542767276523398111510174025601811323527600859249876547306988688344166390608748190, y=9.87789077496982192809140902261474042136361328873826618292731494933661532935267994217820007421649597601541657151434891797385177282719442155927874875209661909760176717387846469008534007174587603568767109138181793952471643100734778684208975367), Point(x=14.6291715870227010270603447705099642062932549788679450534625902324668696595989549084153588377210135662551306850345710441061288798249363739503554577196027351649478485916115558430512623160495597643113114945568549632790168083747304533148749256, y=-55.5422400477503792524895176160494754137265713945942105661081051205424768891166215797738467415408445726009305745975391949619787546987772117912621958687123922494608661071102641576350850861266231818560288901594219333219685647260080309129676830))</span><br></code></pre></td></tr></table></div></figure>
+<p>题目其实是在实数域上的一条singular curve上的ECDLP。我们知道singular
+curve只会是cusp(三重根)或node(二重根)。对于本题而言，曲线其实是<span
+class="math inline">\(y^{2}=x^{3}-3x-2=(x+1)^{2}(x-2)\)</span>，是node(二重根)，所以有个homomorphism可以把ECDLP转化到DLP：</p>
+<p><span class="math display">\[\phi: E\left(\mathbb{R}\right)
+\rightarrow K^{\times}(x, y) \mapsto
+\frac{y+\sqrt{\alpha-\beta}(x-\alpha)}{y-\sqrt{\alpha-\beta}(x-\alpha)},\alpha=-1,\beta=2\]</span></p>
+<p>这题中<span
+class="math inline">\(\mathbb{K}=\mathbb{C}\)</span>，sagemath没有可以直接解决其上的DLP的函数。记<span
+class="math inline">\(\phi(P)^{m}=\phi(Q)\)</span>,则<span
+class="math inline">\(m =
+\frac{ln(\phi(Q))}{ln(\phi(P))}\)</span>。不过因为复对数函数是多值函数，所以实际的m对应的分子/分母上是要加上<span
+class="math inline">\(2k\pi\)</span>的，因此没办法直接从这个式子计算得到m。</p>
+<p>不过总之我们有<span
+class="math inline">\(ln(\phi(Q))-mln(\phi(P))+k\pi=0\)</span>，所以还是可以考虑LLL求解。这里反而困扰了我一段时间，因为赛场上最初构造的格乘上的系数太大，出不来flag：</p>
+<figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-rf1c55lzpy4q8y"></i><span>python</span><div class="collapse show" id="collapse-rf1c55lzpy4q8y"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br>R = RealField(prec=<span class="hljs-number">800</span>)<br><br>alpha = -<span class="hljs-number">1</span><br>beta = <span class="hljs-number">2</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">hom</span>(<span class="hljs-params">x,y</span>):<br>    div = y+sqrt(alpha-beta)*(x-alpha)<br>    todiv = y-sqrt(alpha-beta)*(x-alpha)<br>    <span class="hljs-keyword">return</span> div/todiv<br><br>P = (R(<span class="hljs-number">4.85057122750390330433014774845690325940033540110422764146149706704984961847838462175367562988623210644689151060385830985493965537584825006903699918005698470402542767276523398111510174025601811323527600859249876547306988688344166390608748190</span>), R(<span class="hljs-number">9.87789077496982192809140902261474042136361328873826618292731494933661532935267994217820007421649597601541657151434891797385177282719442155927874875209661909760176717387846469008534007174587603568767109138181793952471643100734778684208975367</span>))<br>Q = (R(<span class="hljs-number">14.6291715870227010270603447705099642062932549788679450534625902324668696595989549084153588377210135662551306850345710441061288798249363739503554577196027351649478485916115558430512623160495597643113114945568549632790168083747304533148749256</span>), R(-<span class="hljs-number">55.5422400477503792524895176160494754137265713945942105661081051205424768891166215797738467415408445726009305745975391949619787546987772117912621958687123922494608661071102641576350850861266231818560288901594219333219685647260080309129676830</span>))<br><span class="hljs-built_in">print</span>(ln(hom(P[<span class="hljs-number">0</span>],P[<span class="hljs-number">1</span>]).n(<span class="hljs-number">800</span>)))<br><span class="hljs-built_in">print</span>(ln(hom(Q[<span class="hljs-number">0</span>],Q[<span class="hljs-number">1</span>]).n(<span class="hljs-number">800</span>)))<br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">stage 2</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes<br><br>lnA = <span class="hljs-number">1.5963399904427224116173827067870805565590340871250159532480571882126644527245944378708607087469070702562689993080725487929823685075110225872715830601783644029979376992010083200663415416743039753924899188724496117733386312004922854550327233</span><br>lnB = -<span class="hljs-number">0.90701142842631779866989635451465989740748171137396031502748236138314098068314071068047683347370914363484552270097028805338972038604958239411917951278259144793574361613789650347897002759119665062755502665641658407547473699916261636571633561</span><br><br><br>R = RealField(prec=<span class="hljs-number">800</span>)<br>pi = R(pi)<br><br><br>Ge = Matrix(QQ,[[<span class="hljs-number">2</span>^<span class="hljs-number">528</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">528</span>*lnB],[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">2</span>^<span class="hljs-number">528</span>*lnA],[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">528</span>*<span class="hljs-number">2</span>*pi]])<br>ans = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">abs</span>(Ge.LLL()[-<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]))<br><span class="hljs-built_in">print</span>(long_to_bytes(ans))<br></code></pre></td></tr></table></div></figure>
+<p>最初格子里的<span class="math inline">\(2^{528}\)</span>取的是<span
+class="math inline">\(2^{2048}\)</span>，一直出不来；最后把系数调小到<span
+class="math inline">\(2^{528}\)</span>反而就有了...</p>
+<blockquote>
+<p>不懂，感觉很玄学（</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Writeups/" class="category-chain-item">Writeups</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/">#CTF</a>
+      
+        <a href="/tags/Crypto/">#Crypto</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024 CTFZone-she&#39;s the real one-Writeup</div>
+      <div>https://eupho.me/2024-CTFZone-shes-the-real-one</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lambert Swizzer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024-TFCCTF-Writeup" title="2024 TFCCTF Writeup">
+                        <span class="hidden-mobile">2024 TFCCTF Writeup</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Swizzzer/blogComments');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
