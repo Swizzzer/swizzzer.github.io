@@ -19,24 +19,22 @@
   <meta name="author" content="Lambert Swizzer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="多项式插值 多项式插值要做的就是,找一个多项式 \(y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n\) 来近似任意函数 \(f(x)\)。 为了让插值尽量精确，我们让 \(y(x)\) 经过所有的 \(x_i\)（插值节点）。这样就得到： \[ \left\{\begin{aligned} a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(">
+    <meta name="description" content="铃芽之旅所传达的 称为新海诚三部曲之三实在是很有道理.沿袭着一贯的灾难描写的文脉,铃芽对于灾难的描写似乎更为翔实,灾难甚至成为了本片剧情的核心驱动力,对灾难中情感的表达也成为了本片表达的核心--不同于前两部仅仅着眼于对爱情的描写,人与人之间的更泛化的情感在本片中被显式地推到了台前.不论是关门时候男主明确的昭告,希望在当下的幸福能延续更久;或是女主在关门时对土地上曾有的生生不息的想象;亦或是门后的常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算方法:插值与数值逼近">
-<meta property="og:url" content="https://eupho.me/%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-%E6%8F%92%E5%80%BC%E4%B8%8E%E6%95%B0%E5%80%BC%E9%80%BC%E8%BF%91">
+<meta property="og:title" content="锐评铃芽之旅">
+<meta property="og:url" content="https://eupho.me/377c07d7.html">
 <meta property="og:site_name" content="Euphome">
-<meta property="og:description" content="多项式插值 多项式插值要做的就是,找一个多项式 \(y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n\) 来近似任意函数 \(f(x)\)。 为了让插值尽量精确，我们让 \(y(x)\) 经过所有的 \(x_i\)（插值节点）。这样就得到： \[ \left\{\begin{aligned} a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(">
+<meta property="og:description" content="铃芽之旅所传达的 称为新海诚三部曲之三实在是很有道理.沿袭着一贯的灾难描写的文脉,铃芽对于灾难的描写似乎更为翔实,灾难甚至成为了本片剧情的核心驱动力,对灾难中情感的表达也成为了本片表达的核心--不同于前两部仅仅着眼于对爱情的描写,人与人之间的更泛化的情感在本片中被显式地推到了台前.不论是关门时候男主明确的昭告,希望在当下的幸福能延续更久;或是女主在关门时对土地上曾有的生生不息的想象;亦或是门后的常">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://eupho.me/assets/Untitled.png">
-<meta property="article:published_time" content="2023-05-04T10:10:44.000Z">
-<meta property="article:modified_time" content="2023-05-04T10:10:44.000Z">
+<meta property="article:published_time" content="2023-04-14T09:38:40.000Z">
+<meta property="article:modified_time" content="2023-04-14T09:38:40.000Z">
 <meta property="article:author" content="Lambert Swizzer">
-<meta property="article:tag" content="Computation">
+<meta property="article:tag" content="动画评论">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://eupho.me/assets/Untitled.png">
   
   
   
-  <title>计算方法:插值与数值逼近 - Euphome</title>
+  <title>锐评铃芽之旅 - Euphome</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="计算方法:插值与数值逼近"></span>
+            <span id="subtitle" data-typed-text="锐评铃芽之旅"></span>
           
         </div>
 
@@ -217,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-04 18:10" pubdate>
-          2023年5月4日 晚上
+        <time datetime="2023-04-14 17:38" pubdate>
+          2023年4月14日 下午
         </time>
       </span>
     
@@ -229,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.5k 字
+          2.4k 字
         
       </span>
     
@@ -240,7 +238,7 @@
         
         
         
-          11 分钟
+          5 分钟
         
       </span>
     
@@ -278,297 +276,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">计算方法:插值与数值逼近</h1>
+            <h1 style="display: none">锐评铃芽之旅</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="多项式插值">多项式插值</h2>
-<p>多项式插值要做的就是,找一个多项式 <span
-class="math inline">\(y(x)=a_0+a_1x+a_2x^2+\cdots+a_nx^n\)</span>
-来近似任意函数 <span class="math inline">\(f(x)\)</span>。</p>
-<p>为了让插值尽量精确，我们让 <span class="math inline">\(y(x)\)</span>
-经过所有的 <span
-class="math inline">\(x_i\)</span>（插值节点）。这样就得到：</p>
-<p><span class="math display">\[
-\left\{\begin{aligned}
-a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;=f(x_0)\\
-a_0+a_1x_1+a_2x_1^2+\cdots+a_nx_1^n&amp;=f(x_1)\\
-&amp;\vdots \\
-a_0+a_1x_n+a_2x_n^2+\cdots+a_nx_n^n&amp;=f(x_n)\\
-\end{aligned}\right.
-\]</span></p>
-<p>显然这个方程组的解是唯一的，即：多项式插值具有唯一性。Lagrange
-插值、Newton
-插值等只是得到这个方程组的解的不同方式，最终得到的结果是一样的。</p>
-<h2 id="lagrange-插值">Lagrange 插值</h2>
-<h3 id="计算">计算</h3>
-<p><span class="math display">\[
-L(x)=\sum_{j=0}^nf(x_j)l_j(x)
-\]</span></p>
-<p>其中</p>
-<p><span class="math display">\[
-\begin{aligned}
-l_j(x)&amp;=\frac{(x-x_0)(x-x_1)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_n)}{(x_j-x_0)(x_j-x_1)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_n)}
-\\
-&amp;= \prod_{i=0, i\neq j}^n\frac{x-x_i}{x_j-x_i}
-\end{aligned}
-\]</span></p>
-<p>事实上，<span class="math inline">\(l_j(x)\)</span> 的本质就是 <span
-class="math display">\[\left\{\begin{aligned}
-&amp;0, x\neq x_j\\ &amp;1, x=x_j
-\end{aligned}\right.\]</span> 类似布尔函数.</p>
-<p>被插函数可以表示为 <span
-class="math inline">\(f(x)=L(x)+E(x)\)</span>，其中 <span
-class="math inline">\(E(x)\)</span> 即为误差（又叫「插值余项」）。</p>
-<h3 id="误差-余项">误差 / 余项</h3>
-<p><span class="math display">\[
-E(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}p_{n+1}(x),
-p_{n+1}(x)=(x-x_0)(x-x_1)\cdots(x-x_n)
-\]</span></p>
-<p>其中 <span class="math inline">\(\xi\in(a, b)\)</span>。</p>
-<p>容易得到误差上限 <span
-class="math inline">\(|E(x)|\leqslant\frac{\max\limits_{a&lt;x&lt;b}
-f^{(n+1)}(x)}{(n+1)!}p_{n+1}(x)\)</span>。事实上，因为多项式插值是唯一的，所有多项式插值的误差和上限都是这个东西。</p>
-<h2 id="newton-插值">Newton 插值</h2>
-<h3 id="计算-1">计算</h3>
-<p>将 <span class="math inline">\(n\)</span>
-次插值多项式写成如下的形式：</p>
-<p><span class="math display">\[
-y(x)=a_0+a_1(x-x_0)+a_2(x-x_0)(x-x_1)+\cdots+a_n(x-x_0)(x-x_1)\cdots(x-x_{n+1})
-\]</span></p>
-<p>其中：</p>
-<p><span class="math display">\[
-\begin{aligned}
-a_0 &amp;= f(x_0)\\
-a_1 &amp;= \frac{f(x_1)-f(x_0)}{x_1-x_0} \\
-a_2 &amp;=
-\frac{\frac{f(x_2)-f(x_0)}{x_2-x_0}-\frac{f(x_1)-f(x_0)}{x_1-x_0}}{x_2-x_1}
-\\
-&amp;\cdots
-\end{aligned}
-\]</span></p>
-<p>为了便于表示，引入差商的定义。</p>
-<h3 id="差商">差商</h3>
-<p><span class="math display">\[
-\begin{aligned}
-f[x_0 x_1] &amp;= \frac{f(x_1)-f(x_0)}{x_1-x_0} \\
-f[x_0x_1x_2] &amp;= \frac{f[x_0x_2]-f[x_0x_1]}{x_2-x_1} \\
-f[x_0x_1x_2x_3] &amp;= \frac{f[x_0x_1x_3]-f[x_0x_1x_2]}{x_3-x_2} \\
-&amp;\cdots \\
-f[x_0x_1\cdots x_k] &amp;= \frac{f[x_0x_1\cdots
-x_{k-2}x_k]-f[x_0x_1\cdots x_{k-2}x_{k-1}]}{x_k-x_{k-1}}
-\end{aligned}
-\]</span></p>
-<p>从上到下依次称「一阶差商」「二阶差商」……「<span
-class="math inline">\(k\)</span> 阶差商」。可以证明，<span
-class="math inline">\(a_k=f[x_0x_1\cdots x_k], k=0, 1, 2, \cdots,
-n\)</span>。</p>
-<p>用差商表示的 Newton 插值多项式：</p>
-<p><span class="math display">\[
-N_n(x)=f(x_0)+f[x_0x_1](x-x_0)+f[x_0x_1x_2](x-x_0)(x-x_1)+\cdots+f[x_0x_1\cdots
-x_n](x-x_0)\cdots(x-x_{n-1})
-\]</span></p>
-<h3 id="误差-余项-1">误差 / 余项</h3>
-<p><span class="math display">\[
-E(x)=f[x_0x_1\cdots x_nx](x-x_0)(x-x_1)\cdots(x-x_n)
-\]</span></p>
-<p>由于多项式插值的唯一性，这个式子的值和 Lagrange
-插值的余项是相等的，由此可以得到差商和导数的关系：</p>
-<p><span class="math display">\[
-f[x_0x_1\cdots x_j]=\frac{f^{(j)}(\xi_j)}{j!}
-\]</span></p>
-<p>其中 <span class="math inline">\(\xi_j\in(x_0, x_j)\)</span>。</p>
-<h2 id="差分与等距节点的插值">差分与等距节点的插值</h2>
-<h3 id="差分">差分</h3>
-<ul>
-<li><span class="math inline">\(k\)</span> 阶向前差分：<span
-class="math inline">\(\Delta^kf(x)=\Delta^{k-1}f(x+h)-\Delta^{k-1}f(x)\)</span>；</li>
-<li>0 阶向前差分：<span
-class="math inline">\(\Delta^0f(x)=f(x)\)</span>；</li>
-<li><span class="math inline">\(k\)</span> 阶向后差分：<span
-class="math inline">\(\nabla^kf(x)=\nabla^{k-1}f(x)-\nabla^{k-1}f(x-h)\)</span>；</li>
-<li>0 阶向后差分：<span
-class="math inline">\(\nabla^0f(x)=f(x)\)</span>；</li>
-<li><span class="math inline">\(k\)</span> 阶中心差分：<span
-class="math inline">\(\delta^kf(x)=\delta^{k-1}f(x+\frac{h}{2})-\delta^{k-1}f(x-\frac{h}{2})\)</span>；</li>
-<li>0 阶中心差分：<span
-class="math inline">\(\delta^0f(x)=f(x)\)</span>。</li>
-</ul>
-<p>向前差分与差商的关系：<span class="math inline">\(f[x_0x_1\cdots
-x_k]=\frac{\Delta^kf_0}{k!h^k}=\frac{\nabla^kf_k}{k!h^k}\)</span>。</p>
-<h3 id="newton-向前插值公式">Newton 向前插值公式</h3>
-<p>用差分代替 Newton 插值公式中的差商：</p>
-<p><span class="math display">\[
-\begin{aligned}
-N_n(x) =
-\Delta^0f_0&amp;+\frac{\Delta^1f_0}{h}(x-x_0)+\frac{\Delta^2f_0}{2!h^2}(x-x_1)(x-x_0)+\cdots
-\\ &amp;+\frac{\Delta^nf_0}{n!h^n}(x-x_{n-1})(x-x_{n-2})\cdots(x-x_0)
-\end{aligned}
-\]</span></p>
-<p>用 <span class="math inline">\(x_0+th\)</span> 代替 <span
-class="math inline">\(x\)</span>：</p>
-<p><span class="math display">\[
-\begin{aligned}
-N_n(x_0+th) &amp;= \Delta^0f_0+
-\Delta^1f_0t+\Delta^2f_0\frac{t(t-1)}{2!}
-+\cdots+\Delta^nf_0\frac{t(t-1)\cdots(t-(n-1))}{n!} \\
-&amp;= \sum_{j=0}^n\Delta^jf_0\frac{t(t-1)(t-2)\cdots(t-(j-1))}{j!} \\
-&amp;= \sum_{j=0}^n\Delta^jf_0\mathrm{C}_t^j
-\end{aligned}
-\]</span></p>
-<p>（组合数公式：<span
-class="math inline">\(\mathrm{C}_n^m=\frac{n!}{m!(n-m)!}=\frac{n(n-1)(n-2)\cdots(n-(m-1))}{m!}\)</span>。广义的组合数中
-<span class="math inline">\(n\)</span> 可以是负数、小数）</p>
-<h3 id="newton-向后插值公式">Newton 向后插值公式</h3>
-<p>起始点选 <span
-class="math inline">\(x_n\)</span>，使用向后的差分，可以推出下面的
-Newton 向后插值公式。</p>
-<p><span class="math display">\[
-\begin{aligned}
-N_n(x_n+th)
-&amp;=\sum_{j=0}^{n}\nabla^jf_n\frac{t(t+1)\cdots(t+j-2)(t+j-1)}{j!} \\
-&amp;=\sum_{j=0}^n\nabla^jf_n\mathrm{C}_{t+j-1}^{j}
-\end{aligned}
-\]</span></p>
-<h2 id="函数的最佳平方逼近">函数的最佳平方逼近</h2>
-<h3 id="问题描述">问题描述</h3>
-<p>先来看连续情况.给定函数 <span class="math inline">\(f(x)\in C[a,b],
-x\in[a, b];\phi_0,\phi_1,\cdots,\phi_n\)</span>是<span
-class="math inline">\(C[a,b]\)</span>上n+1个线性无关函数，找一个 <span
-class="math inline">\(\phi^*(x)\in\Phi(x)=\mathrm{span}\{\phi_0(x),
-\phi_1(x), \cdots, \phi_n(x)\}\)</span>，使得</p>
-<p><span class="math display">\[
-\int\limits_a^b\rho(x)(f(x)-\phi^*(x))^2\mathrm{d}x=\min_{\phi(x)\in\Phi(x)}\int\limits_a^b\rho(x)(f(x)-\phi(x))^2\mathrm{d}x
-\]</span></p>
-<p>即左侧的积分式取得最小值。式中 <span
-class="math inline">\(\rho(x)\)</span> 是权函数，满足：</p>
-<ul>
-<li><span class="math inline">\(\rho(x)\geqslant 0, \forall x\in[a,
-b]\)</span>；</li>
-<li><span class="math inline">\(\int_a^b\rho(x)x^k\mathrm{d}x\)</span>
-存在，<span class="math inline">\(\forall k=0, 1, 2,
-\cdots\)</span>；</li>
-<li>对任何非负函数 <span class="math inline">\(f(x)\)</span>，若 <span
-class="math inline">\(\int_a^bf(x)\rho(x)\mathrm{d}x=0\)</span>，则
-<span class="math inline">\(f(x)\equiv0\)</span>。</li>
-</ul>
-<h3 id="求解">求解</h3>
-<p>记 <span
-class="math inline">\(\phi^*(x)=a_0\phi_0(x)+a_1\phi_1(x)+\cdots+a_n\phi_n(x)\)</span>。</p>
-<p>记 <span class="math inline">\(||f-\phi^*||_2^2=F(a_0, a_1, \cdots,
-a_n)=\int_a^b\rho(x)(f(x)-\phi^*(x))^2\mathrm{d}x\)</span>。令 <span
-class="math inline">\(\frac{\partial F}{\partial a_j}=0\)</span>，有</p>
-<p><span class="math display">\[
-\begin{aligned}
-\int\limits_a^b\rho(x)f(x)\phi_j(x)\mathrm{d}x =
-a_0\int\limits_a^b\rho(x)\phi_0(x)\phi_j(x)\mathrm{d}x&amp;+a_1\int\limits_a^b\rho(x)\phi_1(x)\phi_j(x)\mathrm{d}x+\cdots
-\\
-&amp;+ a_n\int\limits_a^b\rho(x)\phi_n(x)\phi_j(x)\mathrm{d}x
-\end{aligned}
-\]</span></p>
-<p>记 <span class="math inline">\((f, g)\)</span> 为 <span
-class="math inline">\(\int_a^b\rho(x)f(x)g(x)\mathrm{d}x\)</span>。令
-<span class="math inline">\(F\)</span>
-的所有偏导为零，得到下面的线性方程组：</p>
-<p><span class="math display">\[
-\left[\begin{matrix}
-(\phi_0,\phi_0) &amp; (\phi_1, \phi_0) &amp; \cdots &amp; (\phi_n,
-\phi_0) \\
-(\phi_0,\phi_1) &amp; (\phi_1, \phi_1) &amp; \cdots &amp; (\phi_n,
-\phi_1) \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-(\phi_0,\phi_n) &amp; (\phi_1, \phi_n) &amp; \cdots &amp; (\phi_n,
-\phi_n) \\
-\end{matrix}\right]
-\left[\begin{matrix}
-a_0 \\ a_1 \\\vdots\\a_n
-\end{matrix}\right]=
-\left[\begin{matrix}
-(f, \phi_0)\\
-(f, \phi_1)\\
-\vdots \\
-(f, \phi_n) \\
-\end{matrix}\right]
-\]</span></p>
-<p>求解这个方程组，即可得到最佳平方逼近时的系数。</p>
-<h3 id="误差">误差</h3>
-<p>记 <span class="math inline">\(f-\phi^*(x)=\delta\)</span>，记 <span
-class="math inline">\(||\delta||_2^2\)</span>
-为「平方误差」，记它的平方根 <span
-class="math inline">\(||\delta||_2\)</span> 为「均方误差」。</p>
-<p><span class="math display">\[
-\begin{aligned}
-||\delta||_2^2&amp;=||f-\phi^*||_2^2=(f, f)-(\phi^*, f)\\
-&amp;=||f||_2^2-\sum_{j=0}^na_j^*(\phi_j, f)
-\end{aligned}
-\]</span></p>
-<h3 id="正交函数与正交多项式">正交函数与正交多项式</h3>
-<p>对 <span class="math inline">\(f(x),g(x)\in C[a, b]\)</span>，记
-<span
-class="math inline">\((f,g)=\int_a^b\rho(x)f(x)g(x)\mathrm{d}x\)</span>，若
-<span class="math inline">\((f,g)=0\)</span>，称 <span
-class="math inline">\(f(x)\)</span>、<span
-class="math inline">\(g(x)\)</span> 在 <span
-class="math inline">\([a,b]\)</span> 上带权 <span
-class="math inline">\(\rho(x)\)</span> 正交，记作 <span
-class="math inline">\(f\bot g\)</span>。</p>
-<p>如果函数序列 <span
-class="math inline">\(\{\phi_j\}_0^{+\infty}\)</span> 在 <span
-class="math inline">\([a, b]\)</span> 上两两带权 <span
-class="math inline">\(\rho(x)\)</span> 正交，称 <span
-class="math inline">\(\{\phi_j\}\)</span> 为 <span
-class="math inline">\([a, b]\)</span> 上带权 <span
-class="math inline">\(\rho(x)\)</span> 的正交函数族。</p>
-<p>例如：<span class="math inline">\(1, \sin x, \cos x, \sin 2x, \cos
-2x, \cdots\)</span> 是在 <span class="math inline">\([-\pi,\pi]\)</span>
-上带权 <span class="math inline">\(\rho(x)\equiv1\)</span>
-的正交函数族，因为</p>
-<p><span class="math display">\[
-\begin{aligned}
-(1, 1)&amp;=\int\limits_{-\pi}^{\pi}\mathrm{d}x=2\pi\\
-(\sin nx, \sin mx)&amp;=\int\limits_{-\pi}^\pi\sin nx\sin
-mx\mathrm{d}x=\left\{\begin{aligned}&amp;\pi,m=n\\&amp;0, m\neq
-n\end{aligned}\right. \\
-(\cos nx, \cos mx)&amp;=\int\limits_{-\pi}^\pi\cos nx\cos
-mx\mathrm{d}x=\left\{\begin{aligned}&amp;\pi,m=n\\&amp;0, m\neq
-n\end{aligned}\right. \\
-(\cos nx, \sin mx)&amp;=\int\limits_{-\pi}^\pi\cos nx\sin
-mx\mathrm{d}x=0 \\
-\end{aligned}
-\]</span></p>
-<p>如果 <span class="math inline">\(\phi_n(x)\)</span> 为首项系数非零的
-<span class="math inline">\(n\)</span> 次多项式，称 <span
-class="math inline">\(\{\phi_j\}\)</span> 为正交多项式族。</p>
-<p><img src="../assets/Untitled.png" srcset="/img/loading.gif" lazyload /></p>
-<p>使用正交多项式族作为 <span class="math inline">\(\Phi(x)\)</span>
-进行最佳平方逼近，这样得到的左侧矩阵是对角阵。</p>
-<h3 id="曲线拟合最小二乘法">曲线拟合（最小二乘法）</h3>
-<p>曲线拟合即是离散情况的最佳平方逼近问题。给定已知 <span
-class="math inline">\((m+1)\)</span> 个数据点的离散函数 <span
-class="math inline">\(f(x), x\in[a, b]\)</span>，找一个 <span
-class="math inline">\(\phi^*(x)\in\Phi(x)=\mathrm{span}\{\phi_0(x),
-\phi_1(x), \cdots, \phi_n(x)\}\)</span>，使得</p>
-<p><span class="math display">\[
-||f-\phi^*||_2^2=F(a_0, a_1,\cdots,
-a_n)=\min_{\phi\in\Phi}\sum_{j=0}^m\rho(x_j)(f(x_j)-\phi(x_j))^2
-\]</span></p>
-<p>定义离散情况的内积</p>
-<p><span class="math display">\[
-(f,g)=\sum_{i=0}^m\rho(x_i)f(x_i)g(x_i)
-\]</span></p>
-<p>使用与前文相同的解法，可以解出系数 <span
-class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
-<p>同样可以定义离散情况下的平方误差</p>
-<p><span class="math display">\[
-||\delta||_2^2=||f-\phi^*||_2^2=\sum_{i=0}^m\rho(x_i)(f_i-\phi(x_i))^2
-\]</span></p>
-<p>以及均方误差</p>
-<p><span class="math display">\[
-||\delta||_2=\sqrt{||\delta||_2^2}=\sqrt{\sum_{i=0}^m\rho(x_i)(f_i-\phi(x_i))^2}
-\]</span></p>
-<p>特别注意，在曲线拟合这里的「均方误差」没有「均」，即不用将根号里的东西乘以
-<span class="math inline">\(\frac{1}{m}\)</span>。</p>
+                <h1 id="铃芽之旅所传达的">铃芽之旅所传达的</h1>
+<p>称<铃芽之旅>为新海诚三部曲之三实在是很有道理.沿袭着一贯的灾难描写的文脉,铃芽对于灾难的描写似乎更为翔实,灾难甚至成为了本片剧情的核心驱动力,对灾难中情感的表达也成为了本片表达的核心--不同于前两部仅仅着眼于对爱情的描写,人与人之间的更泛化的情感在本片中被显式地推到了台前.不论是关门时候男主明确的昭告,希望在当下的幸福能延续更久;或是女主在关门时对土地上曾有的生生不息的想象;亦或是门后的常世中宁静的生活,影片中出现的种种要素都在试图讨论着这份灾难中的泛化的感情.它关乎人与人之间的一切情感,或者说,正是人与人之间朴素的温情.</p>
+<p>几乎可以断言的是,正是为了处理这样的更泛化的感情,新海才会选择公路片(至少算是有公路要素的片子?)这种形式以及其带来的崭新的展开方式.正是如此才让更多人的相遇成为可能,才让人在无情的灾难面前得以先验地认识到情感的温度.而对于感情的后验式的认知则是由男女主这条线来处理的.两种不同属性的关系,分别勾勒着对于感情的先验的和后验的认知.</p>
+<h1 id="传达到了吗">传达到了吗</h1>
+<p>事实上,两条不同的勾勒路线都没有很好地完成使命.对情感的后验式的认知要想成立,首先要求的是这份情感要先验地存在--而片中男女主关系其实是很稀薄的.诚然影片有着"女主在小时候在常世中就见过男主"这种叙事诡计,但是这并不能弥补恋爱的"单薄".一段关系如果要更馥郁,势必需要一些私密的叙事空间,像是<君名>中两人长期的互换身体体验对方的私密生活,或是<天气>中只属于两人的奋斗历程.而这样的私密空间在铃芽中是几乎不存在的.相比于<君名><天气>中新海宁愿用一个甚至多个场景去单独呈现主角间的互动,新海却让铃芽的男主在开场15分钟后即陷入掉线状态,后期也只是一直为了追寻大臣而奔忙.虽然本片的恋爱的确平淡,但是在这样的奔忙之后,却是女主的"我要去找喜欢的人了"这样一句台词直接点明了亲密关系,这种关系的厚度显然是不足的.</p>
+<p>先验式认知的情感处理得也有同样的缺乏厚度的问题.公路旅途上的相遇虽然直白地试图展现人与人之间的温情,但是影像上的处理是如此泛化,三幕场景都只是点到为止.新海诚当然是内敛的,但是内敛不意味着蜻蜓点水,不意味着主角自身情感对观众情感的引导完全失位.为什么是失位的呢?关门时涌入铃芽耳中的是泛泛的言语和声音,人间的温情缺少一个确切的情感落地点;姨妈对铃芽的爱也是泛泛而谈--姨妈为了铃芽做的牺牲几乎只有在一次争吵中草草交代了事,同样缺少确切的情感落地点;妈妈对铃芽的爱更是几无笔墨,灾难中最亲密的人之间的情感更成为了无法落地的空中楼阁.当感情无法锚定在一个确切的时空位置,只能流于泛泛,感情的厚度必然是不足的.</p>
+<p>关键场景的缺失,让全片对灾难的表达同样浅尝辄止.在<君名>中,我们有陨石坑上主角的相见;在<天气>中,我们有男女主的天空坠落和男主的长距离奔跑--但铃芽中缺少这么一个具有力度的场景.唯一的力度可能也只是来自于铃芽回到老家挖出的日记中写有3.11的那一页,而且也是严重不足的--尽管影片中不时穿插着涂黑日记的画面,但是铃芽找到日记的过程是如此顺利成章--没有任何犹豫和模糊.涂黑日记本身是人脑对创伤性经历不可避免的模糊化的具象,包括前文铃芽对椅子缺腿的原因的闪烁其辞也体现着这种模糊,但是找到日记的过程却没有任何模糊,甚至在找到日记后也没有任何对过往记忆的确认,3.11就这样被直接糊脸--缺少了对记忆碎片的整理,缺少了私人化的情感体验,缺少了影像上的蓄力和角色情感的倾泻,单单通过一个场外的符号,带出的表达力度真的足够吗?我的评断是否定的.而作为全片灾难的集中象征的3.11就这样被轻描淡写,全片的关键场景由此不复存在.</p>
+<p>我们甚至还可以批评片子的演出手段.3D
+LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了不少--铃芽开头奔跑的跟摇,椅子追逐猫猫时的多个运动镜头...但是奇观多了就一定好吗?如果奇观没有地基支撑,那么奇观的泛滥就只会像对着观众喊"狼来了"一般,最终使得奇观也无法调动观众的注意力.当然本片不少奇观造的都不错,但是总归是有那么几个缺少地基(比如开头的跟摇).而且我们还没有说到这些奇观画面上的不协调.</p>
+<h1 id="铃芽背后的其他">铃芽背后的其他</h1>
+<p>尽管闭门师在竭力避免蚓厄的发生,但<铃芽>中却放置了一个不可改变不可避免的"3.11".由此我们可以断言,<铃芽>某种程度上是对于灾难的再认知--与<你的名字>中试图挽回灾难中失去的爱人,<天气之子>中主动选择爱人拥抱灾难不同的是,<铃芽>中的核心灾难,也即"3.11,"首先是被放在一个不可处置的地位的.因此影片的所有情节都是在接受这一事实的基础上加以展开,而完全不同于前作中的"反抗"要素.</p>
+<p><铃芽>中的新海在尽力告诉观众,接受灾难并坚定地生活下去才是面对灾难的解药,领悟了这一点后我们就能明白为什么3条腿的草太椅子依然能灵活地奔跑,即使是失去了曾经拥有的一条腿--即使灾后失去了曾经拥有的美好生活,我们依然能接受这一事实,我们生活如常,社会运转如常.</p>
+<p>但是这种如常的背后并非不存在隐忧.灾难带来的伤痛真的就能随着时间流逝,随着一份轻描淡写的"接受"之心,而散入记忆的长河直至无影无踪吗?新海的回答当然是否定的,正如他自述的那样,"3.11"依然是他创作过程中的持续低音;正如影片中那座游乐场,始终停留在人们心中无法抹去;正如铃芽涂黑的一页页日记,总是在梦中闯入她的思绪.</p>
+<p>不如说铃芽执意回老家正是为了寻求一份和解,事实上灾难中的幸存者或许都需要这份和解.铃芽在门中看到的辽阔的常世,那里面并不是悲伤,而是失去了情感的记忆.这种麻木是值得警惕的.可以猜测,要石的身体之所以冷若冰霜,正是因为对失去的哀叹化作了无边的麻木与虚无.幸存者也好,要石也好,都需要在对灾难的反复审视中确认生的可贵,从而让生的动力支撑自己在此时此地多停留一刻甚至一秒.</p>
+<p><铃芽>关注的正是这种"后灾难"的疗愈,是痛苦背后更深刻的创伤的弥合过程.新海给出的回答,不是随着时间试着遗忘,而是在追思与审视中,了解生的可贵;影片中的灾难不再是一种需要避讳的苦难,而是需要确认的人生必然.</p>
+<p>对新海来说,这何尝不是一种进步呢?</p>
 
                 
               </div>
@@ -587,8 +315,15 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="category-chain-item">课程笔记</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/%E9%9A%8F%E7%AC%94/%E5%8A%A8%E7%94%BB/" class="category-chain-item">动画</a>
+  
+  
+
   
 
       </span>
@@ -602,7 +337,7 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Computation/">#Computation</a>
+        <a href="/tags/%E5%8A%A8%E7%94%BB%E8%AF%84%E8%AE%BA/">#动画评论</a>
       
     </div>
   
@@ -614,8 +349,8 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>计算方法:插值与数值逼近</div>
-      <div>https://eupho.me/计算方法-插值与数值逼近</div>
+      <div>锐评铃芽之旅</div>
+      <div>https://eupho.me/377c07d7.html</div>
     </div>
     <div class="license-meta">
       
@@ -627,7 +362,7 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月4日</div>
+          <div>2023年4月14日</div>
         </div>
       
       
@@ -671,21 +406,15 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86" title="计算方法-数值积分">
+                      <a href="/f96a7a8c.html" title="面向对象课程第一章:Java基础">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">计算方法-数值积分</span>
+                        <span class="hidden-mobile">面向对象课程第一章:Java基础</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%BE%E7%A8%8B%E7%AC%AC%E4%B8%80%E7%AB%A0-Java%E5%9F%BA%E7%A1%80" title="面向对象课程第一章:Java基础">
-                        <span class="hidden-mobile">面向对象课程第一章:Java基础</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
@@ -774,12 +503,6 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -973,49 +696,6 @@ class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

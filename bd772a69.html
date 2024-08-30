@@ -19,22 +19,24 @@
   <meta name="author" content="Lambert Swizzer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="问题定义 求 \(I(f)&#x3D;\int_a^bf(x)\mathrm{d}x\)，但是 \(f(x)\) 的原函数很难求、\(f(x)\) 未明确给出（可能只是一张离散的数表），同时对计算精度没有过高的要求。 机械求积公式 尝试用给定的一系列节点的函数值 \(f(x_0), f(x_1), \cdots\) 来线性组合出积分的近似值，即 \[ Q(f)&#x3D;\sum_{j&#x3D;0}^nf(x_j)H_j \">
+    <meta name="description" content="多项式插值 多项式插值要做的就是,找一个多项式 \(y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n\) 来近似任意函数 \(f(x)\)。 为了让插值尽量精确，我们让 \(y(x)\) 经过所有的 \(x_i\)（插值节点）。这样就得到： \[ \left\{\begin{aligned} a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算方法-数值积分">
-<meta property="og:url" content="https://eupho.me/%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86">
+<meta property="og:title" content="计算方法:插值与数值逼近">
+<meta property="og:url" content="https://eupho.me/bd772a69.html">
 <meta property="og:site_name" content="Euphome">
-<meta property="og:description" content="问题定义 求 \(I(f)&#x3D;\int_a^bf(x)\mathrm{d}x\)，但是 \(f(x)\) 的原函数很难求、\(f(x)\) 未明确给出（可能只是一张离散的数表），同时对计算精度没有过高的要求。 机械求积公式 尝试用给定的一系列节点的函数值 \(f(x_0), f(x_1), \cdots\) 来线性组合出积分的近似值，即 \[ Q(f)&#x3D;\sum_{j&#x3D;0}^nf(x_j)H_j \">
+<meta property="og:description" content="多项式插值 多项式插值要做的就是,找一个多项式 \(y(x)&#x3D;a_0+a_1x+a_2x^2+\cdots+a_nx^n\) 来近似任意函数 \(f(x)\)。 为了让插值尽量精确，我们让 \(y(x)\) 经过所有的 \(x_i\)（插值节点）。这样就得到： \[ \left\{\begin{aligned} a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;&#x3D;f(">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-12T12:36:51.000Z">
-<meta property="article:modified_time" content="2023-05-12T12:36:51.000Z">
+<meta property="og:image" content="https://eupho.me/assets/Untitled.png">
+<meta property="article:published_time" content="2023-05-04T10:10:44.000Z">
+<meta property="article:modified_time" content="2023-05-04T10:10:44.000Z">
 <meta property="article:author" content="Lambert Swizzer">
 <meta property="article:tag" content="Computation">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://eupho.me/assets/Untitled.png">
   
   
   
-  <title>计算方法-数值积分 - Euphome</title>
+  <title>计算方法:插值与数值逼近 - Euphome</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="计算方法-数值积分"></span>
+            <span id="subtitle" data-typed-text="计算方法:插值与数值逼近"></span>
           
         </div>
 
@@ -215,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-12 20:36" pubdate>
-          2023年5月12日 晚上
+        <time datetime="2023-05-04 18:10" pubdate>
+          2023年5月4日 晚上
         </time>
       </span>
     
@@ -227,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          6.5k 字
         
       </span>
     
@@ -238,7 +240,7 @@
         
         
         
-          7 分钟
+          11 分钟
         
       </span>
     
@@ -276,212 +278,297 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">计算方法-数值积分</h1>
+            <h1 style="display: none">计算方法:插值与数值逼近</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="问题定义">问题定义</h2>
-<p>求 <span
-class="math inline">\(I(f)=\int_a^bf(x)\mathrm{d}x\)</span>，但是 <span
-class="math inline">\(f(x)\)</span> 的原函数很难求、<span
-class="math inline">\(f(x)\)</span>
-未明确给出（可能只是一张离散的数表），同时对计算精度没有过高的要求。</p>
-<h2 id="机械求积公式">机械求积公式</h2>
-<p>尝试用给定的一系列节点的函数值 <span class="math inline">\(f(x_0),
-f(x_1), \cdots\)</span> 来线性组合出积分的近似值，即</p>
+                <h2 id="多项式插值">多项式插值</h2>
+<p>多项式插值要做的就是,找一个多项式 <span
+class="math inline">\(y(x)=a_0+a_1x+a_2x^2+\cdots+a_nx^n\)</span>
+来近似任意函数 <span class="math inline">\(f(x)\)</span>。</p>
+<p>为了让插值尽量精确，我们让 <span class="math inline">\(y(x)\)</span>
+经过所有的 <span
+class="math inline">\(x_i\)</span>（插值节点）。这样就得到：</p>
 <p><span class="math display">\[
-Q(f)=\sum_{j=0}^nf(x_j)H_j
+\left\{\begin{aligned}
+a_0+a_1x_0+a_2x_0^2+\cdots+a_nx_0^n&amp;=f(x_0)\\
+a_0+a_1x_1+a_2x_1^2+\cdots+a_nx_1^n&amp;=f(x_1)\\
+&amp;\vdots \\
+a_0+a_1x_n+a_2x_n^2+\cdots+a_nx_n^n&amp;=f(x_n)\\
+\end{aligned}\right.
 \]</span></p>
-<p>其中，<span class="math inline">\(x_i(i=0, 1, \cdots, n)\)</span>
-是给出函数值的 <span class="math inline">\((n+1)\)</span> 个节点，<span
-class="math inline">\(H_j\)</span> 是与前面那 <span
-class="math inline">\((n+1)\)</span> 个节点有关，而与 <span
-class="math inline">\(f(x)\)</span>
-本身无关的一系列系数。显然，机械求积公式的关键是从给出的 <span
-class="math inline">\(x_i\)</span> 确定 <span
-class="math inline">\(H_j\)</span>。</p>
-<h3 id="代数精度">代数精度</h3>
-<p>如果一个机械求积公式，它用在所有不超过 <span
-class="math inline">\(r\)</span> 次的多项式（即 <span
-class="math inline">\(f(x)\)</span> 是不超过 <span
-class="math inline">\(r\)</span> 次的多项式）上时能精确成立，而对于
-<span class="math inline">\((r+1)\)</span>
-次多项式至少有一个不能精确成立，称这个求积公式有 <span
-class="math inline">\(r\)</span> 次代数精度。</p>
-<p>例如，梯形公式 <span
-class="math inline">\(I_1(f)=\frac{b-a}{2}(f(a)+f(b))\)</span> 有 1
-次代数精度：</p>
-<ul>
-<li><span class="math inline">\(f(x)=1\)</span> 时，精确成立。</li>
-<li><span class="math inline">\(f(x)=x\)</span> 时，<span
-class="math inline">\(\int_a^bx\mathrm{d}x=\frac{b^2-a^2}{2}=\frac{b-a}{2}(b+a)\)</span>，精确成立。</li>
-<li><span class="math inline">\(f(x)=x^2\)</span> 时，不精确成立。</li>
-</ul>
-<h3 id="插值型求积公式">插值型求积公式</h3>
-<p>将 <span class="math inline">\(f(x)\)</span> 在 <span
-class="math inline">\(x_0, x_1, \cdots, x_n\)</span> 处 Lagrange
-插值，得到 <span
-class="math inline">\(L_n(x)=\sum_{j=0}^nl_j(x)f(x_j)\)</span>，取</p>
+<p>显然这个方程组的解是唯一的，即：多项式插值具有唯一性。Lagrange
+插值、Newton
+插值等只是得到这个方程组的解的不同方式，最终得到的结果是一样的。</p>
+<h2 id="lagrange-插值">Lagrange 插值</h2>
+<h3 id="计算">计算</h3>
 <p><span class="math display">\[
-H_j=\int\limits_a^bl_j(x)\mathrm{d}x
+L(x)=\sum_{j=0}^nf(x_j)l_j(x)
 \]</span></p>
-<p>来作为机械求积公式的系数，可以证明这个公式至少有 <span
-class="math inline">\(n\)</span>
-次代数精度。事实上，如果一个机械求积公式有 <span
-class="math inline">\(n\)</span>
-次及以上的代数精度，它必然是插值型的。</p>
-<h2 id="等距节点的-newton-cotes-公式">等距节点的 Newton-Cotes 公式</h2>
-<p>当求积节点等距时，将区间 <span class="math inline">\([a, b]\)</span>
-分成 <span class="math inline">\(n\)</span> 等分，记 <span
-class="math inline">\(x_0=a\)</span>，<span
-class="math inline">\(x_i=a+ih\)</span>，<span
-class="math inline">\(i=0, 1, \cdots, n\)</span>。</p>
-<p>记 <span class="math inline">\(x=a+th\)</span>，则</p>
+<p>其中</p>
 <p><span class="math display">\[
 \begin{aligned}
-H_j &amp;= \int\limits_a^bl_j(x)\mathrm{d}x \\
-&amp;= \int\limits_a^b\prod_{i=0,i\neq
-j}^n\frac{(x-x_i)}{(x_j-x_i)}\mathrm{d}x \\
-&amp;= \int\limits_a^b\prod_{i=0, i\neq
-j}^n\frac{t-i}{j-i}\mathrm{d}(a+th) \\
-&amp;= \frac{(-1)^{n-j}h}{j!(n-j)!}\int\limits_a^b\prod_{i=0, i\neq
-j}^n(t-i)\mathrm{d}t
-\end{aligned}
-\]</span></p>
-<p>因为 <span class="math inline">\(b-a=nh\)</span>，将上式除以 <span
-class="math inline">\((b-a)\)</span>，得到</p>
-<p><span class="math display">\[
-C_j=\frac{H_j}{b-a}=\frac{(-1)^{n-j}}{nj!(n-j)!}\int\limits_a^b\prod_{i=0,
-i\neq j}^n(t-i)\mathrm{d}t
-\]</span></p>
-<p>称之为「Cotes 系数」。由此可以得到等距节点的 Newton-Cotes 公式：</p>
-<p><span class="math display">\[
-Q_n(f)=(b-a)\sum_{j=0}^nC_jf(x_j)
-\]</span></p>
-<h3 id="特殊情况">特殊情况</h3>
-<ul>
-<li><p>梯形公式：<span class="math inline">\(n=1, x_0=a,
-x_1=b\)</span>，</p>
-<p><span class="math display">\[
-  Q_1(f)=\frac{b-a}{2}(f(a)+f(b))
-  \]</span></p></li>
-<li><p>Simpson 公式（抛物线公式）：<span class="math inline">\(n=2,
-x_0=a, x_2=b, x_1=\frac{a+b}{2}\)</span>，</p>
-<p><span class="math display">\[
-  Q_2(f)=\frac{b-a}{6}(f(a)+4f(\frac{a+b}{2})+f(b))
-  \]</span></p></li>
-<li><p>Cotes 公式：<span class="math inline">\(n=4\)</span>，</p>
-<p><span class="math display">\[
-  Q_4(f)=\frac{2h}{45}(7f(a)+32f(a+h)+12f(a+2h)+32f(a+3h)+7f(b))
-  \]</span></p></li>
-</ul>
-<h3 id="收敛性">收敛性</h3>
-<p><strong>Newton-Cotes 公式并不总是收敛于积分的真值。</strong></p>
-<h3 id="数值稳定性">数值稳定性</h3>
-<p>设 <span class="math inline">\(f(x_i)\)</span> 的计算值为 <span
-class="math inline">\(\tilde{f}(x_i)\)</span>，且 <span
-class="math inline">\(|f(x_i)-\tilde{f}(x_i)|\leqslant\varepsilon\)</span>，则</p>
-<p><span class="math display">\[
-|\sum_{j=0}^nH_jf(x_j)-\sum_{j=0}^nH_j\tilde{f}(x_j)|=|\sum_{j=0}^nH_j(f(x_j)-\tilde{f}(x_j))|\leqslant\varepsilon\sum_{j=0}^n|H_j|
-\]</span></p>
-<ul>
-<li><p>如果 <span class="math inline">\(H_j\)</span> 全是正数，有 <span
-class="math inline">\(|H_j|=H_j\)</span>，那么</p>
-<p><span class="math display">\[
-  \varepsilon\sum_{j=0}^n|H_j|=\varepsilon\sum_{j=0}^nH_j=(b-a)\varepsilon
-  \]</span></p>
-<p>这个误差不会因为 <span class="math inline">\(n\)</span>
-的增大而增大，数值稳定。</p></li>
-<li><p>如果 <span class="math inline">\(H_j\)</span> 有正有负，则 <span
-class="math inline">\(\varepsilon\sum_{j=0}^n|H_j|\)</span> 是可能随
-<span class="math inline">\(n\)</span>
-变大而无限增长的，数值不稳定。</p></li>
-</ul>
-<p><strong>只有 <span class="math inline">\(n\leqslant7\)</span> 和
-<span class="math inline">\(n=9\)</span> 的 Newton-Cotes 公式 <span
-class="math inline">\(H_j\)</span> 是全正的。</strong></p>
-<h3 id="代数精度与余项">代数精度与余项</h3>
-<ul>
-<li><p>当 <span class="math inline">\(n\)</span> 为奇数时，NC 公式有
-<span class="math inline">\(n\)</span> 次代数精度。设 <span
-class="math inline">\(f\in C^{n+1}[a, b]\)</span>，则总是 <span
-class="math inline">\(\exists\xi\in(a, b)\)</span>，使得</p>
-<p><span class="math display">\[
-  I(f)-Q(f)=E(f)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\int\limits_a^bp_{n+1}(x)\mathrm{d}x
-  \]</span></p></li>
-<li><p>当 <span class="math inline">\(n\)</span> 为偶数时，NC 公式有
-<span class="math inline">\((n+1)\)</span> 次代数精度。设 <span
-class="math inline">\(f\in C^{n+2}[a, b]\)</span>，则总是 <span
-class="math inline">\(\exists\xi\in(a, b)\)</span>，使得</p>
-<p><span class="math display">\[
-  I(f)-Q(f)=E(f)=\frac{f^{(n+2)}(\xi)}{(n+2)!}\int\limits_a^bxp_{n+1}(x)\mathrm{d}x
-  \]</span></p></li>
-</ul>
-<p>常用 NC 公式的余项（也就是误差）：</p>
-<ul>
-<li>梯形公式（<span class="math inline">\(n=1,h=b-a\)</span>）：<span
-class="math inline">\(-\frac{h^3}{12}f&#39;&#39;(\eta)\)</span>；</li>
-<li>Simpson 公式（<span
-class="math inline">\(n=2,h=\frac{b-a}{2}\)</span>）：<span
-class="math inline">\(-\frac{h^5}{90}f^{(4)}(\eta)\)</span>；</li>
-<li>Cotes 公式（<span
-class="math inline">\(n=4,h=\frac{b-a}{4}\)</span>）：<span
-class="math inline">\(-\frac{8h^7}{945}f^{(6)}(\eta)\)</span>。</li>
-</ul>
-<h2 id="复化的-newton-cotes-公式">复化的 Newton-Cotes 公式</h2>
-<p>所谓「复化」，是指将区间 <span class="math inline">\([a, b]\)</span>
-进行 <span class="math inline">\(n\)</span>
-等分后，在每个小区间上用一些简单的求积公式（例如梯形公式或 Simpson
-公式），然后进行求和。</p>
-<h3 id="复化的梯形公式">复化的梯形公式</h3>
-<p>记 <span class="math inline">\(h=\frac{b-a}{n}\)</span>，<span
-class="math inline">\(x_i=x_0+ih\)</span>。</p>
-<p><span class="math display">\[
-\begin{aligned}
-T_n&amp;=\sum_{i=0}^{n-1}\frac{h}{2}(f(x_i)+f(x_{i+1})) \\
-&amp;= \frac{h}{2}(f(a)+2\sum_{i=1}^{n-1}f(x_i)+f(b))
-\end{aligned}
-\]</span></p>
-<p>如果在 <span class="math inline">\(T_n\)</span>
-的基础上，将每个区间平分，即 <span class="math inline">\([x_i,
-x_{i+1}]\to[x_i, x_{i+\frac{1}{2}}], [x_{i+\frac{1}{2}},
-x_{i+1}]\)</span>，得到 <span class="math inline">\(2n\)</span>
-等分的复化梯形公式 <span
-class="math inline">\(T_{2n}=\frac{h}{4}\sum_{i=0}^{n-1}(f(x_i)+2f(x_{i+\frac{1}{2}})+f(x_{i+1}))\)</span>。</p>
-<p>记 <span
-class="math inline">\(U_n=h\sum_{i=0}^{n-1}f(x_{i+\frac{1}{2}})\)</span>，有</p>
-<p><span class="math display">\[
-T_{2n}=\frac{1}{2}(T_n+U_n)
-\]</span></p>
-<p>这提供了一种计算高阶复化梯形公式的方法。例如，要计算 <span
-class="math inline">\(T_8\)</span>，只要按 <span
-class="math inline">\(T_1\to T_2\to T_4\to T_8\)</span>
-的顺序算就可以了。</p>
-<h3 id="复化的-simpson-公式">复化的 Simpson 公式</h3>
-<p>记 <span class="math inline">\(h=\frac{b-a}n\)</span>，<span
-class="math inline">\(x_i=x_0+ih\)</span>。</p>
-<p><span class="math display">\[
-\begin{aligned}
-S_n
-&amp;=\frac{h}6\sum_{i=0}^{n-1}(f(x_i)+4f(x_{i+\frac{1}{2}})+f(x_{i+1}))
-\\ &amp;=
-\frac{h}6(f(a)+4\sum_{i=0}^{n-1}f(x_{i+\frac{1}{2}})+2\sum_{i=1}^{n-1}f(x_i)+f(b))
+l_j(x)&amp;=\frac{(x-x_0)(x-x_1)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_n)}{(x_j-x_0)(x_j-x_1)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_n)}
 \\
-&amp;=\frac{1}{3}T_n+\frac{2}{3}U_n=\frac{4T_{2n}-T_n}{3}
+&amp;= \prod_{i=0, i\neq j}^n\frac{x-x_i}{x_j-x_i}
 \end{aligned}
 \]</span></p>
-<p>即，用高一阶的复化梯形公式就可以计算出复化 Simpson
-公式。这种计算方式比较方便。</p>
-<h3 id="复化的-cotes-公式">复化的 Cotes 公式</h3>
+<p>事实上，<span class="math inline">\(l_j(x)\)</span> 的本质就是 <span
+class="math display">\[\left\{\begin{aligned}
+&amp;0, x\neq x_j\\ &amp;1, x=x_j
+\end{aligned}\right.\]</span> 类似布尔函数.</p>
+<p>被插函数可以表示为 <span
+class="math inline">\(f(x)=L(x)+E(x)\)</span>，其中 <span
+class="math inline">\(E(x)\)</span> 即为误差（又叫「插值余项」）。</p>
+<h3 id="误差-余项">误差 / 余项</h3>
 <p><span class="math display">\[
-C_n=\frac{h}{90}(7f(a)+32\sum_{i=0}^{n-1}f(x_{i+\frac{1}{4}})+12\sum_{i=0}^{n-1}f(x_{i+\frac{1}{2}})+32\sum_{i=0}^{n-1}f(x_{i+\frac{3}{4}})+14\sum_{i=1}^{n-1}f(x_i)+7f(b))
+E(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}p_{n+1}(x),
+p_{n+1}(x)=(x-x_0)(x-x_1)\cdots(x-x_n)
 \]</span></p>
-<p>使用 <span class="math inline">\(S_{2n}\)</span> 和 <span
-class="math inline">\(S_n\)</span> 表示：</p>
+<p>其中 <span class="math inline">\(\xi\in(a, b)\)</span>。</p>
+<p>容易得到误差上限 <span
+class="math inline">\(|E(x)|\leqslant\frac{\max\limits_{a&lt;x&lt;b}
+f^{(n+1)}(x)}{(n+1)!}p_{n+1}(x)\)</span>。事实上，因为多项式插值是唯一的，所有多项式插值的误差和上限都是这个东西。</p>
+<h2 id="newton-插值">Newton 插值</h2>
+<h3 id="计算-1">计算</h3>
+<p>将 <span class="math inline">\(n\)</span>
+次插值多项式写成如下的形式：</p>
 <p><span class="math display">\[
-C_n=\frac{4^2S_{2n}-S_{n}}{4^2-1}
+y(x)=a_0+a_1(x-x_0)+a_2(x-x_0)(x-x_1)+\cdots+a_n(x-x_0)(x-x_1)\cdots(x-x_{n+1})
 \]</span></p>
+<p>其中：</p>
+<p><span class="math display">\[
+\begin{aligned}
+a_0 &amp;= f(x_0)\\
+a_1 &amp;= \frac{f(x_1)-f(x_0)}{x_1-x_0} \\
+a_2 &amp;=
+\frac{\frac{f(x_2)-f(x_0)}{x_2-x_0}-\frac{f(x_1)-f(x_0)}{x_1-x_0}}{x_2-x_1}
+\\
+&amp;\cdots
+\end{aligned}
+\]</span></p>
+<p>为了便于表示，引入差商的定义。</p>
+<h3 id="差商">差商</h3>
+<p><span class="math display">\[
+\begin{aligned}
+f[x_0 x_1] &amp;= \frac{f(x_1)-f(x_0)}{x_1-x_0} \\
+f[x_0x_1x_2] &amp;= \frac{f[x_0x_2]-f[x_0x_1]}{x_2-x_1} \\
+f[x_0x_1x_2x_3] &amp;= \frac{f[x_0x_1x_3]-f[x_0x_1x_2]}{x_3-x_2} \\
+&amp;\cdots \\
+f[x_0x_1\cdots x_k] &amp;= \frac{f[x_0x_1\cdots
+x_{k-2}x_k]-f[x_0x_1\cdots x_{k-2}x_{k-1}]}{x_k-x_{k-1}}
+\end{aligned}
+\]</span></p>
+<p>从上到下依次称「一阶差商」「二阶差商」……「<span
+class="math inline">\(k\)</span> 阶差商」。可以证明，<span
+class="math inline">\(a_k=f[x_0x_1\cdots x_k], k=0, 1, 2, \cdots,
+n\)</span>。</p>
+<p>用差商表示的 Newton 插值多项式：</p>
+<p><span class="math display">\[
+N_n(x)=f(x_0)+f[x_0x_1](x-x_0)+f[x_0x_1x_2](x-x_0)(x-x_1)+\cdots+f[x_0x_1\cdots
+x_n](x-x_0)\cdots(x-x_{n-1})
+\]</span></p>
+<h3 id="误差-余项-1">误差 / 余项</h3>
+<p><span class="math display">\[
+E(x)=f[x_0x_1\cdots x_nx](x-x_0)(x-x_1)\cdots(x-x_n)
+\]</span></p>
+<p>由于多项式插值的唯一性，这个式子的值和 Lagrange
+插值的余项是相等的，由此可以得到差商和导数的关系：</p>
+<p><span class="math display">\[
+f[x_0x_1\cdots x_j]=\frac{f^{(j)}(\xi_j)}{j!}
+\]</span></p>
+<p>其中 <span class="math inline">\(\xi_j\in(x_0, x_j)\)</span>。</p>
+<h2 id="差分与等距节点的插值">差分与等距节点的插值</h2>
+<h3 id="差分">差分</h3>
+<ul>
+<li><span class="math inline">\(k\)</span> 阶向前差分：<span
+class="math inline">\(\Delta^kf(x)=\Delta^{k-1}f(x+h)-\Delta^{k-1}f(x)\)</span>；</li>
+<li>0 阶向前差分：<span
+class="math inline">\(\Delta^0f(x)=f(x)\)</span>；</li>
+<li><span class="math inline">\(k\)</span> 阶向后差分：<span
+class="math inline">\(\nabla^kf(x)=\nabla^{k-1}f(x)-\nabla^{k-1}f(x-h)\)</span>；</li>
+<li>0 阶向后差分：<span
+class="math inline">\(\nabla^0f(x)=f(x)\)</span>；</li>
+<li><span class="math inline">\(k\)</span> 阶中心差分：<span
+class="math inline">\(\delta^kf(x)=\delta^{k-1}f(x+\frac{h}{2})-\delta^{k-1}f(x-\frac{h}{2})\)</span>；</li>
+<li>0 阶中心差分：<span
+class="math inline">\(\delta^0f(x)=f(x)\)</span>。</li>
+</ul>
+<p>向前差分与差商的关系：<span class="math inline">\(f[x_0x_1\cdots
+x_k]=\frac{\Delta^kf_0}{k!h^k}=\frac{\nabla^kf_k}{k!h^k}\)</span>。</p>
+<h3 id="newton-向前插值公式">Newton 向前插值公式</h3>
+<p>用差分代替 Newton 插值公式中的差商：</p>
+<p><span class="math display">\[
+\begin{aligned}
+N_n(x) =
+\Delta^0f_0&amp;+\frac{\Delta^1f_0}{h}(x-x_0)+\frac{\Delta^2f_0}{2!h^2}(x-x_1)(x-x_0)+\cdots
+\\ &amp;+\frac{\Delta^nf_0}{n!h^n}(x-x_{n-1})(x-x_{n-2})\cdots(x-x_0)
+\end{aligned}
+\]</span></p>
+<p>用 <span class="math inline">\(x_0+th\)</span> 代替 <span
+class="math inline">\(x\)</span>：</p>
+<p><span class="math display">\[
+\begin{aligned}
+N_n(x_0+th) &amp;= \Delta^0f_0+
+\Delta^1f_0t+\Delta^2f_0\frac{t(t-1)}{2!}
++\cdots+\Delta^nf_0\frac{t(t-1)\cdots(t-(n-1))}{n!} \\
+&amp;= \sum_{j=0}^n\Delta^jf_0\frac{t(t-1)(t-2)\cdots(t-(j-1))}{j!} \\
+&amp;= \sum_{j=0}^n\Delta^jf_0\mathrm{C}_t^j
+\end{aligned}
+\]</span></p>
+<p>（组合数公式：<span
+class="math inline">\(\mathrm{C}_n^m=\frac{n!}{m!(n-m)!}=\frac{n(n-1)(n-2)\cdots(n-(m-1))}{m!}\)</span>。广义的组合数中
+<span class="math inline">\(n\)</span> 可以是负数、小数）</p>
+<h3 id="newton-向后插值公式">Newton 向后插值公式</h3>
+<p>起始点选 <span
+class="math inline">\(x_n\)</span>，使用向后的差分，可以推出下面的
+Newton 向后插值公式。</p>
+<p><span class="math display">\[
+\begin{aligned}
+N_n(x_n+th)
+&amp;=\sum_{j=0}^{n}\nabla^jf_n\frac{t(t+1)\cdots(t+j-2)(t+j-1)}{j!} \\
+&amp;=\sum_{j=0}^n\nabla^jf_n\mathrm{C}_{t+j-1}^{j}
+\end{aligned}
+\]</span></p>
+<h2 id="函数的最佳平方逼近">函数的最佳平方逼近</h2>
+<h3 id="问题描述">问题描述</h3>
+<p>先来看连续情况.给定函数 <span class="math inline">\(f(x)\in C[a,b],
+x\in[a, b];\phi_0,\phi_1,\cdots,\phi_n\)</span>是<span
+class="math inline">\(C[a,b]\)</span>上n+1个线性无关函数，找一个 <span
+class="math inline">\(\phi^*(x)\in\Phi(x)=\mathrm{span}\{\phi_0(x),
+\phi_1(x), \cdots, \phi_n(x)\}\)</span>，使得</p>
+<p><span class="math display">\[
+\int\limits_a^b\rho(x)(f(x)-\phi^*(x))^2\mathrm{d}x=\min_{\phi(x)\in\Phi(x)}\int\limits_a^b\rho(x)(f(x)-\phi(x))^2\mathrm{d}x
+\]</span></p>
+<p>即左侧的积分式取得最小值。式中 <span
+class="math inline">\(\rho(x)\)</span> 是权函数，满足：</p>
+<ul>
+<li><span class="math inline">\(\rho(x)\geqslant 0, \forall x\in[a,
+b]\)</span>；</li>
+<li><span class="math inline">\(\int_a^b\rho(x)x^k\mathrm{d}x\)</span>
+存在，<span class="math inline">\(\forall k=0, 1, 2,
+\cdots\)</span>；</li>
+<li>对任何非负函数 <span class="math inline">\(f(x)\)</span>，若 <span
+class="math inline">\(\int_a^bf(x)\rho(x)\mathrm{d}x=0\)</span>，则
+<span class="math inline">\(f(x)\equiv0\)</span>。</li>
+</ul>
+<h3 id="求解">求解</h3>
+<p>记 <span
+class="math inline">\(\phi^*(x)=a_0\phi_0(x)+a_1\phi_1(x)+\cdots+a_n\phi_n(x)\)</span>。</p>
+<p>记 <span class="math inline">\(||f-\phi^*||_2^2=F(a_0, a_1, \cdots,
+a_n)=\int_a^b\rho(x)(f(x)-\phi^*(x))^2\mathrm{d}x\)</span>。令 <span
+class="math inline">\(\frac{\partial F}{\partial a_j}=0\)</span>，有</p>
+<p><span class="math display">\[
+\begin{aligned}
+\int\limits_a^b\rho(x)f(x)\phi_j(x)\mathrm{d}x =
+a_0\int\limits_a^b\rho(x)\phi_0(x)\phi_j(x)\mathrm{d}x&amp;+a_1\int\limits_a^b\rho(x)\phi_1(x)\phi_j(x)\mathrm{d}x+\cdots
+\\
+&amp;+ a_n\int\limits_a^b\rho(x)\phi_n(x)\phi_j(x)\mathrm{d}x
+\end{aligned}
+\]</span></p>
+<p>记 <span class="math inline">\((f, g)\)</span> 为 <span
+class="math inline">\(\int_a^b\rho(x)f(x)g(x)\mathrm{d}x\)</span>。令
+<span class="math inline">\(F\)</span>
+的所有偏导为零，得到下面的线性方程组：</p>
+<p><span class="math display">\[
+\left[\begin{matrix}
+(\phi_0,\phi_0) &amp; (\phi_1, \phi_0) &amp; \cdots &amp; (\phi_n,
+\phi_0) \\
+(\phi_0,\phi_1) &amp; (\phi_1, \phi_1) &amp; \cdots &amp; (\phi_n,
+\phi_1) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+(\phi_0,\phi_n) &amp; (\phi_1, \phi_n) &amp; \cdots &amp; (\phi_n,
+\phi_n) \\
+\end{matrix}\right]
+\left[\begin{matrix}
+a_0 \\ a_1 \\\vdots\\a_n
+\end{matrix}\right]=
+\left[\begin{matrix}
+(f, \phi_0)\\
+(f, \phi_1)\\
+\vdots \\
+(f, \phi_n) \\
+\end{matrix}\right]
+\]</span></p>
+<p>求解这个方程组，即可得到最佳平方逼近时的系数。</p>
+<h3 id="误差">误差</h3>
+<p>记 <span class="math inline">\(f-\phi^*(x)=\delta\)</span>，记 <span
+class="math inline">\(||\delta||_2^2\)</span>
+为「平方误差」，记它的平方根 <span
+class="math inline">\(||\delta||_2\)</span> 为「均方误差」。</p>
+<p><span class="math display">\[
+\begin{aligned}
+||\delta||_2^2&amp;=||f-\phi^*||_2^2=(f, f)-(\phi^*, f)\\
+&amp;=||f||_2^2-\sum_{j=0}^na_j^*(\phi_j, f)
+\end{aligned}
+\]</span></p>
+<h3 id="正交函数与正交多项式">正交函数与正交多项式</h3>
+<p>对 <span class="math inline">\(f(x),g(x)\in C[a, b]\)</span>，记
+<span
+class="math inline">\((f,g)=\int_a^b\rho(x)f(x)g(x)\mathrm{d}x\)</span>，若
+<span class="math inline">\((f,g)=0\)</span>，称 <span
+class="math inline">\(f(x)\)</span>、<span
+class="math inline">\(g(x)\)</span> 在 <span
+class="math inline">\([a,b]\)</span> 上带权 <span
+class="math inline">\(\rho(x)\)</span> 正交，记作 <span
+class="math inline">\(f\bot g\)</span>。</p>
+<p>如果函数序列 <span
+class="math inline">\(\{\phi_j\}_0^{+\infty}\)</span> 在 <span
+class="math inline">\([a, b]\)</span> 上两两带权 <span
+class="math inline">\(\rho(x)\)</span> 正交，称 <span
+class="math inline">\(\{\phi_j\}\)</span> 为 <span
+class="math inline">\([a, b]\)</span> 上带权 <span
+class="math inline">\(\rho(x)\)</span> 的正交函数族。</p>
+<p>例如：<span class="math inline">\(1, \sin x, \cos x, \sin 2x, \cos
+2x, \cdots\)</span> 是在 <span class="math inline">\([-\pi,\pi]\)</span>
+上带权 <span class="math inline">\(\rho(x)\equiv1\)</span>
+的正交函数族，因为</p>
+<p><span class="math display">\[
+\begin{aligned}
+(1, 1)&amp;=\int\limits_{-\pi}^{\pi}\mathrm{d}x=2\pi\\
+(\sin nx, \sin mx)&amp;=\int\limits_{-\pi}^\pi\sin nx\sin
+mx\mathrm{d}x=\left\{\begin{aligned}&amp;\pi,m=n\\&amp;0, m\neq
+n\end{aligned}\right. \\
+(\cos nx, \cos mx)&amp;=\int\limits_{-\pi}^\pi\cos nx\cos
+mx\mathrm{d}x=\left\{\begin{aligned}&amp;\pi,m=n\\&amp;0, m\neq
+n\end{aligned}\right. \\
+(\cos nx, \sin mx)&amp;=\int\limits_{-\pi}^\pi\cos nx\sin
+mx\mathrm{d}x=0 \\
+\end{aligned}
+\]</span></p>
+<p>如果 <span class="math inline">\(\phi_n(x)\)</span> 为首项系数非零的
+<span class="math inline">\(n\)</span> 次多项式，称 <span
+class="math inline">\(\{\phi_j\}\)</span> 为正交多项式族。</p>
+<p><img src="../assets/Untitled.png" srcset="/img/loading.gif" lazyload /></p>
+<p>使用正交多项式族作为 <span class="math inline">\(\Phi(x)\)</span>
+进行最佳平方逼近，这样得到的左侧矩阵是对角阵。</p>
+<h3 id="曲线拟合最小二乘法">曲线拟合（最小二乘法）</h3>
+<p>曲线拟合即是离散情况的最佳平方逼近问题。给定已知 <span
+class="math inline">\((m+1)\)</span> 个数据点的离散函数 <span
+class="math inline">\(f(x), x\in[a, b]\)</span>，找一个 <span
+class="math inline">\(\phi^*(x)\in\Phi(x)=\mathrm{span}\{\phi_0(x),
+\phi_1(x), \cdots, \phi_n(x)\}\)</span>，使得</p>
+<p><span class="math display">\[
+||f-\phi^*||_2^2=F(a_0, a_1,\cdots,
+a_n)=\min_{\phi\in\Phi}\sum_{j=0}^m\rho(x_j)(f(x_j)-\phi(x_j))^2
+\]</span></p>
+<p>定义离散情况的内积</p>
+<p><span class="math display">\[
+(f,g)=\sum_{i=0}^m\rho(x_i)f(x_i)g(x_i)
+\]</span></p>
+<p>使用与前文相同的解法，可以解出系数 <span
+class="math inline">\(a_i,i=0, 1, \cdots, n\)</span>。</p>
+<p>同样可以定义离散情况下的平方误差</p>
+<p><span class="math display">\[
+||\delta||_2^2=||f-\phi^*||_2^2=\sum_{i=0}^m\rho(x_i)(f_i-\phi(x_i))^2
+\]</span></p>
+<p>以及均方误差</p>
+<p><span class="math display">\[
+||\delta||_2=\sqrt{||\delta||_2^2}=\sqrt{\sum_{i=0}^m\rho(x_i)(f_i-\phi(x_i))^2}
+\]</span></p>
+<p>特别注意，在曲线拟合这里的「均方误差」没有「均」，即不用将根号里的东西乘以
+<span class="math inline">\(\frac{1}{m}\)</span>。</p>
 
                 
               </div>
@@ -527,8 +614,8 @@ C_n=\frac{4^2S_{2n}-S_{n}}{4^2-1}
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>计算方法-数值积分</div>
-      <div>https://eupho.me/计算方法-数值积分</div>
+      <div>计算方法:插值与数值逼近</div>
+      <div>https://eupho.me/bd772a69.html</div>
     </div>
     <div class="license-meta">
       
@@ -540,7 +627,7 @@ C_n=\frac{4^2S_{2n}-S_{n}}{4^2-1}
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月12日</div>
+          <div>2023年5月4日</div>
         </div>
       
       
@@ -584,9 +671,9 @@ C_n=\frac{4^2S_{2n}-S_{n}}{4^2-1}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/nazo%E4%B9%8B%E6%97%85" title="nazo之旅">
+                      <a href="/a558a3e4.html" title="计算方法-数值积分">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">nazo之旅</span>
+                        <span class="hidden-mobile">计算方法-数值积分</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -594,8 +681,8 @@ C_n=\frac{4^2S_{2n}-S_{n}}{4^2-1}
                   <article class="post-next col-6">
                     
                     
-                      <a href="/%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-%E6%8F%92%E5%80%BC%E4%B8%8E%E6%95%B0%E5%80%BC%E9%80%BC%E8%BF%91" title="计算方法:插值与数值逼近">
-                        <span class="hidden-mobile">计算方法:插值与数值逼近</span>
+                      <a href="/f96a7a8c.html" title="面向对象课程第一章:Java基础">
+                        <span class="hidden-mobile">面向对象课程第一章:Java基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

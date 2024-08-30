@@ -19,22 +19,22 @@
   <meta name="author" content="Lambert Swizzer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="铃芽之旅所传达的 称为新海诚三部曲之三实在是很有道理.沿袭着一贯的灾难描写的文脉,铃芽对于灾难的描写似乎更为翔实,灾难甚至成为了本片剧情的核心驱动力,对灾难中情感的表达也成为了本片表达的核心--不同于前两部仅仅着眼于对爱情的描写,人与人之间的更泛化的情感在本片中被显式地推到了台前.不论是关门时候男主明确的昭告,希望在当下的幸福能延续更久;或是女主在关门时对土地上曾有的生生不息的想象;亦或是门后的常">
+    <meta name="description" content="问题定义 求 \(I(f)&#x3D;\int_a^bf(x)\mathrm{d}x\)，但是 \(f(x)\) 的原函数很难求、\(f(x)\) 未明确给出（可能只是一张离散的数表），同时对计算精度没有过高的要求。 机械求积公式 尝试用给定的一系列节点的函数值 \(f(x_0), f(x_1), \cdots\) 来线性组合出积分的近似值，即 \[ Q(f)&#x3D;\sum_{j&#x3D;0}^nf(x_j)H_j \">
 <meta property="og:type" content="article">
-<meta property="og:title" content="锐评铃芽之旅">
-<meta property="og:url" content="https://eupho.me/%E9%94%90%E8%AF%84%E9%93%83%E8%8A%BD%E4%B9%8B%E6%97%85">
+<meta property="og:title" content="计算方法-数值积分">
+<meta property="og:url" content="https://eupho.me/a558a3e4.html">
 <meta property="og:site_name" content="Euphome">
-<meta property="og:description" content="铃芽之旅所传达的 称为新海诚三部曲之三实在是很有道理.沿袭着一贯的灾难描写的文脉,铃芽对于灾难的描写似乎更为翔实,灾难甚至成为了本片剧情的核心驱动力,对灾难中情感的表达也成为了本片表达的核心--不同于前两部仅仅着眼于对爱情的描写,人与人之间的更泛化的情感在本片中被显式地推到了台前.不论是关门时候男主明确的昭告,希望在当下的幸福能延续更久;或是女主在关门时对土地上曾有的生生不息的想象;亦或是门后的常">
+<meta property="og:description" content="问题定义 求 \(I(f)&#x3D;\int_a^bf(x)\mathrm{d}x\)，但是 \(f(x)\) 的原函数很难求、\(f(x)\) 未明确给出（可能只是一张离散的数表），同时对计算精度没有过高的要求。 机械求积公式 尝试用给定的一系列节点的函数值 \(f(x_0), f(x_1), \cdots\) 来线性组合出积分的近似值，即 \[ Q(f)&#x3D;\sum_{j&#x3D;0}^nf(x_j)H_j \">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-14T09:38:40.000Z">
-<meta property="article:modified_time" content="2023-04-14T09:38:40.000Z">
+<meta property="article:published_time" content="2023-05-12T12:36:51.000Z">
+<meta property="article:modified_time" content="2023-05-12T12:36:51.000Z">
 <meta property="article:author" content="Lambert Swizzer">
-<meta property="article:tag" content="动画评论">
+<meta property="article:tag" content="Computation">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>锐评铃芽之旅 - Euphome</title>
+  <title>计算方法-数值积分 - Euphome</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="锐评铃芽之旅"></span>
+            <span id="subtitle" data-typed-text="计算方法-数值积分"></span>
           
         </div>
 
@@ -215,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-14 17:38" pubdate>
-          2023年4月14日 下午
+        <time datetime="2023-05-12 20:36" pubdate>
+          2023年5月12日 晚上
         </time>
       </span>
     
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          3.9k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          5 分钟
+          7 分钟
         
       </span>
     
@@ -276,27 +276,212 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">锐评铃芽之旅</h1>
+            <h1 style="display: none">计算方法-数值积分</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="铃芽之旅所传达的">铃芽之旅所传达的</h1>
-<p>称<铃芽之旅>为新海诚三部曲之三实在是很有道理.沿袭着一贯的灾难描写的文脉,铃芽对于灾难的描写似乎更为翔实,灾难甚至成为了本片剧情的核心驱动力,对灾难中情感的表达也成为了本片表达的核心--不同于前两部仅仅着眼于对爱情的描写,人与人之间的更泛化的情感在本片中被显式地推到了台前.不论是关门时候男主明确的昭告,希望在当下的幸福能延续更久;或是女主在关门时对土地上曾有的生生不息的想象;亦或是门后的常世中宁静的生活,影片中出现的种种要素都在试图讨论着这份灾难中的泛化的感情.它关乎人与人之间的一切情感,或者说,正是人与人之间朴素的温情.</p>
-<p>几乎可以断言的是,正是为了处理这样的更泛化的感情,新海才会选择公路片(至少算是有公路要素的片子?)这种形式以及其带来的崭新的展开方式.正是如此才让更多人的相遇成为可能,才让人在无情的灾难面前得以先验地认识到情感的温度.而对于感情的后验式的认知则是由男女主这条线来处理的.两种不同属性的关系,分别勾勒着对于感情的先验的和后验的认知.</p>
-<h1 id="传达到了吗">传达到了吗</h1>
-<p>事实上,两条不同的勾勒路线都没有很好地完成使命.对情感的后验式的认知要想成立,首先要求的是这份情感要先验地存在--而片中男女主关系其实是很稀薄的.诚然影片有着"女主在小时候在常世中就见过男主"这种叙事诡计,但是这并不能弥补恋爱的"单薄".一段关系如果要更馥郁,势必需要一些私密的叙事空间,像是<君名>中两人长期的互换身体体验对方的私密生活,或是<天气>中只属于两人的奋斗历程.而这样的私密空间在铃芽中是几乎不存在的.相比于<君名><天气>中新海宁愿用一个甚至多个场景去单独呈现主角间的互动,新海却让铃芽的男主在开场15分钟后即陷入掉线状态,后期也只是一直为了追寻大臣而奔忙.虽然本片的恋爱的确平淡,但是在这样的奔忙之后,却是女主的"我要去找喜欢的人了"这样一句台词直接点明了亲密关系,这种关系的厚度显然是不足的.</p>
-<p>先验式认知的情感处理得也有同样的缺乏厚度的问题.公路旅途上的相遇虽然直白地试图展现人与人之间的温情,但是影像上的处理是如此泛化,三幕场景都只是点到为止.新海诚当然是内敛的,但是内敛不意味着蜻蜓点水,不意味着主角自身情感对观众情感的引导完全失位.为什么是失位的呢?关门时涌入铃芽耳中的是泛泛的言语和声音,人间的温情缺少一个确切的情感落地点;姨妈对铃芽的爱也是泛泛而谈--姨妈为了铃芽做的牺牲几乎只有在一次争吵中草草交代了事,同样缺少确切的情感落地点;妈妈对铃芽的爱更是几无笔墨,灾难中最亲密的人之间的情感更成为了无法落地的空中楼阁.当感情无法锚定在一个确切的时空位置,只能流于泛泛,感情的厚度必然是不足的.</p>
-<p>关键场景的缺失,让全片对灾难的表达同样浅尝辄止.在<君名>中,我们有陨石坑上主角的相见;在<天气>中,我们有男女主的天空坠落和男主的长距离奔跑--但铃芽中缺少这么一个具有力度的场景.唯一的力度可能也只是来自于铃芽回到老家挖出的日记中写有3.11的那一页,而且也是严重不足的--尽管影片中不时穿插着涂黑日记的画面,但是铃芽找到日记的过程是如此顺利成章--没有任何犹豫和模糊.涂黑日记本身是人脑对创伤性经历不可避免的模糊化的具象,包括前文铃芽对椅子缺腿的原因的闪烁其辞也体现着这种模糊,但是找到日记的过程却没有任何模糊,甚至在找到日记后也没有任何对过往记忆的确认,3.11就这样被直接糊脸--缺少了对记忆碎片的整理,缺少了私人化的情感体验,缺少了影像上的蓄力和角色情感的倾泻,单单通过一个场外的符号,带出的表达力度真的足够吗?我的评断是否定的.而作为全片灾难的集中象征的3.11就这样被轻描淡写,全片的关键场景由此不复存在.</p>
-<p>我们甚至还可以批评片子的演出手段.3D
-LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了不少--铃芽开头奔跑的跟摇,椅子追逐猫猫时的多个运动镜头...但是奇观多了就一定好吗?如果奇观没有地基支撑,那么奇观的泛滥就只会像对着观众喊"狼来了"一般,最终使得奇观也无法调动观众的注意力.当然本片不少奇观造的都不错,但是总归是有那么几个缺少地基(比如开头的跟摇).而且我们还没有说到这些奇观画面上的不协调.</p>
-<h1 id="铃芽背后的其他">铃芽背后的其他</h1>
-<p>尽管闭门师在竭力避免蚓厄的发生,但<铃芽>中却放置了一个不可改变不可避免的"3.11".由此我们可以断言,<铃芽>某种程度上是对于灾难的再认知--与<你的名字>中试图挽回灾难中失去的爱人,<天气之子>中主动选择爱人拥抱灾难不同的是,<铃芽>中的核心灾难,也即"3.11,"首先是被放在一个不可处置的地位的.因此影片的所有情节都是在接受这一事实的基础上加以展开,而完全不同于前作中的"反抗"要素.</p>
-<p><铃芽>中的新海在尽力告诉观众,接受灾难并坚定地生活下去才是面对灾难的解药,领悟了这一点后我们就能明白为什么3条腿的草太椅子依然能灵活地奔跑,即使是失去了曾经拥有的一条腿--即使灾后失去了曾经拥有的美好生活,我们依然能接受这一事实,我们生活如常,社会运转如常.</p>
-<p>但是这种如常的背后并非不存在隐忧.灾难带来的伤痛真的就能随着时间流逝,随着一份轻描淡写的"接受"之心,而散入记忆的长河直至无影无踪吗?新海的回答当然是否定的,正如他自述的那样,"3.11"依然是他创作过程中的持续低音;正如影片中那座游乐场,始终停留在人们心中无法抹去;正如铃芽涂黑的一页页日记,总是在梦中闯入她的思绪.</p>
-<p>不如说铃芽执意回老家正是为了寻求一份和解,事实上灾难中的幸存者或许都需要这份和解.铃芽在门中看到的辽阔的常世,那里面并不是悲伤,而是失去了情感的记忆.这种麻木是值得警惕的.可以猜测,要石的身体之所以冷若冰霜,正是因为对失去的哀叹化作了无边的麻木与虚无.幸存者也好,要石也好,都需要在对灾难的反复审视中确认生的可贵,从而让生的动力支撑自己在此时此地多停留一刻甚至一秒.</p>
-<p><铃芽>关注的正是这种"后灾难"的疗愈,是痛苦背后更深刻的创伤的弥合过程.新海给出的回答,不是随着时间试着遗忘,而是在追思与审视中,了解生的可贵;影片中的灾难不再是一种需要避讳的苦难,而是需要确认的人生必然.</p>
-<p>对新海来说,这何尝不是一种进步呢?</p>
+                <h2 id="问题定义">问题定义</h2>
+<p>求 <span
+class="math inline">\(I(f)=\int_a^bf(x)\mathrm{d}x\)</span>，但是 <span
+class="math inline">\(f(x)\)</span> 的原函数很难求、<span
+class="math inline">\(f(x)\)</span>
+未明确给出（可能只是一张离散的数表），同时对计算精度没有过高的要求。</p>
+<h2 id="机械求积公式">机械求积公式</h2>
+<p>尝试用给定的一系列节点的函数值 <span class="math inline">\(f(x_0),
+f(x_1), \cdots\)</span> 来线性组合出积分的近似值，即</p>
+<p><span class="math display">\[
+Q(f)=\sum_{j=0}^nf(x_j)H_j
+\]</span></p>
+<p>其中，<span class="math inline">\(x_i(i=0, 1, \cdots, n)\)</span>
+是给出函数值的 <span class="math inline">\((n+1)\)</span> 个节点，<span
+class="math inline">\(H_j\)</span> 是与前面那 <span
+class="math inline">\((n+1)\)</span> 个节点有关，而与 <span
+class="math inline">\(f(x)\)</span>
+本身无关的一系列系数。显然，机械求积公式的关键是从给出的 <span
+class="math inline">\(x_i\)</span> 确定 <span
+class="math inline">\(H_j\)</span>。</p>
+<h3 id="代数精度">代数精度</h3>
+<p>如果一个机械求积公式，它用在所有不超过 <span
+class="math inline">\(r\)</span> 次的多项式（即 <span
+class="math inline">\(f(x)\)</span> 是不超过 <span
+class="math inline">\(r\)</span> 次的多项式）上时能精确成立，而对于
+<span class="math inline">\((r+1)\)</span>
+次多项式至少有一个不能精确成立，称这个求积公式有 <span
+class="math inline">\(r\)</span> 次代数精度。</p>
+<p>例如，梯形公式 <span
+class="math inline">\(I_1(f)=\frac{b-a}{2}(f(a)+f(b))\)</span> 有 1
+次代数精度：</p>
+<ul>
+<li><span class="math inline">\(f(x)=1\)</span> 时，精确成立。</li>
+<li><span class="math inline">\(f(x)=x\)</span> 时，<span
+class="math inline">\(\int_a^bx\mathrm{d}x=\frac{b^2-a^2}{2}=\frac{b-a}{2}(b+a)\)</span>，精确成立。</li>
+<li><span class="math inline">\(f(x)=x^2\)</span> 时，不精确成立。</li>
+</ul>
+<h3 id="插值型求积公式">插值型求积公式</h3>
+<p>将 <span class="math inline">\(f(x)\)</span> 在 <span
+class="math inline">\(x_0, x_1, \cdots, x_n\)</span> 处 Lagrange
+插值，得到 <span
+class="math inline">\(L_n(x)=\sum_{j=0}^nl_j(x)f(x_j)\)</span>，取</p>
+<p><span class="math display">\[
+H_j=\int\limits_a^bl_j(x)\mathrm{d}x
+\]</span></p>
+<p>来作为机械求积公式的系数，可以证明这个公式至少有 <span
+class="math inline">\(n\)</span>
+次代数精度。事实上，如果一个机械求积公式有 <span
+class="math inline">\(n\)</span>
+次及以上的代数精度，它必然是插值型的。</p>
+<h2 id="等距节点的-newton-cotes-公式">等距节点的 Newton-Cotes 公式</h2>
+<p>当求积节点等距时，将区间 <span class="math inline">\([a, b]\)</span>
+分成 <span class="math inline">\(n\)</span> 等分，记 <span
+class="math inline">\(x_0=a\)</span>，<span
+class="math inline">\(x_i=a+ih\)</span>，<span
+class="math inline">\(i=0, 1, \cdots, n\)</span>。</p>
+<p>记 <span class="math inline">\(x=a+th\)</span>，则</p>
+<p><span class="math display">\[
+\begin{aligned}
+H_j &amp;= \int\limits_a^bl_j(x)\mathrm{d}x \\
+&amp;= \int\limits_a^b\prod_{i=0,i\neq
+j}^n\frac{(x-x_i)}{(x_j-x_i)}\mathrm{d}x \\
+&amp;= \int\limits_a^b\prod_{i=0, i\neq
+j}^n\frac{t-i}{j-i}\mathrm{d}(a+th) \\
+&amp;= \frac{(-1)^{n-j}h}{j!(n-j)!}\int\limits_a^b\prod_{i=0, i\neq
+j}^n(t-i)\mathrm{d}t
+\end{aligned}
+\]</span></p>
+<p>因为 <span class="math inline">\(b-a=nh\)</span>，将上式除以 <span
+class="math inline">\((b-a)\)</span>，得到</p>
+<p><span class="math display">\[
+C_j=\frac{H_j}{b-a}=\frac{(-1)^{n-j}}{nj!(n-j)!}\int\limits_a^b\prod_{i=0,
+i\neq j}^n(t-i)\mathrm{d}t
+\]</span></p>
+<p>称之为「Cotes 系数」。由此可以得到等距节点的 Newton-Cotes 公式：</p>
+<p><span class="math display">\[
+Q_n(f)=(b-a)\sum_{j=0}^nC_jf(x_j)
+\]</span></p>
+<h3 id="特殊情况">特殊情况</h3>
+<ul>
+<li><p>梯形公式：<span class="math inline">\(n=1, x_0=a,
+x_1=b\)</span>，</p>
+<p><span class="math display">\[
+  Q_1(f)=\frac{b-a}{2}(f(a)+f(b))
+  \]</span></p></li>
+<li><p>Simpson 公式（抛物线公式）：<span class="math inline">\(n=2,
+x_0=a, x_2=b, x_1=\frac{a+b}{2}\)</span>，</p>
+<p><span class="math display">\[
+  Q_2(f)=\frac{b-a}{6}(f(a)+4f(\frac{a+b}{2})+f(b))
+  \]</span></p></li>
+<li><p>Cotes 公式：<span class="math inline">\(n=4\)</span>，</p>
+<p><span class="math display">\[
+  Q_4(f)=\frac{2h}{45}(7f(a)+32f(a+h)+12f(a+2h)+32f(a+3h)+7f(b))
+  \]</span></p></li>
+</ul>
+<h3 id="收敛性">收敛性</h3>
+<p><strong>Newton-Cotes 公式并不总是收敛于积分的真值。</strong></p>
+<h3 id="数值稳定性">数值稳定性</h3>
+<p>设 <span class="math inline">\(f(x_i)\)</span> 的计算值为 <span
+class="math inline">\(\tilde{f}(x_i)\)</span>，且 <span
+class="math inline">\(|f(x_i)-\tilde{f}(x_i)|\leqslant\varepsilon\)</span>，则</p>
+<p><span class="math display">\[
+|\sum_{j=0}^nH_jf(x_j)-\sum_{j=0}^nH_j\tilde{f}(x_j)|=|\sum_{j=0}^nH_j(f(x_j)-\tilde{f}(x_j))|\leqslant\varepsilon\sum_{j=0}^n|H_j|
+\]</span></p>
+<ul>
+<li><p>如果 <span class="math inline">\(H_j\)</span> 全是正数，有 <span
+class="math inline">\(|H_j|=H_j\)</span>，那么</p>
+<p><span class="math display">\[
+  \varepsilon\sum_{j=0}^n|H_j|=\varepsilon\sum_{j=0}^nH_j=(b-a)\varepsilon
+  \]</span></p>
+<p>这个误差不会因为 <span class="math inline">\(n\)</span>
+的增大而增大，数值稳定。</p></li>
+<li><p>如果 <span class="math inline">\(H_j\)</span> 有正有负，则 <span
+class="math inline">\(\varepsilon\sum_{j=0}^n|H_j|\)</span> 是可能随
+<span class="math inline">\(n\)</span>
+变大而无限增长的，数值不稳定。</p></li>
+</ul>
+<p><strong>只有 <span class="math inline">\(n\leqslant7\)</span> 和
+<span class="math inline">\(n=9\)</span> 的 Newton-Cotes 公式 <span
+class="math inline">\(H_j\)</span> 是全正的。</strong></p>
+<h3 id="代数精度与余项">代数精度与余项</h3>
+<ul>
+<li><p>当 <span class="math inline">\(n\)</span> 为奇数时，NC 公式有
+<span class="math inline">\(n\)</span> 次代数精度。设 <span
+class="math inline">\(f\in C^{n+1}[a, b]\)</span>，则总是 <span
+class="math inline">\(\exists\xi\in(a, b)\)</span>，使得</p>
+<p><span class="math display">\[
+  I(f)-Q(f)=E(f)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\int\limits_a^bp_{n+1}(x)\mathrm{d}x
+  \]</span></p></li>
+<li><p>当 <span class="math inline">\(n\)</span> 为偶数时，NC 公式有
+<span class="math inline">\((n+1)\)</span> 次代数精度。设 <span
+class="math inline">\(f\in C^{n+2}[a, b]\)</span>，则总是 <span
+class="math inline">\(\exists\xi\in(a, b)\)</span>，使得</p>
+<p><span class="math display">\[
+  I(f)-Q(f)=E(f)=\frac{f^{(n+2)}(\xi)}{(n+2)!}\int\limits_a^bxp_{n+1}(x)\mathrm{d}x
+  \]</span></p></li>
+</ul>
+<p>常用 NC 公式的余项（也就是误差）：</p>
+<ul>
+<li>梯形公式（<span class="math inline">\(n=1,h=b-a\)</span>）：<span
+class="math inline">\(-\frac{h^3}{12}f&#39;&#39;(\eta)\)</span>；</li>
+<li>Simpson 公式（<span
+class="math inline">\(n=2,h=\frac{b-a}{2}\)</span>）：<span
+class="math inline">\(-\frac{h^5}{90}f^{(4)}(\eta)\)</span>；</li>
+<li>Cotes 公式（<span
+class="math inline">\(n=4,h=\frac{b-a}{4}\)</span>）：<span
+class="math inline">\(-\frac{8h^7}{945}f^{(6)}(\eta)\)</span>。</li>
+</ul>
+<h2 id="复化的-newton-cotes-公式">复化的 Newton-Cotes 公式</h2>
+<p>所谓「复化」，是指将区间 <span class="math inline">\([a, b]\)</span>
+进行 <span class="math inline">\(n\)</span>
+等分后，在每个小区间上用一些简单的求积公式（例如梯形公式或 Simpson
+公式），然后进行求和。</p>
+<h3 id="复化的梯形公式">复化的梯形公式</h3>
+<p>记 <span class="math inline">\(h=\frac{b-a}{n}\)</span>，<span
+class="math inline">\(x_i=x_0+ih\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+T_n&amp;=\sum_{i=0}^{n-1}\frac{h}{2}(f(x_i)+f(x_{i+1})) \\
+&amp;= \frac{h}{2}(f(a)+2\sum_{i=1}^{n-1}f(x_i)+f(b))
+\end{aligned}
+\]</span></p>
+<p>如果在 <span class="math inline">\(T_n\)</span>
+的基础上，将每个区间平分，即 <span class="math inline">\([x_i,
+x_{i+1}]\to[x_i, x_{i+\frac{1}{2}}], [x_{i+\frac{1}{2}},
+x_{i+1}]\)</span>，得到 <span class="math inline">\(2n\)</span>
+等分的复化梯形公式 <span
+class="math inline">\(T_{2n}=\frac{h}{4}\sum_{i=0}^{n-1}(f(x_i)+2f(x_{i+\frac{1}{2}})+f(x_{i+1}))\)</span>。</p>
+<p>记 <span
+class="math inline">\(U_n=h\sum_{i=0}^{n-1}f(x_{i+\frac{1}{2}})\)</span>，有</p>
+<p><span class="math display">\[
+T_{2n}=\frac{1}{2}(T_n+U_n)
+\]</span></p>
+<p>这提供了一种计算高阶复化梯形公式的方法。例如，要计算 <span
+class="math inline">\(T_8\)</span>，只要按 <span
+class="math inline">\(T_1\to T_2\to T_4\to T_8\)</span>
+的顺序算就可以了。</p>
+<h3 id="复化的-simpson-公式">复化的 Simpson 公式</h3>
+<p>记 <span class="math inline">\(h=\frac{b-a}n\)</span>，<span
+class="math inline">\(x_i=x_0+ih\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+S_n
+&amp;=\frac{h}6\sum_{i=0}^{n-1}(f(x_i)+4f(x_{i+\frac{1}{2}})+f(x_{i+1}))
+\\ &amp;=
+\frac{h}6(f(a)+4\sum_{i=0}^{n-1}f(x_{i+\frac{1}{2}})+2\sum_{i=1}^{n-1}f(x_i)+f(b))
+\\
+&amp;=\frac{1}{3}T_n+\frac{2}{3}U_n=\frac{4T_{2n}-T_n}{3}
+\end{aligned}
+\]</span></p>
+<p>即，用高一阶的复化梯形公式就可以计算出复化 Simpson
+公式。这种计算方式比较方便。</p>
+<h3 id="复化的-cotes-公式">复化的 Cotes 公式</h3>
+<p><span class="math display">\[
+C_n=\frac{h}{90}(7f(a)+32\sum_{i=0}^{n-1}f(x_{i+\frac{1}{4}})+12\sum_{i=0}^{n-1}f(x_{i+\frac{1}{2}})+32\sum_{i=0}^{n-1}f(x_{i+\frac{3}{4}})+14\sum_{i=1}^{n-1}f(x_i)+7f(b))
+\]</span></p>
+<p>使用 <span class="math inline">\(S_{2n}\)</span> 和 <span
+class="math inline">\(S_n\)</span> 表示：</p>
+<p><span class="math display">\[
+C_n=\frac{4^2S_{2n}-S_{n}}{4^2-1}
+\]</span></p>
 
                 
               </div>
@@ -315,15 +500,8 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
     
       <span class="category-chain">
         
-  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
+  <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="category-chain-item">课程笔记</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/%E9%9A%8F%E7%AC%94/%E5%8A%A8%E7%94%BB/" class="category-chain-item">动画</a>
-  
-  
-
   
 
       </span>
@@ -337,7 +515,7 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8A%A8%E7%94%BB%E8%AF%84%E8%AE%BA/">#动画评论</a>
+        <a href="/tags/Computation/">#Computation</a>
       
     </div>
   
@@ -349,8 +527,8 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>锐评铃芽之旅</div>
-      <div>https://eupho.me/锐评铃芽之旅</div>
+      <div>计算方法-数值积分</div>
+      <div>https://eupho.me/a558a3e4.html</div>
     </div>
     <div class="license-meta">
       
@@ -362,7 +540,7 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月14日</div>
+          <div>2023年5月12日</div>
         </div>
       
       
@@ -406,15 +584,21 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%BE%E7%A8%8B%E7%AC%AC%E4%B8%80%E7%AB%A0-Java%E5%9F%BA%E7%A1%80" title="面向对象课程第一章:Java基础">
+                      <a href="/8335bdad.html" title="nazo之旅">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">面向对象课程第一章:Java基础</span>
+                        <span class="hidden-mobile">nazo之旅</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/bd772a69.html" title="计算方法:插值与数值逼近">
+                        <span class="hidden-mobile">计算方法:插值与数值逼近</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -503,6 +687,12 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -696,6 +886,49 @@ LO的引入让更复杂的镜头成为可能,演出上的奇观自然也多了�
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
