@@ -22,5 +22,5 @@ jobs:
           sitemap-location: "https://eupho.me/sitemap.xml"  # change it
           since: 1
           # minite, hour, day, week, month, year
-          since-unit: "day"
+          since-unit: "month"
           key: ${{ secrets.INDEXNOW_KEY }}
