@@ -19,23 +19,22 @@
   <meta name="author" content="Lambert Swizzer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="I use Arch btw :)">
+    <meta name="description" content="CRT一般是在已知">
 <meta property="og:type" content="article">
-<meta property="og:title" content="切换到Linux工作环境">
-<meta property="og:url" content="https://eupho.me/b156821.html">
+<meta property="og:title" content="NoisyCRT">
+<meta property="og:url" content="https://eupho.me/35228183.html">
 <meta property="og:site_name" content="Euphome">
-<meta property="og:description" content="I use Arch btw :)">
+<meta property="og:description" content="CRT一般是在已知">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://eupho.me/assets/screen_shot_.png">
-<meta property="article:published_time" content="2024-11-14T18:24:41.000Z">
-<meta property="article:modified_time" content="2024-11-14T19:57:26.000Z">
+<meta property="article:published_time" content="2025-02-14T09:33:57.000Z">
+<meta property="article:modified_time" content="2025-02-14T09:36:23.136Z">
 <meta property="article:author" content="Lambert Swizzer">
+<meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://eupho.me/assets/screen_shot_.png">
   
   
   
-  <title>切换到Linux工作环境 - Euphome</title>
+  <title>NoisyCRT - Euphome</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="切换到Linux工作环境"></span>
+            <span id="subtitle" data-typed-text="NoisyCRT"></span>
           
         </div>
 
@@ -216,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-15 02:24" pubdate>
-          2024年11月15日 凌晨
+        <time datetime="2025-02-14 17:33" pubdate>
+          2025年2月14日 下午
         </time>
       </span>
     
@@ -228,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.5k 字
         
       </span>
     
@@ -277,12 +276,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">切换到Linux工作环境</h1>
+            <h1 style="display: none">NoisyCRT</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年11月15日 凌晨
+                    本文最后更新于：2025年2月14日 下午
                   
                 
               </p>
@@ -290,49 +289,59 @@
             
               <div class="markdown-body">
                 
-                <figure>
-<img src="../assets/screen_shot_.png" srcset="/img/loading.gif" lazyload alt="I use Arch btw :)" />
-<figcaption aria-hidden="true">I use Arch btw :)</figcaption>
-</figure>
+                <p>CRT一般是在已知</p>
 <span id="more"></span>
-<p>之前虽然是双持设备Windows+macOS,但工作环境几乎全在macOS侧。这次因为打算卖掉旧的Macbook备战新款M4
-Pro Macbook,所以打算把工作流迁移到另一台设备.</p>
-<h2 id="系统准备">系统准备</h2>
-<p>切换到Windows显然是不可接受的,毕竟身为一个密码人,有太多环境是Unix系独占的,而且我和WSL
-2之前有过一段不愉快的经历(指给校赛出的一道逆向题在WSL
-2上运行时会莫名其妙地跑飞)。
-所以,先在Windows设备上装个双系统.手头的这台Redmibook
-14提供了一个额外的M.2
-2242硬盘位,我加装了一块1T的SSD专门用于安装Linux</p>
-<p>在众多Linux发行版中,Arch,Fedora和Nix提供的Sagemath包比较新,所以首先考虑这几个。作为一个乐于折腾的人,果然还是要选择Arch
-Linux!</p>
-<p>安装过程没什么可说的,跟着<a
-target="_blank" rel="noopener" href="https://arch.icekylin.online/guide/rookie/basic-install.html">指南</a>走就好,遇到问题了也有详尽的ArchWiki可供查阅.</p>
-<p>不过我在安装时没有严格遵循以上网站的分区策略XD(毕竟它没有完全利用上Btrfs的优势),而是把整个磁盘划一个分区,然后<code>/</code>,<code>/home</code>,<code>/swap</code>,<code>/var/cache</code>和<code>/var/log</code>目录各自用btrfs建立一个
-subvolume,安装时一个个单独挂载到<code>/mnt</code>.这样做的好处是可以不同subvolume制定不同的策略,比如,<code>/swap</code>可以关闭CoW,<code>/home</code>可以开启压缩</p>
-<h2 id="软件安装">软件安装</h2>
-<h3 id="gui和小工具">GUI和小工具</h3>
-<p>KDE,Gnome之类的早该入土了😡还得是Hyprland自己从头配置才美观轻巧!</p>
-<p>先整个paru用来安装AUR包,然后一把梭:</p>
-<p><code>paru -S kitty waybar otf-font-awesome network-manager-applet brightnessctl pw-volume hyprshot tlp tlp-rdw tlpui tofi hyprpaper swayidle swaylock-effects-git wlogout mako cliphist pipewire pipewire-pulse wireplumber pavucontrol xorg xorg-xwayland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit-kde-agent qt5-wayland qt6-wayland qt5ct qt6ct nwg-look udiskie greetd greetd-tuigreet chezmoi fcitx5-im fcitx5-chewing fcitx5-qt fcitx5-gtk fcitx5-chinese-addons fcitx5-rime rime-ice</code></p>
-<p>然后是<a
-target="_blank" rel="noopener" href="https://github.com/Swizzzer/my-dotfiles">我的软件配置</a></p>
-<p>greetd默认的登录界面太朴素了,这里稍微把它修改得简约而不简单:</p>
-<figure class="highlight ini"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-wgba3sm74kqoxk"></i><span>ini</span><div class="collapse show" id="collapse-wgba3sm74kqoxk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># /etc/greetd/config.toml</span><br><span class="hljs-section">[default_session]</span><br><span class="hljs-attr">command</span> = <span class="hljs-string">&quot;tuigreet --time --asterisks --remember --cmd Hyprland&quot;</span><br></code></pre></td></tr></table></div></figure>
-<h3 id="sagemath">Sagemath!</h3>
-<p>非常简单,直接<code>paru -S sagemath python-pycryptodome python-pwntools</code></p>
-<h3 id="misc人的自我修养">Misc人的自我修养</h3>
-<p><code>paru -S zsteg jdk qsstv</code></p>
-<p>其实还整了个Wine打算运行exe,想着可能运行个IDA搞搞简单的逆向,但是转念一想反正都双系统了为什么还要再套层转译白费力气呢XD</p>
-<h3 id="crypto人的自我修养">Crypto人的自我修养</h3>
-<p><code>paru -S m4ri gmp-ecm flatter-git cado-nfs-git</code></p>
-<p>相较于macOS需要手动编译，AUR它给的实在是太多了.jpg——flatter,cado-nfs和gmp-ecm都可以直接从AUR安装,而之前这几个工具我分别需要在实体机和两个独立的docker里分别运行QAQ</p>
-<p>唯一的遗憾是Ultra 5 125H的性能有点弱鸡,比起卖掉的M3 Max Macbook
-(即使是M3 Max套一层Rosetta 2运行x86ArchLinux docker
-image之上的Sagemath,在大部分赛题上的性能表现也比Ultra 5
-125H强45%左右...) 就已经落后不少,如果未来购入M4
-Pro的话差距只会更大...</p>
-<p>所以,未来估计还会把工作环境切回Macbook吧.</p>
+<p><span class="math display">\[x\equiv{a_1}\pmod{p_1}\]</span> <span
+class="math display">\[x\equiv{a_2}\pmod{p_2}\]</span> <span
+class="math display">\[\vdots\]</span> <span
+class="math display">\[x\equiv{a_m}\pmod{p_m}\]</span> 时用于求 <span
+class="math display">\[x\equiv{a}\pmod{\prod{p_i}}\]</span>
+的解的方法。但是，如果已知的条件并非一一对应的<span
+class="math inline">\((a_i,p_i)\)</span>，而是经过了shuffle的呢？</p>
+<p>Noisy
+CRT就是为了解决此种情况而提出的（一次shuffle就可以看作一次noise的掺入不是吗），这一点是基于一个观察：</p>
+<p>我们在正常的CRT求解时，其实很像是在每个<span
+class="math inline">\(\mathbb{Z}mod(N_i)\)</span>里找了一个basis，最终用这些basis去线性表示我们最终的解。具体地来说，是这么一回事：</p>
+<p>先取 <span class="math inline">\(T_i\)</span> 符合 <span
+class="math display">\[
+\begin{array}{ll}
+T_i \equiv 1 &amp; \left(\bmod p_i\right) \\
+T_i \equiv 0 &amp; \left(\bmod p_{j \neq i}\right)
+\end{array}
+\]</span></p>
+<p>那么对于一个 <span class="math inline">\(x \equiv a_i\left(\bmod
+p_i\right)\)</span> 的系統，可以得出解为 <span class="math inline">\(x
+\equiv \sum a_i T_i\left(\bmod \prod p_i\right)\)</span> 。</p>
+<p>默认情况下我们是用直接的CRT求T的，但是在noisy
+CRT情况下，因为经过了shuffle，所以我们需要再把<span
+class="math inline">\(T_i\)</span>摊开一下： <span
+class="math display">\[x\equiv \sum_{i=1}\sum_{j=1}\delta_{i,j}
+r_{i,j}a_i\pmod{\prod{p_i}}\]</span> 其中<span
+class="math inline">\(r_{i,j}\)</span>是正常CRT下我们求出的T，<span
+class="math inline">\(\delta\)</span>在r和a对应时取1，不对应时取0。这时我们构造格
+<span class="math display">\[\left(\begin{array}{ccccc}
+\prod{p_i} &amp; 0 &amp; \ldots &amp; \ldots &amp; 0 \\
+r_{1,1} a_1 &amp; B &amp; 0 &amp; \ldots &amp; 0 \\
+r_{1,2} a_1 &amp; 0 &amp; B &amp; \ddots &amp; \vdots \\
+\vdots &amp; \vdots &amp; \ddots &amp; \ddots &amp; 0 \\
+r_{m, m} a_n &amp; 0 &amp; \ldots &amp; 0 &amp; B
+\end{array}\right)\]</span> 那么<span
+class="math inline">\((x,\overrightarrow{\delta})\)</span>就在这个格子里,适当选取B优化我们的格子就很有可能规约出我们想要的x。</p>
+<blockquote>
+<p>有线性组合的地方就有格！</p>
+</blockquote>
+<p>以上的情况实际上是shuffle了以下CRT矩阵的列(并且是nx1大小的矩阵):
+<span class="math display">\[\left(\begin{array}{ccccc}
+N_1\bmod{p_1}&amp;N_2\bmod{p_1}&amp;\cdots&amp;N_m\bmod{p_1}\\
+N_1\bmod{p_2}&amp;N_2\bmod{p_2}&amp;\cdots&amp;\\
+\vdots\\
+N_1\bmod{p_n}&amp;\cdots&amp; &amp; N_m\bmod{p_n}
+\end{array}\right)
+\]</span>
+这种情况有一个很麻烦的地方——在摊平CRT矩阵时，每一行具体要乘上的<span
+class="math inline">\(r_i\)</span>是不确定的。 一般情况下我们遇见的noisy
+CRT是对以上CRT矩阵的行进行shuffle，这样每一行需要乘上的是确定的，那么摊平后LLL就变得更容易了。</p>
+<p>不管怎么说，最终需要的格子都很大，所以规约的时候一般都需要flatter去加速。</p>
 
                 
               </div>
@@ -354,13 +363,6 @@ Pro的话差距只会更大...</p>
   <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
-    <span>></span>
-    
-  <a href="/categories/%E9%9A%8F%E7%AC%94/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
-  
-  
-
-  
 
       </span>
     
@@ -370,6 +372,13 @@ Pro的话差距只会更大...</p>
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Crypto/">#Crypto</a>
+      
+    </div>
+  
 </div>
 
 
@@ -378,8 +387,8 @@ Pro的话差距只会更大...</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>切换到Linux工作环境</div>
-      <div>https://eupho.me/b156821.html</div>
+      <div>NoisyCRT</div>
+      <div>https://eupho.me/35228183.html</div>
     </div>
     <div class="license-meta">
       
@@ -391,7 +400,7 @@ Pro的话差距只会更大...</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月15日</div>
+          <div>2025年2月14日</div>
         </div>
       
       
@@ -435,18 +444,12 @@ Pro的话差距只会更大...</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/c4610b76.html" title="RSA LSB Oracle Attack">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">RSA LSB Oracle Attack</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/6cbf80c.html" title="Compile gmp-ecm on macOS">
-                        <span class="hidden-mobile">Compile gmp-ecm on macOS</span>
+                      <a href="/1deedd32.html" title="2025 CISCNxCCB Qual Writeup">
+                        <span class="hidden-mobile">2025 CISCNxCCB Qual Writeup</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -538,6 +541,12 @@ Pro的话差距只会更大...</p>
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -731,6 +740,49 @@ Pro的话差距只会更大...</p>
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
