@@ -19,23 +19,26 @@
   <meta name="author" content="Lambert Swizzer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="CTFZone好难好难...肝了一天也只不过拿下这一道题。">
+    <meta name="description" content="你说得对但是现在好像人人都会同源...感觉我不学已经落后了。 本文主要是借鉴鸡块的blog和Triode的blog做个简略的读后感，日后慢慢补充一些东西吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2024 CTFZone-she&#39;s the real one-Writeup">
-<meta property="og:url" content="https://eupho.me/9d419715.html">
+<meta property="og:title" content="Isogeny概览">
+<meta property="og:url" content="https://eupho.me/e1345c95.html">
 <meta property="og:site_name" content="Euphome">
-<meta property="og:description" content="CTFZone好难好难...肝了一天也只不过拿下这一道题。">
+<meta property="og:description" content="你说得对但是现在好像人人都会同源...感觉我不学已经落后了。 本文主要是借鉴鸡块的blog和Triode的blog做个简略的读后感，日后慢慢补充一些东西吧。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-08-11T18:41:45.000Z">
-<meta property="article:modified_time" content="2024-08-11T18:41:45.000Z">
+<meta property="og:image" content="https://eupho.me/assets/image-15.png">
+<meta property="og:image" content="https://eupho.me/assets/image-16.png">
+<meta property="article:published_time" content="2025-02-26T12:32:59.000Z">
+<meta property="article:modified_time" content="2025-02-26T13:38:47.557Z">
 <meta property="article:author" content="Lambert Swizzer">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://eupho.me/assets/image-15.png">
   
   
   
-  <title>2024 CTFZone-she&#39;s the real one-Writeup - Euphome</title>
+  <title>Isogeny概览 - Euphome</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +208,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2024 CTFZone-she&#39;s the real one-Writeup"></span>
+            <span id="subtitle" data-typed-text="Isogeny概览"></span>
           
         </div>
 
@@ -216,8 +219,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-12 02:41" pubdate>
-          2024年8月12日 凌晨
+        <time datetime="2025-02-26 20:32" pubdate>
+          2025年2月26日 晚上
         </time>
       </span>
     
@@ -228,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k 字
+          2.4k 字
         
       </span>
     
@@ -239,7 +242,7 @@
         
         
         
-          9 分钟
+          4 分钟
         
       </span>
     
@@ -277,43 +280,83 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">2024 CTFZone-she&#39;s the real one-Writeup</h1>
+            <h1 style="display: none">Isogeny概览</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2025年2月26日 晚上
+                  
+                
+              </p>
             
             
               <div class="markdown-body">
                 
-                <p>CTFZone好难好难...肝了一天也只不过拿下这一道题。</p>
+                <p>你说得对但是现在好像人人都会同源...感觉我不学已经落后了。
+本文主要是借鉴<a
+target="_blank" rel="noopener" href="https://tangcuxiaojikuai.xyz/post/e06139e7.html">鸡块的blog</a>和<a
+target="_blank" rel="noopener" href="https://triodelzx.github.io/2025/02/26/%E5%90%8C%E6%BA%90%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94SIDH/">Triode的blog</a>做个简略的读后感，日后慢慢补充一些东西吧。</p>
 <span id="more"></span>
-<blockquote>
-<p>task</p>
-</blockquote>
-<figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-g0afw0m7lyom00"></i><span>python</span><div class="collapse show" id="collapse-g0afw0m7lyom00"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> namedtuple<br><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><br><span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(flag) == <span class="hljs-number">33</span><br><br>Point = namedtuple(<span class="hljs-string">&quot;Point&quot;</span>, [<span class="hljs-string">&quot;x&quot;</span>, <span class="hljs-string">&quot;y&quot;</span>])<br>R = RealField(prec=<span class="hljs-number">800</span>)<br>inf = Point(R(<span class="hljs-number">0</span>), R(<span class="hljs-number">1</span>))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lift_x</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> Point(x, sqrt(x**<span class="hljs-number">3</span> - R(<span class="hljs-number">3</span>) * x - R(<span class="hljs-number">2</span>)))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">P, Q</span>):<br>    <span class="hljs-keyword">if</span> P.x == Q.x <span class="hljs-keyword">and</span> P.y != Q.y:<br>        <span class="hljs-keyword">return</span> inf<br>    <span class="hljs-keyword">elif</span> P.y == Q.y:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;Points have to differ!&quot;</span>)<br>    <span class="hljs-keyword">elif</span> P == inf:<br>        <span class="hljs-keyword">return</span> Q<br>    <span class="hljs-keyword">elif</span> Q == inf:<br>        <span class="hljs-keyword">return</span> P<br><br>    lambda_ = (P.y - Q.y) / (P.x - Q.x)<br><br>    xr = lambda_**<span class="hljs-number">2</span> - P.x - Q.x<br>    yr = lambda_ * (Q.x - xr) - Q.y<br>    <span class="hljs-keyword">return</span> Point(xr, yr)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">double</span>(<span class="hljs-params">P</span>):<br>    <span class="hljs-keyword">if</span> P == inf:<br>        <span class="hljs-keyword">return</span> P<br><br>    lambda_ = (R(<span class="hljs-number">3</span>) * P.x**<span class="hljs-number">2</span> - R(<span class="hljs-number">3</span>)) / (R(<span class="hljs-number">2</span>) * P.y)<br><br>    xr = lambda_**<span class="hljs-number">2</span> - <span class="hljs-number">2</span> * P.x<br>    yr = lambda_ * (P.x - xr) - P.y<br>    <span class="hljs-keyword">return</span> Point(xr, yr)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">multiply_by_scalar</span>(<span class="hljs-params">P, n: <span class="hljs-built_in">int</span></span>):<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> P == inf:<br>        <span class="hljs-keyword">return</span> inf<br>    <span class="hljs-keyword">elif</span> n &lt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> multiply_by_scalar(Point(-P.x, P.y), -n)<br><br>    R0, R1 = P, double(P)<br>    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> <span class="hljs-built_in">bin</span>(n)[<span class="hljs-number">3</span>:]:<br>        <span class="hljs-keyword">if</span> b == <span class="hljs-string">&quot;0&quot;</span>:<br>            R0, R1 = double(R0), add(R0, R1)<br>        <span class="hljs-keyword">else</span>:<br>            R0, R1 = add(R0, R1), double(R1)<br>    <span class="hljs-keyword">return</span> R0<br><br><br>P = lift_x(R(<span class="hljs-number">5.0</span>) + R.random_element())<br>s = <span class="hljs-built_in">int</span>.from_bytes(flag, <span class="hljs-string">&#x27;big&#x27;</span>)<br>Q = multiply_by_scalar(P, s)<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;output.dump&quot;</span>, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(dumps([P, Q]))<br></code></pre></td></tr></table></div></figure>
-<p>先来看下输出：</p>
-<blockquote>
-<p>output.dump</p>
-</blockquote>
-<figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-d1cakvm7lyom00"></i><span>python</span><div class="collapse show" id="collapse-d1cakvm7lyom00"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># sage</span><br><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> namedtuple<br>Point = namedtuple(<span class="hljs-string">&quot;Point&quot;</span>, [<span class="hljs-string">&quot;x&quot;</span>, <span class="hljs-string">&quot;y&quot;</span>])<br>P, Q = loads(<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;output.dump&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>).read())<br>P, Q<br><span class="hljs-comment"># (Point(x=4.85057122750390330433014774845690325940033540110422764146149706704984961847838462175367562988623210644689151060385830985493965537584825006903699918005698470402542767276523398111510174025601811323527600859249876547306988688344166390608748190, y=9.87789077496982192809140902261474042136361328873826618292731494933661532935267994217820007421649597601541657151434891797385177282719442155927874875209661909760176717387846469008534007174587603568767109138181793952471643100734778684208975367), Point(x=14.6291715870227010270603447705099642062932549788679450534625902324668696595989549084153588377210135662551306850345710441061288798249363739503554577196027351649478485916115558430512623160495597643113114945568549632790168083747304533148749256, y=-55.5422400477503792524895176160494754137265713945942105661081051205424768891166215797738467415408445726009305745975391949619787546987772117912621958687123922494608661071102641576350850861266231818560288901594219333219685647260080309129676830))</span><br></code></pre></td></tr></table></div></figure>
-<p>题目其实是在实数域上的一条singular curve上的ECDLP。我们知道singular
-curve只会是cusp(三重根)或node(二重根)。对于本题而言，曲线其实是<span
-class="math inline">\(y^{2}=x^{3}-3x-2=(x+1)^{2}(x-2)\)</span>，是node(二重根)，所以有个homomorphism可以把ECDLP转化到DLP：</p>
-<p><span class="math display">\[\phi: E\left(\mathbb{R}\right)
-\rightarrow K^{\times}(x, y) \mapsto
-\frac{y+\sqrt{\alpha-\beta}(x-\alpha)}{y-\sqrt{\alpha-\beta}(x-\alpha)},\alpha=-1,\beta=2\]</span></p>
-<p>这题中<span
-class="math inline">\(\mathbb{K}=\mathbb{C}\)</span>，sagemath没有可以直接解决其上的DLP的函数。记<span
-class="math inline">\(\phi(P)^{m}=\phi(Q)\)</span>,则<span
-class="math inline">\(m =
-\frac{ln(\phi(Q))}{ln(\phi(P))}\)</span>。不过因为复对数函数是多值函数，所以实际的m对应的分子/分母上是要加上<span
-class="math inline">\(2k\pi\)</span>的，因此没办法直接从这个式子计算得到m。</p>
-<p>不过总之我们有<span
-class="math inline">\(ln(\phi(Q))-mln(\phi(P))+k\pi=0\)</span>，所以还是可以考虑LLL求解。这里反而困扰了我一段时间，因为赛场上最初构造的格乘上的系数太大，出不来flag：</p>
-<figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-d7fjn1m7lyom00"></i><span>python</span><div class="collapse show" id="collapse-d7fjn1m7lyom00"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br>R = RealField(prec=<span class="hljs-number">800</span>)<br><br>alpha = -<span class="hljs-number">1</span><br>beta = <span class="hljs-number">2</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">hom</span>(<span class="hljs-params">x,y</span>):<br>    div = y+sqrt(alpha-beta)*(x-alpha)<br>    todiv = y-sqrt(alpha-beta)*(x-alpha)<br>    <span class="hljs-keyword">return</span> div/todiv<br><br>P = (R(<span class="hljs-number">4.85057122750390330433014774845690325940033540110422764146149706704984961847838462175367562988623210644689151060385830985493965537584825006903699918005698470402542767276523398111510174025601811323527600859249876547306988688344166390608748190</span>), R(<span class="hljs-number">9.87789077496982192809140902261474042136361328873826618292731494933661532935267994217820007421649597601541657151434891797385177282719442155927874875209661909760176717387846469008534007174587603568767109138181793952471643100734778684208975367</span>))<br>Q = (R(<span class="hljs-number">14.6291715870227010270603447705099642062932549788679450534625902324668696595989549084153588377210135662551306850345710441061288798249363739503554577196027351649478485916115558430512623160495597643113114945568549632790168083747304533148749256</span>), R(-<span class="hljs-number">55.5422400477503792524895176160494754137265713945942105661081051205424768891166215797738467415408445726009305745975391949619787546987772117912621958687123922494608661071102641576350850861266231818560288901594219333219685647260080309129676830</span>))<br><span class="hljs-built_in">print</span>(ln(hom(P[<span class="hljs-number">0</span>],P[<span class="hljs-number">1</span>]).n(<span class="hljs-number">800</span>)))<br><span class="hljs-built_in">print</span>(ln(hom(Q[<span class="hljs-number">0</span>],Q[<span class="hljs-number">1</span>]).n(<span class="hljs-number">800</span>)))<br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">stage 2</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes<br><br>lnA = <span class="hljs-number">1.5963399904427224116173827067870805565590340871250159532480571882126644527245944378708607087469070702562689993080725487929823685075110225872715830601783644029979376992010083200663415416743039753924899188724496117733386312004922854550327233</span><br>lnB = -<span class="hljs-number">0.90701142842631779866989635451465989740748171137396031502748236138314098068314071068047683347370914363484552270097028805338972038604958239411917951278259144793574361613789650347897002759119665062755502665641658407547473699916261636571633561</span><br><br><br>R = RealField(prec=<span class="hljs-number">800</span>)<br>pi = R(pi)<br><br><br>Ge = Matrix(QQ,[[<span class="hljs-number">2</span>^<span class="hljs-number">528</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">528</span>*lnB],[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">2</span>^<span class="hljs-number">528</span>*lnA],[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>^<span class="hljs-number">528</span>*<span class="hljs-number">2</span>*pi]])<br>ans = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">abs</span>(Ge.LLL()[-<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]))<br><span class="hljs-built_in">print</span>(long_to_bytes(ans))<br></code></pre></td></tr></table></div></figure>
-<p>最初格子里的<span class="math inline">\(2^{528}\)</span>取的是<span
-class="math inline">\(2^{2048}\)</span>，一直出不来；最后把系数调小到<span
-class="math inline">\(2^{528}\)</span>反而就有了...</p>
-<blockquote>
-<p>不懂，感觉很玄学（</p>
-</blockquote>
+<h1 id="超椭圆曲线hyperellitic-curve">超椭圆曲线(Hyperellitic
+Curve)</h1>
+<p>目前的同源似乎主要基于超椭圆曲线。所谓超椭圆曲线，就是有限域<span
+class="math inline">\(F_{q^r}\)</span>上一条<span
+class="math inline">\(order\equiv{1}\bmod{q}\)</span>的椭圆曲线。</p>
+<h1 id="j-invariant">j-invariant</h1>
+<p>对于椭圆曲线来说，j不变量可以简单理解为一个判定两条椭圆曲线是否同构的值。也就是说，任何一个曲线都有自己独特的j不变量，而如果两条曲线的j不变量相等，则说明这两条曲线彼此同构。而由于同构的曲线本质上都可以看作同一条曲线，这也就说明，一个j不变量其实在同构意义上其实就唯一对应着一条曲线。</p>
+<p>——引用自鸡块blog原文</p>
+<p>看起来就像是一种特殊的不变量，类似流形的基本群这种东西，只要相等就同构。</p>
+<p>以Montgomery型曲线<span
+class="math inline">\(y^2=x^3+ax^2+x\)</span>为例，其j-invariant可表示为<span
+class="math inline">\(j(E)=\frac{256(a^2-3)^3}{a^2-4}\)</span></p>
+<p>验个证：</p>
+<figure>
+<img src="../assets/image-15.png" srcset="/img/loading.gif" lazyload alt="同构" />
+<figcaption aria-hidden="true">同构</figcaption>
+</figure>
+<h1 id="同源">同源</h1>
+<p>虽然读完blog感觉有点讳莫如深，不过我认为姑且可以把同源看作一种满射的群同态。</p>
+<p>正式地说，一个可分的(separable)同源可以描述为：对于一条曲线E
+以及E上一个子群G，都可以构造一个以G为核的映射<span
+class="math inline">\(\phi:E\to
+E^{\prime}\)</span>,这个映射就是同源，映射到的曲线<span
+class="math inline">\(E^{\prime}\)</span>就叫做这个同源的陪域(codomain)。</p>
+<p>从这个观点来说，同源的核就很容易理解——就是同态的核空间嘛。所以同源的核自然是原曲线加法群上的一个正规子群。同源的度数d就是这个群的群阶，所以这里面的点其实也是d-torsion上的点。(这里我不确定对不对，但是按鸡块blog里的定义，r-torsion并没有要求r是满足条件的最小的r，这种情况下这个结论就是成立的)</p>
+<p>从这点出发，我们构造同源的时候其实也可以取曲线E(0).division_points(k)里的随便一个点，生成个k阶循环子群G，然后构造以G为核的同源，同源的度数就是k。</p>
+<p>这样得到的同源的核可以记作<span
+class="math inline">\(ker([k])\)</span></p>
+<h2 id="同源的计算">同源的计算</h2>
+<p>对于Montgomery型曲线，同源映射可以仅仅由点的x坐标的变换去表示，比方说对于<span
+class="math inline">\(GF(431^2)\)</span>上的曲线<span
+class="math inline">\(y^2=x^3+x\)</span>：</p>
+<figure>
+<img src="../assets/image-16.png" srcset="/img/loading.gif" lazyload alt="x坐标的变换" />
+<figcaption aria-hidden="true">x坐标的变换</figcaption>
+</figure>
+<p>这种情况下，计算分母为0时x的取值就能得到同源的核里所有点的x坐标。</p>
+<h2 id="同源图">同源图</h2>
+<p>对于一个固定的<span class="math inline">\(p\)</span>,我们用<span
+class="math inline">\(GF(p^2)\)</span>中所有的超奇异<span
+class="math inline">\(j\)</span>-不变量各构造一条曲线，在每条曲线的ker<span
+class="math inline">\(( [ l]
+)\)</span>中取除了无穷远点外的所有点分别进行同源，将原来曲线的<span
+class="math inline">\(j\)</span>-不变量作为起点，同源得到的陪域的<span
+class="math inline">\(j\)</span>-不变量作为终点，就可以得到一个无向图，称为同源图。</p>
+<p>按Triode的blog中的代码： <figure class="highlight python"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-un4zwmm7lyom01"></i><span>python</span><div class="collapse show" id="collapse-un4zwmm7lyom01"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">IsogenyGraph</span>(<span class="hljs-params">p, l=<span class="hljs-number">2</span>, vertex_size=<span class="hljs-number">3750</span>, size=[<span class="hljs-number">20</span>, <span class="hljs-number">20</span>]</span>):<br>    R.&lt;i&gt; = GF(p^<span class="hljs-number">2</span>, modulus=[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>])<br><br>    jlist = &#123;&#125;<br>    Elist = []<br><br>    E = EllipticCurve(R, [<span class="hljs-number">1</span>, <span class="hljs-number">0</span>])<br>    <span class="hljs-keyword">assert</span> E.is_supersingular()<br>    jlist[E.j_invariant()] = <span class="hljs-built_in">set</span>()<br>    Elist.append(E)<br><br>    <span class="hljs-keyword">while</span> Elist:<br>        tmp = Elist.pop()<br>        kerl = tmp(<span class="hljs-number">0</span>).division_points(l)<br>        <span class="hljs-keyword">for</span> P <span class="hljs-keyword">in</span> kerl:<br>            <span class="hljs-keyword">if</span> P != tmp(<span class="hljs-number">0</span>):<br>                phi = tmp.isogeny(P, model = <span class="hljs-string">&quot;montgomery&quot;</span>)<br>                E2 = phi.codomain()<br>                j = E2.j_invariant()<br>                <span class="hljs-comment"># print(tmp.j_invariant(), j)</span><br>                <span class="hljs-keyword">if</span> j <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> jlist:<br>                    jlist[j] = <span class="hljs-built_in">set</span>()<br>                <span class="hljs-keyword">if</span> j <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> jlist[tmp.j_invariant()]:<br>                    jlist[tmp.j_invariant()].add(j)<br>                    Elist.append(E2)<br><br>    Tab = &#123;&#125;<br>    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> jlist:<br>        Tab[x] = <span class="hljs-built_in">list</span>(jlist[x])<br>    G = Graph(Tab)<br><br>    G.set_pos(G.layout_circular())<br>    G.plot(vertex_labels=<span class="hljs-literal">True</span>,vertex_size=vertex_size).show(figsize=size)<br></code></pre></td></tr></table></div></figure></p>
+<p>可以求出<span class="math inline">\(GF(p^2)\)</span>下<span
+class="math inline">\(ker([l])\)</span>的同源图。</p>
+<p>同源图揭示了j-invariant在同源下的移动路径，顺便也可以展示同源之间的复合。</p>
+<h2 id="同源的性质">同源的性质</h2>
+<p>同态方面的性质不加赘述。除此之外： -
+一个同源拥有一个唯一的对偶同源，他们度相等，并且这两个同源复合后等价于曲线向其度倍点上的同源
+- 度为<span
+class="math inline">\(d^e\)</span>的同源可以拆解为e个度为d的同源，从而变成d-isogeny图中一条长为e的路径(从同态的性质很容易理解)
+- 还有一个比较有用的东西叫做modular
+polynomial，他的独特作用是用一个多项式关联了d-isogeny中互为邻居的两个j不变量。也就是说，如果知道了一个j不变量，那么可以将其代入对应度的modular
+polynomial去求根，得到的所有根就是所有作为他的邻居的j不变量。这为一些中间相遇提供了快速计算的便利。
+# 挖坑
+关于同源的最重要的结果还得是SIDH/CSIDH，这里先挖个坑，等下篇blog再细究一些东西吧。本文就当是对Isogeny的一瞥，权当预热</p>
 
                 
               </div>
@@ -332,8 +375,15 @@ class="math inline">\(2^{528}\)</span>反而就有了...</p>
     
       <span class="category-chain">
         
-  <a href="/categories/Writeups/" class="category-chain-item">Writeups</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/%E9%9A%8F%E7%AC%94/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
   
 
       </span>
@@ -361,8 +411,8 @@ class="math inline">\(2^{528}\)</span>反而就有了...</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2024 CTFZone-she&#39;s the real one-Writeup</div>
-      <div>https://eupho.me/9d419715.html</div>
+      <div>Isogeny概览</div>
+      <div>https://eupho.me/e1345c95.html</div>
     </div>
     <div class="license-meta">
       
@@ -374,7 +424,7 @@ class="math inline">\(2^{528}\)</span>反而就有了...</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年8月12日</div>
+          <div>2025年2月26日</div>
         </div>
       
       
@@ -418,18 +468,12 @@ class="math inline">\(2^{528}\)</span>反而就有了...</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/13dbdc32.html" title="2024 羊城杯 Writeup">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">2024 羊城杯 Writeup</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/fb92e8a5.html" title="2024 TFCCTF Writeup">
-                        <span class="hidden-mobile">2024 TFCCTF Writeup</span>
+                      <a href="/35228183.html" title="NoisyCRT">
+                        <span class="hidden-mobile">NoisyCRT</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
