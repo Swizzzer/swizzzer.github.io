@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://eupho.me/assets/image-17.png">
 <meta property="og:image" content="https://eupho.me/assets/image-18.png">
 <meta property="article:published_time" content="2025-03-04T13:29:11.000Z">
-<meta property="article:modified_time" content="2025-03-04T14:27:18.820Z">
+<meta property="article:modified_time" content="2025-03-04T20:00:45.755Z">
 <meta property="article:author" content="Lambert Swizzer">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Crypto">
@@ -287,7 +287,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2025年3月4日 晚上
+                    本文最后更新于：2025年3月5日 凌晨
                   
                 
               </p>
@@ -314,7 +314,8 @@ Store压缩的加密压缩包，里面有个png文件。png文件头能抠出来
 <p>等1min左右就出了。</p>
 <h2 id="the-cursed-console---呪われたカセット">*The Cursed Console -
 呪われたカセット</h2>
-<p>这题是队友出的，一血，也是全场唯一一解。我用VirusTotal检查了一下nes文件，从first
+<p>这题是队友<a target="_blank" rel="noopener" href="https://oldkingok.cc"><span class="citation"
+data-cites="oldkingOK">@oldkingOK</span></a>出的，一血，也是全场唯一一解。我用VirusTotal检查了一下nes文件，从first
 submission日期可以确定问题不在于此，所以只需要看分发的emulator。</p>
 <p>IDA看一眼字符串找到对应的<a
 target="_blank" rel="noopener" href="https://github.com/amhndu/SimpleNES">项目</a>，跟队友讨论了一下觉得可以拖一个Action里的二进制出来bindiff，这样会方便逆向一点。</p>
@@ -323,7 +324,9 @@ target="_blank" rel="noopener" href="https://github.com/amhndu/SimpleNES">项目
 <img src="../assets/image-18.png" srcset="/img/loading.gif" lazyload alt="magic!" />
 <figcaption aria-hidden="true">magic!</figcaption>
 </figure>
-<p>主办方最初分发的附件是动态链接的并且链接的libsfml版本很低，大部分人都没有相应的环境运行，我猜在这儿卡住了不少人。</p>
+<p>主办方最初分发的附件是动态链接的并且链接的libsfml版本很低，为了跑起来这玩意儿，<a
+target="_blank" rel="noopener" href="https://oldkingok.cc"><span class="citation"
+data-cites="oldkingOK">@oldkingOK</span></a>整了点灵车手段才搞定<del>估计大部分人都没有相应的环境直接运行吧</del>，我猜在这儿卡住了不少人。</p>
 <p>本来以为是跟GeekGame 2025里mario那题类似的东西，结果判若云泥...</p>
 <h2 id="ghosted-on-the-14th">Ghosted on the 14th</h2>
 <p>流量包里俩人的聊天透露了个IP地址，还说这上面的blog被删除了。结合题面暗示的日期，拿去Wayback
