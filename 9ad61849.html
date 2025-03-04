@@ -19,23 +19,28 @@
   <meta name="author" content="Lambert Swizzer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="I use Arch btw :)">
+    <meta name="description" content="Rank 18th  又又又是印度佬的比赛，题目味道一如既往的咖喱。  你问我为什么要打？当然是因为前75有域名奖励啦！  因为exp什么的都在另一台设备上，这里就不一个个贴了，简单记录下思路吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="切换到Linux工作环境">
-<meta property="og:url" content="https://eupho.me/b156821.html">
+<meta property="og:title" content="2025-ApoorvCTF-Writeup">
+<meta property="og:url" content="https://eupho.me/9ad61849.html">
 <meta property="og:site_name" content="Euphome">
-<meta property="og:description" content="I use Arch btw :)">
+<meta property="og:description" content="Rank 18th  又又又是印度佬的比赛，题目味道一如既往的咖喱。  你问我为什么要打？当然是因为前75有域名奖励啦！  因为exp什么的都在另一台设备上，这里就不一个个贴了，简单记录下思路吧。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://eupho.me/assets/screen_shot_.png">
-<meta property="article:published_time" content="2024-11-14T18:24:41.000Z">
-<meta property="article:modified_time" content="2024-11-14T19:57:26.000Z">
+<meta property="og:image" content="https://eupho.me/assets/image-17.png">
+<meta property="og:image" content="https://eupho.me/assets/image-18.png">
+<meta property="article:published_time" content="2025-03-04T13:29:11.000Z">
+<meta property="article:modified_time" content="2025-03-04T14:27:18.820Z">
 <meta property="article:author" content="Lambert Swizzer">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Crypto">
+<meta property="article:tag" content="Misc">
+<meta property="article:tag" content="Reverse">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://eupho.me/assets/screen_shot_.png">
+<meta name="twitter:image" content="https://eupho.me/assets/image-17.png">
   
   
   
-  <title>切换到Linux工作环境 - Euphome</title>
+  <title>2025-ApoorvCTF-Writeup - Euphome</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="切换到Linux工作环境"></span>
+            <span id="subtitle" data-typed-text="2025-ApoorvCTF-Writeup"></span>
           
         </div>
 
@@ -216,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-15 02:24" pubdate>
-          2024年11月15日 凌晨
+        <time datetime="2025-03-04 21:29" pubdate>
+          2025年3月4日 晚上
         </time>
       </span>
     
@@ -228,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.3k 字
         
       </span>
     
@@ -277,12 +282,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">切换到Linux工作环境</h1>
+            <h1 style="display: none">2025-ApoorvCTF-Writeup</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年11月15日 凌晨
+                    本文最后更新于：2025年3月4日 晚上
                   
                 
               </p>
@@ -291,48 +296,53 @@
               <div class="markdown-body">
                 
                 <figure>
-<img src="../assets/screen_shot_.png" srcset="/img/loading.gif" lazyload alt="I use Arch btw :)" />
-<figcaption aria-hidden="true">I use Arch btw :)</figcaption>
+<img src="../assets/image-17.png" srcset="/img/loading.gif" lazyload alt="Rank 18th" />
+<figcaption aria-hidden="true">Rank 18th</figcaption>
 </figure>
+<p>又又又是印度佬的比赛，题目味道一如既往的咖喱。</p>
+<blockquote>
+<p>你问我为什么要打？当然是因为前75有域名奖励啦！</p>
+</blockquote>
+<p>因为exp什么的都在另一台设备上，这里就不一个个贴了，简单记录下思路吧。</p>
 <span id="more"></span>
-<p>之前虽然是双持设备Windows+macOS,但工作环境几乎全在macOS侧。这次因为打算卖掉旧的Macbook备战新款M4
-Pro Macbook,所以打算把工作流迁移到另一台设备.</p>
-<h2 id="系统准备">系统准备</h2>
-<p>切换到Windows显然是不可接受的,毕竟身为一个密码人,有太多环境是Unix系独占的,而且我和WSL
-2之前有过一段不愉快的经历(指给校赛出的一道逆向题在WSL
-2上运行时会莫名其妙地跑飞)。
-所以,先在Windows设备上装个双系统.手头的这台Redmibook
-14提供了一个额外的M.2
-2242硬盘位,我加装了一块1T的SSD专门用于安装Linux</p>
-<p>在众多Linux发行版中,Arch,Fedora和Nix提供的Sagemath包比较新,所以首先考虑这几个。作为一个乐于折腾的人,果然还是要选择Arch
-Linux!</p>
-<p>安装过程没什么可说的,跟着<a
-target="_blank" rel="noopener" href="https://arch.icekylin.online/guide/rookie/basic-install.html">指南</a>走就好,遇到问题了也有详尽的ArchWiki可供查阅.</p>
-<p>不过我在安装时没有严格遵循以上网站的分区策略XD(毕竟它没有完全利用上Btrfs的优势),而是把整个磁盘划一个分区,然后<code>/</code>,<code>/home</code>,<code>/swap</code>,<code>/var/cache</code>和<code>/var/log</code>目录各自用btrfs建立一个
-subvolume,安装时一个个单独挂载到<code>/mnt</code>.这样做的好处是可以不同subvolume制定不同的策略,比如,<code>/swap</code>可以关闭CoW,<code>/home</code>可以开启压缩</p>
-<h2 id="软件安装">软件安装</h2>
-<h3 id="gui和小工具">GUI和小工具</h3>
-<p>KDE,Gnome之类的早该入土了😡还得是Hyprland自己从头配置才美观轻巧!</p>
-<p>先整个paru用来安装AUR包,然后一把梭:</p>
-<p><code>paru -S kitty waybar otf-font-awesome network-manager-applet brightnessctl pw-volume hyprshot tlp tlp-rdw tlpui tofi hyprpaper swayidle swaylock-effects-git wlogout mako cliphist pipewire pipewire-pulse wireplumber pavucontrol xorg xorg-xwayland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit-kde-agent qt5-wayland qt6-wayland qt5ct qt6ct nwg-look udiskie greetd greetd-tuigreet chezmoi fcitx5-im fcitx5-chewing fcitx5-qt fcitx5-gtk fcitx5-chinese-addons fcitx5-rime rime-ice</code></p>
-<p>然后是<a
-target="_blank" rel="noopener" href="https://github.com/Swizzzer/my-dotfiles">我的软件配置</a></p>
-<p>greetd默认的登录界面太朴素了,这里稍微把它修改得简约而不简单:</p>
-<figure class="highlight ini"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-2c7i8im7ul2oyk"></i><span>ini</span><div class="collapse show" id="collapse-2c7i8im7ul2oyk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># /etc/greetd/config.toml</span><br><span class="hljs-section">[default_session]</span><br><span class="hljs-attr">command</span> = <span class="hljs-string">&quot;tuigreet --time --asterisks --remember --cmd Hyprland&quot;</span><br></code></pre></td></tr></table></div></figure>
-<h3 id="sagemath">Sagemath!</h3>
-<p>非常简单,直接<code>paru -S sagemath python-pycryptodome python-pwntools</code></p>
-<h3 id="misc人的自我修养">Misc人的自我修养</h3>
-<p><code>paru -S zsteg jdk qsstv</code></p>
-<p>其实还整了个Wine打算运行exe,想着可能运行个IDA搞搞简单的逆向,但是转念一想反正都双系统了为什么还要再套层转译白费力气呢XD</p>
-<h3 id="crypto人的自我修养">Crypto人的自我修养</h3>
-<p><code>paru -S m4ri gmp-ecm flatter-git cado-nfs-git</code></p>
-<p>相较于macOS需要手动编译，AUR它给的实在是太多了.jpg——flatter,cado-nfs和gmp-ecm都可以直接从AUR安装,而之前这几个工具我分别需要在实体机和两个独立的docker里分别运行QAQ</p>
-<p>唯一的遗憾是Ultra 5 125H的性能有点弱鸡,比起卖掉的M3 Max Macbook
-(即使是M3 Max套一层Rosetta 2运行x86ArchLinux docker
-image之上的Sagemath,在大部分赛题上的性能表现也比Ultra 5
-125H强45%左右...) 就已经落后不少,如果未来购入M4
-Pro的话差距只会更大...</p>
-<p>所以,未来估计还会把工作环境切回Macbook吧.</p>
+<h1 id="misc-forensics-hardware">Misc &amp; Forensics &amp;
+Hardware</h1>
+<h2 id="ramen-lockdown">Ramen lockdown</h2>
+<p>Zip
+Store压缩的加密压缩包，里面有个png文件。png文件头能抠出来16个连续的已知字节，足够直接bkcrack明文攻击了。</p>
+<p><code>bkcrack -C recipe.zip -c secret_recipe.png -x 0 89504E470D0A1A0A0000000D49484452 -U chall_dec.zip ""</code></p>
+<p>等1min左右就出了。</p>
+<h2 id="the-cursed-console---呪われたカセット">*The Cursed Console -
+呪われたカセット</h2>
+<p>这题是队友出的，一血，也是全场唯一一解。我用VirusTotal检查了一下nes文件，从first
+submission日期可以确定问题不在于此，所以只需要看分发的emulator。</p>
+<p>IDA看一眼字符串找到对应的<a
+target="_blank" rel="noopener" href="https://github.com/amhndu/SimpleNES">项目</a>，跟队友讨论了一下觉得可以拖一个Action里的二进制出来bindiff，这样会方便逆向一点。</p>
+<p>按队友的说法最后是在<code>sn::PictureBus::read</code>里找到的神秘字符串，异或解密后包上flag格式就对了：</p>
+<figure>
+<img src="../assets/image-18.png" srcset="/img/loading.gif" lazyload alt="magic!" />
+<figcaption aria-hidden="true">magic!</figcaption>
+</figure>
+<p>主办方最初分发的附件是动态链接的并且链接的libsfml版本很低，大部分人都没有相应的环境运行，我猜在这儿卡住了不少人。</p>
+<p>本来以为是跟GeekGame 2025里mario那题类似的东西，结果判若云泥...</p>
+<h2 id="ghosted-on-the-14th">Ghosted on the 14th</h2>
+<p>流量包里俩人的聊天透露了个IP地址，还说这上面的blog被删除了。结合题面暗示的日期，拿去Wayback
+Machine查查看就能找到被删除的页面，检查源代码看到一串base64,解码即得。</p>
+<p>一个坑点是Wayback
+Machine不能直接用IP搜索，得加个<code>http://</code>前缀，不然完全找不到正确答案。</p>
+<h2 id="petah-hunt">Petah Hunt</h2>
+<p>图片提示用户名为<code>buffedpetah</code>，DuckDuckGo直接搜到对应的GitHub用户。稍微看看这人(人?)的repo就能发现<a
+target="_blank" rel="noopener" href="https://github.com/buffedpetah/freakQuest">问题</a></p>
+<p>结合代码和数值可以猜到<code>project.obj</code>里的数据前两列是双音多频，可以对应到按键。最后一列虽然不知道是在干嘛，但是可以注意到有<code>&#123;行数&#125;-&gt;&#123;行数*100&#125;</code>这两个集合之间的双射，所以按第三列数字的升序排列一下数据，然后提取按键，可以看出来是个英文9键输入法，再转换一下就是flag。</p>
+<h2 id="broken-tooth">Broken Tooth</h2>
+<p>RTP传输的音频，Wireshark直接就能从里面播放出音频，不过经过了很明显的慢放和降调。+6个半音&amp;1.15倍速后拿给队友听了听，一耳朵认出来是Billie
+Eilish的<code>Birds of a Feather</code>。</p>
+<h1 id="crypto">Crypto</h1>
+<p>开胃小菜都算不上，一个ECB逐分组字节爆破，一个misc(俩图按像素Add就有flag)，一个MT19937(还是直接照抄的<a
+target="_blank" rel="noopener" href="https://stackered.com/blog/python-random-prediction/">这个</a>)，一个MD5长度扩展攻击，还有一个更是直接按D-S-D-S走迷宫就拿下了(虽然后来好像把这个bug给修了)</p>
+<blockquote>
+<p>一坨</p>
+</blockquote>
 
                 
               </div>
@@ -351,15 +361,8 @@ Pro的话差距只会更大...</p>
     
       <span class="category-chain">
         
-  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
+  <a href="/categories/Writeups/" class="category-chain-item">Writeups</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/%E9%9A%8F%E7%AC%94/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
-  
-  
-
   
 
       </span>
@@ -370,6 +373,19 @@ Pro的话差距只会更大...</p>
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/">#CTF</a>
+      
+        <a href="/tags/Crypto/">#Crypto</a>
+      
+        <a href="/tags/Misc/">#Misc</a>
+      
+        <a href="/tags/Reverse/">#Reverse</a>
+      
+    </div>
+  
 </div>
 
 
@@ -378,8 +394,8 @@ Pro的话差距只会更大...</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>切换到Linux工作环境</div>
-      <div>https://eupho.me/b156821.html</div>
+      <div>2025-ApoorvCTF-Writeup</div>
+      <div>https://eupho.me/9ad61849.html</div>
     </div>
     <div class="license-meta">
       
@@ -391,7 +407,7 @@ Pro的话差距只会更大...</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月15日</div>
+          <div>2025年3月4日</div>
         </div>
       
       
@@ -435,18 +451,12 @@ Pro的话差距只会更大...</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/c4610b76.html" title="RSA LSB Oracle Attack">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">RSA LSB Oracle Attack</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/6cbf80c.html" title="Compile gmp-ecm on macOS">
-                        <span class="hidden-mobile">Compile gmp-ecm on macOS</span>
+                      <a href="/e1345c95.html" title="Isogeny概览">
+                        <span class="hidden-mobile">Isogeny概览</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -538,6 +548,12 @@ Pro的话差距只会更大...</p>
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -731,6 +747,49 @@ Pro的话差距只会更大...</p>
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
